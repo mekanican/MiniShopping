@@ -11,7 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-
+    // Hello Loc was here
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

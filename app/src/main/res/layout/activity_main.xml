@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/background_init"
+    android:id="@+id/init_page">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300px"
+        android:fontFamily="cursive"
+        android:text="Buy anything\n you desired!"
+        android:textAlignment="center"
+        android:textColor="#03A9F4"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        android:id="@+id/intro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="200px"
+        android:fontFamily="sans-serif"
+        android:text="Get Started"
+        android:textSize="15sp"
+        android:id="@+id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/intro"></Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

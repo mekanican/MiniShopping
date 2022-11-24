@@ -8,8 +8,10 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,6 +54,9 @@ public class Cart extends AppCompatActivity {
     ProductCartViewAdapter pcvAdapter;
     ListView productListView;
 
+    public static double VAT = 1.15; // 15%
+    public static int DEFAULT_SHIPPING_PRICE = 20000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +68,19 @@ public class Cart extends AppCompatActivity {
 
         // Setup productList
         productList = new ArrayList<>();
-        productList.add(new Product(this, 0, 100, "Iphone"));
-        productList.add(new Product(this, 1, 300, "Táo"));
-        productList.add(new Product(this, 2, 200, "Gà"));
-        productList.add(new Product(this, 3, 500, "Gạo"));
+        productList.add(new Product(this, 0, 1000, "Iphone"));
+        productList.add(new Product(this, 1, 3000, "Táo"));
+        productList.add(new Product(this, 2, 2000, "Gà"));
+        productList.add(new Product(this, 3, 5000, "Gạo"));
+        productList.add(new Product(this, 4, 5000, "a"));
+        productList.add(new Product(this, 5, 5000, "b"));
+        productList.add(new Product(this, 6, 5000, "c"));
+        productList.add(new Product(this, 7, 5000, "d"));
+        productList.add(new Product(this, 8, 5000, "e"));
+        productList.add(new Product(this, 9, 5000, "f"));
+        productList.add(new Product(this, 10, 5000, "g"));
+        productList.add(new Product(this, 11, 5000, "h"));
+        productList.add(new Product(this, 12, 5000, "i"));
 
 
         // Setup list view
@@ -74,16 +88,36 @@ public class Cart extends AppCompatActivity {
         productListView = findViewById(R.id.cart_lv);
         productListView.setAdapter(pcvAdapter);
 
-        setPriceByID(R.id.product_price, 0);
-        setPriceByID(R.id.shipping_price, 30000);
-        setPriceByID(R.id.total_price, 0);
+        resetValue();
 
+        // Handle deleteAll
+        ((Button) findViewById(R.id.delete_)).setOnClickListener(view -> {
+            productList.clear();
+            pcvAdapter.notifyDataSetChanged();
+            resetValue();
+        });
+
+
+        // Handle proceed
+        ((Button) findViewById(R.id.proceed_)).setOnClickListener(view -> {
+            Toast.makeText(this,
+                    String.format("Chúc mừng bạn đã tốn %d VND tiền ngu <(\")",
+                            (int) Math.round((totalProductsPrice(productList) + DEFAULT_SHIPPING_PRICE) * VAT)),
+                    Toast.LENGTH_LONG).show();
+        });
+
+    }
+
+    private void resetValue() {
+        setPriceByID(R.id.product_price, 0);
+        setPriceByID(R.id.shipping_price, DEFAULT_SHIPPING_PRICE);
+        setPriceByID(R.id.total_price, 0);
     }
 
     private void update() {
         int total = totalProductsPrice(productList);
         setPriceByID(R.id.product_price, total);
-        setPriceByID(R.id.total_price, (int) Math.round((total + 30000) * (1 + 0.15)));
+        setPriceByID(R.id.total_price, (int) Math.round((total + DEFAULT_SHIPPING_PRICE) * VAT));
     }
 
     // Back button -> Previous page

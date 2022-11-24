@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         // Button to switch activity (e.g. Cart activity)
         Button button = findViewById(R.id.button);
         button.setOnClickListener(view -> {
-            Intent intent = new Intent(this, Cart.class);
+            Intent intent = new Intent(this, Home.class);
             startActivity(intent);
         });
 

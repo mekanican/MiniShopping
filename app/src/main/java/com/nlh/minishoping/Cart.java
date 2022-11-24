@@ -17,14 +17,14 @@ import java.util.ArrayList;
 
 
 // Dummy class
-class Product {
+class ProductCart {
     public int ID;
     public int price;
     public String name;
     public Drawable image;
     public int numberOfItem;
 
-    public Product(Context context, int ID, int price, String name) {
+    public ProductCart(Context context, int ID, int price, String name) {
         this.ID = ID;
         this.price = price;
         this.name = name;
@@ -50,7 +50,7 @@ class Product {
 
 public class Cart extends AppCompatActivity {
 
-    ArrayList<Product> productList;
+    ArrayList<ProductCart> productList;
     ProductCartViewAdapter pcvAdapter;
     ListView productListView;
 
@@ -68,19 +68,19 @@ public class Cart extends AppCompatActivity {
 
         // Setup productList
         productList = new ArrayList<>();
-        productList.add(new Product(this, 0, 1000, "Iphone"));
-        productList.add(new Product(this, 1, 3000, "Táo"));
-        productList.add(new Product(this, 2, 2000, "Gà"));
-        productList.add(new Product(this, 3, 5000, "Gạo"));
-        productList.add(new Product(this, 4, 5000, "a"));
-        productList.add(new Product(this, 5, 5000, "b"));
-        productList.add(new Product(this, 6, 5000, "c"));
-        productList.add(new Product(this, 7, 5000, "d"));
-        productList.add(new Product(this, 8, 5000, "e"));
-        productList.add(new Product(this, 9, 5000, "f"));
-        productList.add(new Product(this, 10, 5000, "g"));
-        productList.add(new Product(this, 11, 5000, "h"));
-        productList.add(new Product(this, 12, 5000, "i"));
+        productList.add(new ProductCart(this, 0, 1000, "Iphone"));
+        productList.add(new ProductCart(this, 1, 3000, "Táo"));
+        productList.add(new ProductCart(this, 2, 2000, "Gà"));
+        productList.add(new ProductCart(this, 3, 5000, "Gạo"));
+        productList.add(new ProductCart(this, 4, 5000, "a"));
+        productList.add(new ProductCart(this, 5, 5000, "b"));
+        productList.add(new ProductCart(this, 6, 5000, "c"));
+        productList.add(new ProductCart(this, 7, 5000, "d"));
+        productList.add(new ProductCart(this, 8, 5000, "e"));
+        productList.add(new ProductCart(this, 9, 5000, "f"));
+        productList.add(new ProductCart(this, 10, 5000, "g"));
+        productList.add(new ProductCart(this, 11, 5000, "h"));
+        productList.add(new ProductCart(this, 12, 5000, "i"));
 
 
         // Setup list view
@@ -136,7 +136,7 @@ public class Cart extends AppCompatActivity {
     }
 
     // Hacky fp btw <(")
-    private int totalProductsPrice(ArrayList<Product> products) {
+    private int totalProductsPrice(ArrayList<ProductCart> products) {
         return products.stream()
                 .mapToInt(a -> a.total())
                 .sum();

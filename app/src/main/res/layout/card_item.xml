@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--https://www.geeksforgeeks.org/gridview-in-android-with-example/-->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
@@ -19,20 +19,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"
-            android:layout_weight="1">
-        </ImageView>
+            android:src="@mipmap/ic_launcher"></ImageView>
 
         <TextView
             android:id="@+id/tvProductName"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:text="@string/app_name"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textAlignment="center"
-            android:layout_weight="1">
-        </TextView>
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAlignment="center"></TextView>
 
         <TextView
             android:id="@+id/tvProductPrice"
@@ -41,9 +39,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textAlignment="center"
-            android:layout_weight="1">
-        </TextView>
+            android:textAlignment="center"></TextView>
 
     </LinearLayout>
 

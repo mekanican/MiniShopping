@@ -17,10 +17,10 @@ interface Callback {
 
 public class ProductCartViewAdapter extends BaseAdapter {
 
-    final ArrayList<Product> listProduct;
+    final ArrayList<ProductCart> listProduct;
     final Callback onChanged;
 
-    public ProductCartViewAdapter(ArrayList<Product> listProduct, Callback onChanged) {
+    public ProductCartViewAdapter(ArrayList<ProductCart> listProduct, Callback onChanged) {
         this.listProduct = listProduct;
         this.onChanged = onChanged;
     }
@@ -50,7 +50,7 @@ public class ProductCartViewAdapter extends BaseAdapter {
             productView = view;
         }
 
-        Product product = (Product) getItem(i);
+        ProductCart product = (ProductCart) getItem(i);
         // Modify each "item" in list from data of ith product.
         setTextByID(productView, R.id.id_, String.format("ID = %d", product.ID));
         setTextByID(productView, R.id.name_, String.format("%s", product.name));

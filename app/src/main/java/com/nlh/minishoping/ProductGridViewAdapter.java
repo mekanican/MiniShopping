@@ -34,14 +34,12 @@ public class ProductGridViewAdapter extends ArrayAdapter<HomeProduct> {
         TextView tvProductPrice = listItemView.findViewById(R.id.tvProductPrice);
 
         tvProductName.setText(product.getName());
-        ivProductImage.setImageDrawable(product.getImage());
+        product.getImagetoImageView(getContext(), ivProductImage);
+        // ivProductImage.setImageResource(R.drawable.hung);
         tvProductPrice.setText(product.getPrice() + " VND");
 
-        listItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        listItemView.setOnClickListener(view -> {
 
-            }
         });
 
         return listItemView;

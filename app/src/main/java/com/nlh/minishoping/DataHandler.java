@@ -29,7 +29,7 @@ public class DataHandler {
                 json += mLine;
             }
         } catch (IOException e) {
-            Log.d("meow", "GetProducts: " + e.getMessage());
+            // Log.d("meow", "GetProducts: " + e.getMessage());
         } finally {
             if (reader != null) {
                  try {
@@ -40,7 +40,7 @@ public class DataHandler {
             }
         }
 
-        Log.d("meow", "GetProducts: " + json);
+        // Log.d("meow", "GetProducts: " + json);
 
         try {
             JSONArray jsonArray = new JSONArray(json);

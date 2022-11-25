@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 // Dummy class
-class ProductCart {
+public class ProductCart {
     public int ID;
     public int price;
     public String name;

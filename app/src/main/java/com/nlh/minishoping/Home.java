@@ -21,7 +21,7 @@ public class Home extends AppCompatActivity {
 
         gvProductList = findViewById(R.id.grid_view_product_list);
 
-        List<Product> raw = DataHandler.GetProducts().subList(0, 5);
+        List<Product> raw = DataHandler.GetProducts().subList(0, 20); // 20 first item
         ArrayList<HomeProduct> homeProductArrayList = raw.stream()
                 .map(HomeProduct::new)
                 .collect(Collectors.toCollection(ArrayList::new));

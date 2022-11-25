@@ -50,7 +50,7 @@ public class DataHandler {
                     obj.getInt("id"),
                     obj.getString("name"),
                     obj.getString("image"),
-                    obj.getDouble("price")
+                    (int) Math.round(obj.getDouble("price"))
                 ));
             }
         } catch (JSONException e) {

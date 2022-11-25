@@ -2,7 +2,6 @@
 package com.nlh.minishoping;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +34,8 @@ public class ProductGridViewAdapter extends ArrayAdapter<HomeProduct> {
         TextView tvProductPrice = listItemView.findViewById(R.id.tvProductPrice);
 
         tvProductName.setText(product.getName());
-        ivProductImage.setImageResource(product.getImageId());
-        tvProductPrice.setText('$' + Integer.toString(product.getmPrice()));
+        ivProductImage.setImageDrawable(product.getImage());
+        tvProductPrice.setText(product.getPrice() + " VND");
 
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override

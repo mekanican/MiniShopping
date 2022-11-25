@@ -1,58 +1,34 @@
 package com.nlh.minishoping;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 
-import java.util.ArrayList;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    public static AssetManager assetManager;
-    // Hello Loc was here
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selected = null;
+            switch (item.getItemId()) {
+//                case R.id.home:
+//                    selected = new StoreFragment();
+//                    break;
+                default:
+                    selected = new StoreFragment();
+                    break;
+            }
 
-        assetManager = getAssets();
-
-        // Check getting data
-        ArrayList<Product> products = DataHandler.GetProducts();
-        Log.d("meow", "onCreate: " + products.size());
-        for (Product cur : products){
-            Log.d("Product", cur.name);
-        }
-
-        // Hide the "ActionBar" in this activity
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
-        // Manually Blurred background
-        ConstraintLayout constraintLayout = findViewById(R.id.init_page);
-        Bitmap image = BitmapFactory.decodeResource(getResources(),
-                R.drawable.background_init);
-        Bitmap background_blur = BlurBuilder.blur(this, image);
-        constraintLayout.setBackground(
-                new BitmapDrawable(getResources(), background_blur)
-        );
-        // Button to switch activity (e.g. Cart activity)
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(view -> {
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, selected)
+                    .commit();
+            return true;
         });
-
-
     }
 }

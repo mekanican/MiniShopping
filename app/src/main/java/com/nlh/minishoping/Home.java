@@ -44,8 +44,15 @@ public class Home extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HomeProduct product = (HomeProduct) gvProductList.getItemAtPosition(i);
                 String name = product.getName();
+                String price = Integer.toString(product.getPrice()) + " VND";
+                String imageLink = product.getImageLink();
 
                 Intent intent = new Intent(Home.this, ProductDetails.class);
+
+                intent.putExtra("name", name);
+                intent.putExtra("price", price);
+                intent.putExtra("link", imageLink);
+
                 startActivity(intent);
             }
         });

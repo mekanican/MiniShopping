@@ -91,6 +91,37 @@ public class ProductDetails extends AppCompatActivity {
             number = Integer.parseInt(spFavorite.getString("Number", null).toString());
         }
 
+        boolean isDuplicated = false;
+
+        // check if exists duplication
+        if (number > 0) {
+            for (int i = 1; i <= number; i++) {
+                String tempName = spFavorite.getString("Name " + Integer.toString(i), null).toString();
+                if (tempName != name) {
+                    continue;
+                }
+
+                String tempPrice = spFavorite.getString("Price " + Integer.toString(i), null).toString();
+                if (tempPrice != price) {
+                    continue;
+                }
+
+                String tempImageLink = spFavorite.getString("Image " + Integer.toString(i), null).toString();
+                if (tempImageLink != imageLink) {
+                    continue;
+                }
+
+                // if come to this, then 3 things equal
+                isDuplicated = true;
+                break;
+            }
+        }
+
+        // if duplicated, do nothing
+        if (isDuplicated) {
+            return;
+        }
+
         String nameKey = "Name " + Integer.toString(number + 1);
         String priceKey = "Price " + Integer.toString(number + 1);
         String imageKey = "Image " + Integer.toString(number + 1);

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Home">
-
+    tools:context=".StoreFragment">
 
     <LinearLayout
         android:id="@+id/linear_layout_header"
@@ -21,8 +20,7 @@
             android:hint="Enter the product's name"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            >
+            android:layout_marginRight="20dp">
 
         </EditText>
 
@@ -36,16 +34,14 @@
             android:layout_marginRight="20dp"
             android:onClick="productFindClicked" />
 
-
-        <ImageButton
-            android:id="@+id/btn_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            app:srcCompat="@drawable/ic_cart"
-            android:onClick="shoppingCartClicked"
-            android:layout_marginTop="10dp"
-            android:contentDescription="Shopping cart"
-            />
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/btn_cart"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            app:srcCompat="@drawable/ic_cart"-->
+        <!--            android:onClick="shoppingCartClicked"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            />-->
 
     </LinearLayout>
 
@@ -61,8 +57,7 @@
         android:layout_marginTop="10dp"
         android:horizontalSpacing="6dp"
         android:verticalSpacing="6dp"
-        android:scrollbars="vertical"
-        >
+        android:scrollbars="vertical">
 
     </GridView>
 

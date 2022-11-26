@@ -1,58 +1,55 @@
 package com.nlh.minishoping;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 
-import java.util.ArrayList;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    public static AssetManager assetManager;
-    // Hello Loc was here
+
+    Fragment currentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        assetManager = getAssets();
+        StoreFragment storeFragment = new StoreFragment();
+        CartFragment cartFragment = new CartFragment();
 
-        // Check getting data
-        ArrayList<Product> products = DataHandler.GetProducts();
-        Log.d("meow", "onCreate: " + products.size());
-        for (Product cur : products){
-            Log.d("Product", cur.name);
-        }
-
-        // Hide the "ActionBar" in this activity
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
-        // Manually Blurred background
-        ConstraintLayout constraintLayout = findViewById(R.id.init_page);
-        Bitmap image = BitmapFactory.decodeResource(getResources(),
-                R.drawable.background_init);
-        Bitmap background_blur = BlurBuilder.blur(this, image);
-        constraintLayout.setBackground(
-                new BitmapDrawable(getResources(), background_blur)
-        );
-        // Button to switch activity (e.g. Cart activity)
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(view -> {
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    getSupportFragmentManager().beginTransaction()
+                            .hide(currentFragment)
+                            .show(storeFragment)
+                            .commit();
+                    currentFragment = storeFragment;
+                    break;
+                case R.id.cart:
+                    getSupportFragmentManager().beginTransaction()
+                            .hide(currentFragment)
+                            .show(cartFragment)
+                            .commit();
+                    currentFragment = cartFragment;
+                    break;
+                default:
+                    return false;
+            }
+            return true;
         });
+        bottomNavigationView.setOnItemReselectedListener(item -> {
+        }); // disable reselect functional
 
-
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.fragment_container, storeFragment)
+                .add(R.id.fragment_container, cartFragment)
+                .hide(cartFragment)
+                .commit();
+        currentFragment = storeFragment;
     }
 }

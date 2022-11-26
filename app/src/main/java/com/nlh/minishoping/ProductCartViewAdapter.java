@@ -10,11 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-// For callback function
-interface Callback {
-    void call();
-}
-
 public class ProductCartViewAdapter extends BaseAdapter {
 
     final ArrayList<ProductCart> listProduct;
@@ -37,7 +32,7 @@ public class ProductCartViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return listProduct.get(i).ID;
+        return listProduct.get(i).getID();
     }
 
     @Override
@@ -52,11 +47,13 @@ public class ProductCartViewAdapter extends BaseAdapter {
 
         ProductCart product = (ProductCart) getItem(i);
         // Modify each "item" in list from data of ith product.
-        setTextByID(productView, R.id.id_, String.format("ID = %d", product.ID));
-        setTextByID(productView, R.id.name_, String.format("%s", product.name));
-        setTextByID(productView, R.id.price_, String.format("%d * %d VND", product.numberOfItem, product.price));
+        setTextByID(productView, R.id.id_, String.format("#%d", product.getID()));
+        setTextByID(productView, R.id.name_, String.format("%s", product.getName()));
+        setTextByID(productView, R.id.price_, String.format("%d * %d VND", product.getNumberOfItem(), product.getPrice()));
 
-        setImageByID(productView, R.id.image_, product.image);
+        // setImageByID(productView, R.id.image_, product.image);
+
+        product.getImageToImageView(productView.findViewById(R.id.image_));
 
         // Handle button U/D
         setHandleProduct(productView, this, R.id.up_cart, () -> product.addItem());
@@ -69,12 +66,8 @@ public class ProductCartViewAdapter extends BaseAdapter {
         ((TextView) view.findViewById(ID)).setText(text);
     }
 
-    private void setImageByID(View view, int ID, Drawable d) {
-        ((ImageView) view.findViewById(ID)).setImageDrawable(d);
-    }
-
     private void setHandleProduct(View view, BaseAdapter context, int ID, Callback b) {
-        ((Button) view.findViewById(ID)).setOnClickListener(view1 -> {
+        view.findViewById(ID).setOnClickListener(view1 -> {
             b.call();
             context.notifyDataSetChanged();
             onChanged.call();

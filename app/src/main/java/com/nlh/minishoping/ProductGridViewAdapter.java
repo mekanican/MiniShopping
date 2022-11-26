@@ -35,7 +35,7 @@ public class ProductGridViewAdapter extends ArrayAdapter<HomeProduct> {
         TextView tvProductPrice = listItemView.findViewById(R.id.tvProductPrice);
 
         tvProductName.setText(product.getName());
-        product.getImagetoImageView(getContext(), ivProductImage);
+        product.getImageToImageView(ivProductImage);
         // ivProductImage.setImageResource(R.drawable.hung);
         tvProductPrice.setText(product.getPrice() + " VND");
 

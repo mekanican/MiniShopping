@@ -4,35 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/background_init"
-    android:id="@+id/init_page">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintVertical_bias="0"
+        android:id="@+id/fragment_container"
+        android:orientation="vertical" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300px"
-        android:fontFamily="cursive"
-        android:text="Buy anything\n you desired!"
-        android:textAlignment="center"
-        android:textColor="#03A9F4"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        android:id="@+id/intro"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="200px"
-        android:fontFamily="sans-serif"
-        android:text="Get Started"
-        android:textSize="15sp"
-        android:id="@+id/button"
+        android:id="@+id/bottom_navigation"
+        app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/intro"></Button>
+        app:labelVisibilityMode="labeled" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    Fragment currentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,20 +21,20 @@ public class MainActivity extends AppCompatActivity {
         CartFragment cartFragment = new CartFragment();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selected = null;
             switch (item.getItemId()) {
                 case R.id.home:
-                    // selected = new StoreFragment();
                     getSupportFragmentManager().beginTransaction()
-                            .hide(cartFragment)
+                            .hide(currentFragment)
                             .show(storeFragment)
                             .commit();
+                    currentFragment = storeFragment;
                     break;
                 case R.id.cart:
                     getSupportFragmentManager().beginTransaction()
-                            .hide(storeFragment)
+                            .hide(currentFragment)
                             .show(cartFragment)
                             .commit();
+                    currentFragment = cartFragment;
                     break;
                 default:
                     return false;
@@ -48,5 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, cartFragment)
                 .hide(cartFragment)
                 .commit();
+        currentFragment = storeFragment;
     }
 }

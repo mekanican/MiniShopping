@@ -1,22 +1,30 @@
 package com.nlh.minishoping;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
 
-// Dummy class
+
 public class ProductCart {
-    public int ID;
-    public int price;
-    public String name;
-    public Drawable image;
-    public int numberOfItem;
+    private final HomeProduct wrapped;
+    private int numberOfItem;
 
-    public ProductCart(Context context, int ID, int price, String name) {
-        this.ID = ID;
-        this.price = price;
-        this.name = name;
-        this.image = context.getDrawable(R.drawable.icon);
-        this.numberOfItem = 0;
+    public ProductCart(HomeProduct homeProduct) {
+        wrapped = homeProduct;
+    }
+
+    public int getID() {
+        return wrapped.getId();
+    }
+
+    public String getName() {
+        return wrapped.getName();
+    }
+
+    public int getPrice() {
+        return wrapped.getPrice();
+    }
+
+    public void getImageToImageView(ImageView imageView) {
+        wrapped.getImageToImageView(imageView);
     }
 
     public void addItem() {
@@ -29,8 +37,12 @@ public class ProductCart {
         }
     }
 
+    public int getNumberOfItem() {
+        return numberOfItem;
+    }
+
     public int total() {
-        return numberOfItem * price;
+        return numberOfItem * wrapped.getPrice();
     }
 
 }

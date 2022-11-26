@@ -26,12 +26,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         assetManager = getAssets();
 
-        // Check getting data
-//        ArrayList<Product> products = DataHandler.GetProducts();
-//        Log.d("meow", "onCreate: " + products.size());
-//        for (Product cur : products){
-//            Log.d("Product", cur.name);
-//        }
+        // Init data before starting!
+        SharedInfo.getInstance().initData();
+        ArrayList<HomeProduct> t = SharedInfo.getInstance().getProductHome(); // For testing only!
+        for (int i = 0; i < 20; i += 2) {
+            SharedInfo.getInstance().addProductToCart(t.get(i));
+        }
 
         // Hide the "ActionBar" in this activity
         ActionBar actionBar = getSupportActionBar();
@@ -40,7 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
         // Manually Blurred background
         ConstraintLayout constraintLayout = findViewById(R.id.init_page);
         Bitmap image = BitmapFactory.decodeResource(getResources(),
-                R.drawable.background_init);
+                R.drawable.background);
         Bitmap background_blur = BlurBuilder.blur(this, image);
         constraintLayout.setBackground(
                 new BitmapDrawable(getResources(), background_blur)

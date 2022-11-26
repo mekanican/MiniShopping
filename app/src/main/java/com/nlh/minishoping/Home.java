@@ -21,17 +21,7 @@ public class Home extends AppCompatActivity {
 
         gvProductList = findViewById(R.id.grid_view_product_list);
 
-        List<Product> raw = DataHandler.GetProducts().subList(0, 20); // 20 first item
-        ArrayList<HomeProduct> homeProductArrayList = raw.stream()
-                .map(HomeProduct::new)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-//        homeProductArrayList.add(new HomeProduct("NMLT", "Nhap mon lap trinh", R.drawable.nmlt, 100));
-//        homeProductArrayList.add(new HomeProduct("KTLT", "Ky thuat lap trinh", R.drawable.ktlt, 100));
-//        homeProductArrayList.add(new HomeProduct("OOP", "Phuong phap lap trinh huong doi tuong", R.drawable.oop, 100));
-//        homeProductArrayList.add(new HomeProduct("MMT", "Mang may tinh", R.drawable.mmt, 100));
-//        homeProductArrayList.add(new HomeProduct("NVH", "Nguyen Van Hung", R.drawable.hung, 0));
-
+        ArrayList<HomeProduct> homeProductArrayList = SharedInfo.getInstance().getProductHome();
         ProductGridViewAdapter productGridViewAdapter = new ProductGridViewAdapter(this, homeProductArrayList);
         gvProductList.setAdapter(productGridViewAdapter);
     }

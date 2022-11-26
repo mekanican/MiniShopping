@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WelcomeActivity"
-    android:background="@drawable/background_init"
+    android:background="@drawable/background"
     android:id="@+id/init_page">
 
     <TextView
+        android:id="@+id/intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="300px"
         android:fontFamily="cursive"
         android:text="Buy anything\n you desired!"
         android:textAlignment="center"
-        android:textColor="#03A9F4"
+        android:textColor="#FFEB3B"
         android:textSize="60sp"
         android:textStyle="bold"
-        android:id="@+id/intro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

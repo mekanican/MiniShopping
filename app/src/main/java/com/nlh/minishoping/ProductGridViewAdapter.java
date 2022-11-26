@@ -2,6 +2,7 @@
 package com.nlh.minishoping;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,17 @@ public class ProductGridViewAdapter extends ArrayAdapter<HomeProduct> {
         // ivProductImage.setImageResource(R.drawable.hung);
         tvProductPrice.setText(product.getPrice() + " VND");
 
-        listItemView.setOnClickListener(view -> {
 
-        });
+//        listItemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
+//        listItemView.setOnClickListener(view -> {
+//
+//        });
 
         return listItemView;
     }

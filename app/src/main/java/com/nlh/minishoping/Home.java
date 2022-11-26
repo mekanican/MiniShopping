@@ -66,5 +66,9 @@ public class Home extends AppCompatActivity {
 
     }
 
+    public void favoriteListClicked(View view) {
+        Intent intent = new Intent(this, FavoriteList.class);
+        startActivity(intent);
+    }
 }
 

@@ -37,5 +37,7 @@ public class HomeProduct {
         return wrapped.price;
     }
 
+    public String getImageLink() { return wrapped.imageLink;}
+
     private final Product wrapped;
 }

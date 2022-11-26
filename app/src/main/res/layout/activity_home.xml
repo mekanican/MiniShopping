@@ -21,7 +21,8 @@
             android:hint="Enter the product's name"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            >
 
         </EditText>
 
@@ -42,6 +43,7 @@
             app:srcCompat="@drawable/ic_cart"
             android:onClick="shoppingCartClicked"
             android:layout_marginTop="10dp"
+            android:contentDescription="Shopping cart"
             />
 
     </LinearLayout>

@@ -15,8 +15,9 @@
 
         <EditText
             android:id="@+id/et_product_name"
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_weight="2"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="6dp"
             android:layout_marginRight="0dp"
@@ -29,6 +30,7 @@
             android:id="@+id/btn_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="7"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="6dp"
@@ -57,7 +59,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
+        android:verticalSpacing="15dp"
         android:scrollbars="vertical">
 
     </GridView>

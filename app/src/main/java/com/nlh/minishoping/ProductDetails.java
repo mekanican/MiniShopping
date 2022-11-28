@@ -138,4 +138,7 @@ public class ProductDetails extends AppCompatActivity {
         Log.i("Number", Integer.toString(number));
     }
 
+    public void onHotlineClicked(View view) {
+
+    }
 }

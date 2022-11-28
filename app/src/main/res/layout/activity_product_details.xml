@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProductDetails">
+    tools:context=".ProductDetails"
+    android:scrollbars="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +60,7 @@
             android:layout_width="364dp"
             android:layout_height="212dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/hung"
@@ -74,6 +75,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:gravity="center_horizontal"/>
 
         <TextView
@@ -81,6 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0 VND"
+            android:textSize="24dp"
+            android:textColor="#FF3333"
+            android:textStyle="bold"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -94,15 +100,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+<!--        <Button-->
+<!--            android:layout_width="44dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:layout_weight=""-->
+<!--            android:onClick="onContactClicked"-->
+<!--            android:text="Liên hệ" />-->
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:text="Liên hệ"
-            android:onClick="onContactClicked"/>
+            android:layout_weight="1"
+            android:onClick="onFavoriteClicked"
+            android:text="Yêu thích" />
 
         <Button
             android:layout_width="wrap_content"
@@ -114,14 +130,23 @@
             android:text="Thêm vào giỏ"
             android:onClick="onAddToCartClicked"/>
 
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:text="Mua ngay"
+            android:textSize="24dp"
             android:onClick="onInstantBuyClicked"/>
 
     </LinearLayout>
@@ -132,15 +157,16 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:text="Thêm vào mục yêu thích"
-            android:onClick="onFavoriteClicked"/>
-
+            android:text="Hotline"
+            android:textColor="@color/black"
+            android:backgroundTint="#FFFFFF"
+            android:onClick="onHotlineClicked"
+            />
 
     </LinearLayout>
 

@@ -1,12 +1,12 @@
 package com.nlh.minishoping;
 
 public class Product {
-    public int ID;
-    public String imageLink;
-    public String name;
-    public String category;
-    public String description;
-    public int price;
+    protected int ID;
+    protected String imageLink;
+    protected String name;
+    protected String category;
+    protected String description;
+    protected int price;
 
     Product(int ID, String imageLink, String name, String category, String description, int price) {
         this.ID = ID;

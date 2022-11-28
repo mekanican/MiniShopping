@@ -14,8 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
 
 
@@ -24,7 +22,6 @@ public class CartFragment extends Fragment {
     ArrayList<ProductCart> productList;
     ProductCartViewAdapter pcvAdapter;
     ListView productListView;
-    BottomNavigationView bottomNavigationView;
 
     public static double VAT = 1.15; // 15%
     public static int DEFAULT_SHIPPING_PRICE = 20000;
@@ -59,44 +56,30 @@ public class CartFragment extends Fragment {
         productListView = getActivity().findViewById(R.id.cart_lv);
         productListView.setAdapter(pcvAdapter);
 
-        bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
-        SharedInfo.getInstance().setCallbackUpdateCart(() -> {
-            int total = bottomNavigationView.getOrCreateBadge(R.id.cart).getNumber();
-            bottomNavigationView.getOrCreateBadge(R.id.cart).setNumber(total + 1);
-            pcvAdapter.notifyDataSetChanged();
-            update();
-        });
-
         resetValue();
 
         // Handle deleteAll
         ((Button) getActivity().findViewById(R.id.delete_)).setOnClickListener(view1 -> {
-            removeAll();
+            productList.clear();
+            pcvAdapter.notifyDataSetChanged();
+            resetValue();
         });
 
 
         // Handle proceed
         ((Button) getActivity().findViewById(R.id.proceed_)).setOnClickListener(view1 -> {
             Toast.makeText(getContext(),
-                    String.format("Chúc mừng bạn đã tốn %d VND, sản phẩm sẽ được giao trong nay mai :>",
+                    String.format("Chúc mừng bạn đã tốn %d VND tiền ngu <(\")",
                             (int) Math.round((totalProductsPrice(productList) + DEFAULT_SHIPPING_PRICE) * VAT)),
                     Toast.LENGTH_LONG).show();
-            removeAll();
         });
-    }
-
-    private void removeAll() {
-        productList.clear();
-        pcvAdapter.notifyDataSetChanged();
-        resetValue();
-        bottomNavigationView.removeBadge(R.id.cart);
     }
 
     private void setPriceByID(int ID, int price) {
         ((TextView) getActivity().findViewById(ID)).setText(String.format("%d VND", price));
     }
 
-
+    // Hacky fp btw <(")
     private int totalProductsPrice(ArrayList<ProductCart> products) {
         return products.stream()
                 .mapToInt(ProductCart::total)

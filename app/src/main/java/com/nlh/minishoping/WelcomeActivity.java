@@ -19,6 +19,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Init data before starting!
         SharedInfo.getInstance().initData();
+        ArrayList<HomeProduct> t = SharedInfo.getInstance().getProductHome(); // For testing only!
+        for (int i = 0; i < 20; i += 2) {
+            SharedInfo.getInstance().addProductToCart(t.get(i));
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

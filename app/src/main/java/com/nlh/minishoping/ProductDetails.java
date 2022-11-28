@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.internal.ContextUtils;
 import com.koushikdutta.ion.Ion;
@@ -25,9 +26,13 @@ public class ProductDetails extends AppCompatActivity {
     ImageView iv_product_image;
     TextView tv_product_name;
     TextView tv_product_price;
+    TextView tv_product_category;
+    TextView tv_product_description;
     String name;
     String price;
     String imageLink;
+    String category;
+    String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +43,21 @@ public class ProductDetails extends AppCompatActivity {
         iv_product_image = findViewById(R.id.iv_product_image_details);
         tv_product_name = findViewById(R.id.tv_product_name_details);
         tv_product_price = findViewById(R.id.tv_product_price_details);
+        tv_product_category = findViewById(R.id.tv_product_category_details);
+        tv_product_description = findViewById(R.id.tv_product_description_details);
 
         name = bundle.getString("name");
         price = bundle.getString("price");
         imageLink = bundle.getString("link");
+        category = bundle.getString("category");
+        description = bundle.getString("description");
+
 
         setupImageView(this, iv_product_image);
         tv_product_name.setText(name);
         tv_product_price.setText(price);
+        tv_product_category.setText(category);
+        tv_product_description.setText(description);
 
         //Log.i("name", name);
 
@@ -128,17 +140,41 @@ public class ProductDetails extends AppCompatActivity {
         String nameKey = "Name " + (number + 1);
         String priceKey = "Price " + (number + 1);
         String imageKey = "Image " + (number + 1);
+        String categoryKey = "Category " + (number + 1);
+        String descriptionKey = "Description " + (number + 1);
 
         boolean res;
+
         res = spFavorite.edit().putString(nameKey, name).commit();
+        if (!res) {
+            showFailNotification();
+        }
+
         res = spFavorite.edit().putString(priceKey, price).commit();
+        if (!res) {
+            showFailNotification();
+        }
+
         res = spFavorite.edit().putString(imageKey, imageLink).commit();
+        if (!res) {
+            showFailNotification();
+        }
+
+        res = spFavorite.edit().putString(categoryKey, category).commit();
+        if (!res) {
+            showFailNotification();
+        }
+
+        res =spFavorite.edit().putString(descriptionKey, description).commit();
+        if (!res) {
+            showFailNotification();
+        }
 
         number += 1;
         res = spFavorite.edit().putString("Number", Integer.toString(number)).commit();
-        Log.i("Result", Boolean.toString(res));
-        number = Integer.parseInt(spFavorite.getString("Number", null).toString());
-        Log.i("Number", Integer.toString(number));
+        if (!res) {
+            showFailNotification();
+        }
     }
 
     public void onAddToCartClicked(View view) {
@@ -151,5 +187,9 @@ public class ProductDetails extends AppCompatActivity {
 
     public void onHotlineClicked(View view) {
 
+    }
+
+    public void showFailNotification() {
+        Toast.makeText(this, "Fail to add this product to favorite list", Toast.LENGTH_LONG).show();
     }
 }

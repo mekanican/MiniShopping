@@ -28,6 +28,7 @@ public class ProductDetails extends AppCompatActivity {
     TextView tv_product_price;
     TextView tv_product_category;
     TextView tv_product_description;
+    int ID;
     String name;
     String price;
     String imageLink;
@@ -46,6 +47,7 @@ public class ProductDetails extends AppCompatActivity {
         tv_product_category = findViewById(R.id.tv_product_category_details);
         tv_product_description = findViewById(R.id.tv_product_description_details);
 
+        ID = bundle.getInt("ID");
         name = bundle.getString("name");
         price = bundle.getString("price");
         imageLink = bundle.getString("link");
@@ -178,7 +180,7 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     public void onAddToCartClicked(View view) {
-
+        SharedInfo.getInstance().addProductToCart(ID);
     }
 
     public void onInstantBuyClicked(View view) {

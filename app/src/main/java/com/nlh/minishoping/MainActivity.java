@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                             .show(favoriteListFragment)
                             .commit();
                     currentFragment = favoriteListFragment;
+                    break;
                 case R.id.map:
                     getSupportFragmentManager().beginTransaction()
                             .hide(currentFragment)

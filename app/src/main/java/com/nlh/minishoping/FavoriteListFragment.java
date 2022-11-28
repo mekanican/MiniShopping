@@ -60,6 +60,7 @@ public class FavoriteListFragment extends Fragment {
 
         Log.i("Function", "onViewCreated");
         spFavorite = this.requireActivity().getSharedPreferences("FAVORITE" , Context.MODE_PRIVATE);
+        tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
         number = 0;
         if (!spFavorite.contains("Number")) {
             tvNoFavoriteItem.setVisibility(View.VISIBLE);
@@ -67,7 +68,6 @@ public class FavoriteListFragment extends Fragment {
             number = Integer.parseInt(spFavorite.getString("Number", null).toString());
         }
 
-        tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
 
         gvFavoriteList = getActivity().findViewById(R.id.grid_view_favorite_list_fragment);
 

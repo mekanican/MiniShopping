@@ -34,5 +34,9 @@ public class HomeProduct {
 
     public String getImageLink() { return wrapped.imageLink;}
 
+    public String getCategory() { return wrapped.category;}
+
+    public String getDescription() {return wrapped.description;}
+
     private final Product wrapped;
 }

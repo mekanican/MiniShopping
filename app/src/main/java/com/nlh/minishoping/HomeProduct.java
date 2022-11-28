@@ -36,7 +36,7 @@ public class HomeProduct {
 
     public String getCategory() { return wrapped.category;}
 
-    public String getDescription() {return wrapped.description;}
+    public String getDescription() { return wrapped.description;}
 
     private final Product wrapped;
 }

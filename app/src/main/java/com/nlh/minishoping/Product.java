@@ -16,4 +16,8 @@ public class Product {
         this.description = description;
         this.price = price;
     }
+
+    String getCategory() {
+        return category;
+    }
 }

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                             .show(favoriteListFragment)
                             .commit();
                     currentFragment = favoriteListFragment;
+                    break;
                 case R.id.map:
                     getSupportFragmentManager().beginTransaction()
                             .hide(currentFragment)
@@ -66,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, favoriteListFragment)
                 .add(R.id.fragment_container, mapsFragment)
                 .hide(cartFragment)
+                .hide(favoriteListFragment)
+                .hide(mapsFragment)
                 .commit();
         currentFragment = storeFragment;
+        bottomNavigationView.getOrCreateBadge(R.id.cart);
     }
 }

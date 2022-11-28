@@ -60,14 +60,17 @@ public class FavoriteListFragment extends Fragment {
 
         Log.i("Function", "onViewCreated");
         spFavorite = this.requireActivity().getSharedPreferences("FAVORITE" , Context.MODE_PRIVATE);
+        tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
+
         number = 0;
+        tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
+
+        gvFavoriteList = getActivity().findViewById(R.id.grid_view_favorite_list_fragment);
         if (!spFavorite.contains("Number")) {
             tvNoFavoriteItem.setVisibility(View.VISIBLE);
         } else {
             number = Integer.parseInt(spFavorite.getString("Number", null).toString());
         }
-
-        tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
 
         gvFavoriteList = getActivity().findViewById(R.id.grid_view_favorite_list_fragment);
 
@@ -84,18 +87,22 @@ public class FavoriteListFragment extends Fragment {
         String name;
         String price;
         String imageLink;
+        String category;
+        String description;
 
         for (int i = 1; i <= number; i++) {
-            name = spFavorite.getString("Name " + Integer.toString(i), null).toString();
-            price = spFavorite.getString("Price " + Integer.toString(i), null).toString();
-            imageLink = spFavorite.getString("Image " + Integer.toString(i), null).toString();
+            name = spFavorite.getString("Name " + Integer.toString(i), null);
+            price = spFavorite.getString("Price " + Integer.toString(i), null);
+            imageLink = spFavorite.getString("Image " + Integer.toString(i), null);
+            category = spFavorite.getString("Category " + Integer.toString(i), null);
+            description = spFavorite.getString("Description " + Integer.toString(i), null);
 
             String priceWithoutSuffix = "";
             for (int j = 0; j < price.length() - 4; j++) {
                 priceWithoutSuffix += price.charAt(j);
             }
 
-            Product p = new Product(i, name, imageLink, Integer.parseInt(priceWithoutSuffix));
+            Product p = new Product(i, imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
             HomeProduct hp = new HomeProduct(p);
 
             favoriteList.add(hp);
@@ -109,12 +116,16 @@ public class FavoriteListFragment extends Fragment {
                 String productName = product.getName();
                 String productPrice = Integer.toString(product.getPrice()) + " VND";
                 String productImageLink = product.getImageLink();
+                String category = product.getCategory();
+                String description = product.getDescription();
 
                 Intent intent = new Intent(getContext(), ProductDetails.class);
 
                 intent.putExtra("name", productName);
                 intent.putExtra("price", productPrice);
                 intent.putExtra("link", productImageLink);
+                intent.putExtra("category", category);
+                intent.putExtra("description", description);
 
                 startActivity(intent);
             }

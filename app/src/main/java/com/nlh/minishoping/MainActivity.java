@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, favoriteListFragment)
                 .add(R.id.fragment_container, mapsFragment)
                 .hide(cartFragment)
+                .hide(favoriteListFragment)
+                .hide(mapsFragment)
                 .commit();
         currentFragment = storeFragment;
     }

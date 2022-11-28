@@ -9,30 +9,31 @@
 
     <LinearLayout
         android:id="@+id/linear_layout_header"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_product_name"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="60dp"
-            android:hint="Enter the product's name"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="0dp"
+            android:baselineAligned="false"
+            android:hint="Enter the product's name">
 
         </EditText>
 
         <Button
             android:id="@+id/btn_search"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Find"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:onClick="productFindClicked" />
+            android:layout_marginRight="6dp"
+            android:onClick="productFindClicked"
+            android:text="Find" />
 
         <!--        <ImageButton-->
         <!--            android:id="@+id/btn_cart"-->
@@ -51,12 +52,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:numColumns="3"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:numColumns="2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:horizontalSpacing="6dp"
-        android:verticalSpacing="6dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
         android:scrollbars="vertical">
 
     </GridView>

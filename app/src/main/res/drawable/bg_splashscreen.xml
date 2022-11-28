@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- https://yellowcodebooks.com/2017/02/20/ung-dung-android-cau-chuyen-splash-screen/#Splash_Screen_Theo_Kieu_Thong_Thuong -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/black" />
+    <item
+        android:drawable="@drawable/logo_background"
+        android:gravity="center" />
+</layer-list>

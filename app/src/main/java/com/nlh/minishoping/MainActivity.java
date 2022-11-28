@@ -71,5 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 .hide(mapsFragment)
                 .commit();
         currentFragment = storeFragment;
+        bottomNavigationView.getOrCreateBadge(R.id.cart);
     }
 }

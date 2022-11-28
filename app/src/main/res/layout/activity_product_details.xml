@@ -11,47 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <EditText
-        android:id="@+id/et_product_name_details"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:hint="Enter the product's name"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:visibility="invisible"
-        >
-
-        </EditText>
-
-        <Button
-            android:id="@+id/btn_search_details"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:text="Find"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:onClick="productFindClicked"
-            android:visibility="invisible"/>
-
-        <ImageButton
-            android:id="@+id/btn_cart_details"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            app:srcCompat="@drawable/ic_cart"
-            android:onClick="shoppingCartDetailsClicked"
-            android:layout_marginTop="10dp"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
 
@@ -100,16 +59,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-<!--        <Button-->
-<!--            android:layout_width="44dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginRight="20dp"-->
-<!--            android:layout_weight=""-->
-<!--            android:onClick="onContactClicked"-->
-<!--            android:text="Liên hệ" />-->
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -129,8 +78,6 @@
             android:layout_marginRight="20dp"
             android:text="Thêm vào giỏ"
             android:onClick="onAddToCartClicked"/>
-
-
 
     </LinearLayout>
 

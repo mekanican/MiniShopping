@@ -1,5 +1,6 @@
 package com.nlh.minishoping;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -46,6 +47,10 @@ public class ProductDetails extends AppCompatActivity {
 
         //Log.i("name", name);
 
+        // 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
     public void setupImageView(Context c, ImageView iv) {
@@ -58,22 +63,6 @@ public class ProductDetails extends AppCompatActivity {
                 .error(R.drawable.icon)
                 .animateLoad(R.anim.loading)
                 .intoImageView(iv);
-    }
-
-    public void shoppingCartDetailsClicked(View view) {
-
-    }
-
-    public void onContactClicked(View view) {
-
-    }
-
-    public void onAddToCartClicked(View view) {
-
-    }
-
-    public void onInstantBuyClicked(View view) {
-
     }
 
     // https://developer.android.com/training/data-storage/shared-preferences?hl=en
@@ -136,6 +125,14 @@ public class ProductDetails extends AppCompatActivity {
         Log.i("Result", Boolean.toString(res));
         number = Integer.parseInt(spFavorite.getString("Number", null).toString());
         Log.i("Number", Integer.toString(number));
+    }
+
+    public void onAddToCartClicked(View view) {
+
+    }
+
+    public void onInstantBuyClicked(View view) {
+
     }
 
     public void onHotlineClicked(View view) {

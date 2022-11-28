@@ -1,8 +1,5 @@
 package com.nlh.minishoping;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.koushikdutta.ion.Ion;
@@ -21,16 +18,14 @@ public class HomeProduct {
         return wrapped.name;
     }
 
-    public void getImagetoImageView(Context c, ImageView iv) {
-        Log.d("meow", "GetProducts: " + wrapped.imageLink);
-        Ion.getDefault(c).getConscryptMiddleware().enable(false);
-        Ion.with(c)
-                .load(wrapped.imageLink)
-                .withBitmap()
+    public void getImageToImageView(ImageView iv) {
+        // Log.d("meow", "GetProducts: " + wrapped.imageLink);
+        // Ion.getDefault(c).getConscryptMiddleware().enable(false);
+        Ion.with(iv)
                 .placeholder(R.drawable.hung)
                 .error(R.drawable.icon)
                 .animateLoad(R.anim.loading)
-                .intoImageView(iv);
+                .load(wrapped.imageLink);
     }
 
     public int getPrice() {

@@ -1,11 +1,6 @@
 package com.nlh.minishoping;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.util.Log;
-
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
@@ -22,7 +17,7 @@ public class DataHandler {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
-                new InputStreamReader(MainActivity.assetManager.open("data.json"), "UTF-8"));
+                    new InputStreamReader(WelcomeActivity.assetManager.open("data.json"), "UTF-8"));
         
             String mLine;
             while ((mLine = reader.readLine()) != null) {

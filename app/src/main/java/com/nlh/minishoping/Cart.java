@@ -36,21 +36,6 @@ public class Cart extends AppCompatActivity {
 
         // Setup productList
         productList = new ArrayList<>();
-        productList.add(new ProductCart(this, 0, 1000, "Iphone"));
-        productList.add(new ProductCart(this, 1, 3000, "Táo"));
-        productList.add(new ProductCart(this, 2, 2000, "Gà"));
-        productList.add(new ProductCart(this, 3, 5000, "Gạo"));
-        productList.add(new ProductCart(this, 4, 5000, "a"));
-        productList.add(new ProductCart(this, 5, 5000, "b"));
-        productList.add(new ProductCart(this, 6, 5000, "c"));
-        productList.add(new ProductCart(this, 7, 5000, "d"));
-        productList.add(new ProductCart(this, 8, 5000, "e"));
-        productList.add(new ProductCart(this, 9, 5000, "f"));
-        productList.add(new ProductCart(this, 10, 5000, "g"));
-        productList.add(new ProductCart(this, 11, 5000, "h"));
-        productList.add(new ProductCart(this, 12, 5000, "i"));
-
-
         // Setup list view
         pcvAdapter = new ProductCartViewAdapter(productList, () -> update());
         productListView = findViewById(R.id.cart_lv);

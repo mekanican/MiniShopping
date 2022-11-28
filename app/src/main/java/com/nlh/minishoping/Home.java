@@ -36,12 +36,16 @@ public class Home extends AppCompatActivity {
                 String name = product.getName();
                 String price = Integer.toString(product.getPrice()) + " VND";
                 String imageLink = product.getImageLink();
+                String category = product.getCategory();
+                String description = product.getDescription();
 
                 Intent intent = new Intent(Home.this, ProductDetails.class);
 
                 intent.putExtra("name", name);
                 intent.putExtra("price", price);
                 intent.putExtra("link", imageLink);
+                intent.putExtra("category", category);
+                intent.putExtra("description", description);
 
                 startActivity(intent);
             }

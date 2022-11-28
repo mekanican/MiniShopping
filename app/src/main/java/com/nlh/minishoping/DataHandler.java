@@ -59,10 +59,10 @@ public class DataHandler {
         }
 
         for (Product p : ret) {
-            if (!categoryMap.containsKey(p.category)) {
-                categoryMap.put(p.category, new ArrayList<Product>());
+            if (!categoryMap.containsKey(p.getCategory())) {
+                categoryMap.put(p.getCategory(), new ArrayList<Product>());
             }
-            categoryMap.get(p.category).add(p);
+            categoryMap.get(p.getCategory()).add(p);
         }
         return ret;
     }
@@ -70,7 +70,7 @@ public class DataHandler {
     public static ArrayList<Product> GetRecommendProducts(Product cur, int num){
         ArrayList<Product> ret = new ArrayList<Product>();
         int cnt = 0;
-        for (Product p : categoryMap.get(cur.category)) {
+        for (Product p : categoryMap.get(cur.getCategory())) {
             ret.add(p);
             cnt++;
             if (cnt >= num) break;

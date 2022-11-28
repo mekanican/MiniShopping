@@ -49,18 +49,22 @@ public class FavoriteList extends AppCompatActivity {
         String name;
         String price;
         String imageLink;
+        String category;
+        String description;
 
         for (int i = 1; i <= number; i++) {
-            name = spFavorite.getString("Name " + Integer.toString(i), null).toString();
-            price = spFavorite.getString("Price " + Integer.toString(i), null).toString();
-            imageLink = spFavorite.getString("Image " + Integer.toString(i), null).toString();
+            name = spFavorite.getString("Name " + Integer.toString(i), null);
+            price = spFavorite.getString("Price " + Integer.toString(i), null);
+            imageLink = spFavorite.getString("Image " + Integer.toString(i), null);
+            category = spFavorite.getString("Category " + Integer.toString(i), null);
+            description = spFavorite.getString("Description " + Integer.toString(i), null);
 
             String priceWithoutSuffix = "";
             for (int j = 0; j < price.length() - 4; j++) {
                 priceWithoutSuffix += price.charAt(j);
             }
 
-            Product p = new Product(i, name, imageLink, Integer.parseInt(priceWithoutSuffix));
+            Product p = new Product(i, imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
             HomeProduct hp = new HomeProduct(p);
 
             favoriteList.add(hp);

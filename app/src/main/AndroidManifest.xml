@@ -16,19 +16,14 @@
         android:theme="@style/Theme.MiniShoping"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
             android:name=".FavoriteList"
             android:exported="false">
             <meta-data
-                android:name="android.app.lib_name"
+                android:name="android.app.lib_na`me"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ProductDetails"
-=======
             android:name=".MainActivity"
-
->>>>>>> 2ddd1654d00f9d58e12e511e80d2a9043e12fa8f
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

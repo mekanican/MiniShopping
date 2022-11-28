@@ -84,14 +84,14 @@ public class ProductDetails extends AppCompatActivity {
     public void onFavoriteClicked(View view) {
         //Context context = getActivity
         SharedPreferences spFavorite = this.getSharedPreferences(
-               "FAVORITE" , Context.MODE_PRIVATE);
+                "FAVORITE", Context.MODE_PRIVATE);
 
         Integer number;
         if (!spFavorite.contains("Number")) {
             boolean res = spFavorite.edit().putString("Number", "0").commit();
             number = 0;
         } else {
-            number = Integer.parseInt(spFavorite.getString("Number", null).toString());
+            number = Integer.parseInt(spFavorite.getString("Number", null));
         }
 
         boolean isDuplicated = false;
@@ -99,18 +99,18 @@ public class ProductDetails extends AppCompatActivity {
         // check if exists duplication
         if (number > 0) {
             for (int i = 1; i <= number; i++) {
-                String tempName = spFavorite.getString("Name " + Integer.toString(i), null).toString();
-                if (tempName != name) {
+                String tempName = spFavorite.getString("Name " + i, null);
+                if (!tempName.equals(name)) {
                     continue;
                 }
 
-                String tempPrice = spFavorite.getString("Price " + Integer.toString(i), null).toString();
-                if (tempPrice != price) {
+                String tempPrice = spFavorite.getString("Price " + i, null);
+                if (!tempPrice.equals(price)) {
                     continue;
                 }
 
-                String tempImageLink = spFavorite.getString("Image " + Integer.toString(i), null).toString();
-                if (tempImageLink != imageLink) {
+                String tempImageLink = spFavorite.getString("Image " + i, null);
+                if (!tempImageLink.equals(imageLink)) {
                     continue;
                 }
 
@@ -125,9 +125,9 @@ public class ProductDetails extends AppCompatActivity {
             return;
         }
 
-        String nameKey = "Name " + Integer.toString(number + 1);
-        String priceKey = "Price " + Integer.toString(number + 1);
-        String imageKey = "Image " + Integer.toString(number + 1);
+        String nameKey = "Name " + (number + 1);
+        String priceKey = "Price " + (number + 1);
+        String imageKey = "Image " + (number + 1);
 
         boolean res;
         res = spFavorite.edit().putString(nameKey, name).commit();

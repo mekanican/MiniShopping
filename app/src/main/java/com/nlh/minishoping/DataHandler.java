@@ -6,9 +6,13 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.json.*;
 
 public class DataHandler {
+    private static HashMap<String, ArrayList<Product>> categoryMap = new HashMap<>();
+
     public static ArrayList<Product> GetProducts() {
         Path currentRelativePath = Paths.get("");
         ArrayList<Product> ret = new ArrayList<Product>();
@@ -43,13 +47,33 @@ public class DataHandler {
                 JSONObject obj = jsonArray.getJSONObject(i);
                 ret.add(new Product(
                     obj.getInt("id"),
-                    obj.getString("name"),
                     obj.getString("image"),
-                    (int) Math.round(obj.getDouble("price"))
+                    obj.getString("name"),
+                    obj.getString("category"),
+                    obj.getString("description"),
+                    obj.getInt("price")
                 ));
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+
+        for (Product p : ret) {
+            if (!categoryMap.containsKey(p.category)) {
+                categoryMap.put(p.category, new ArrayList<Product>());
+            }
+            categoryMap.get(p.category).add(p);
+        }
+        return ret;
+    }
+
+    public static ArrayList<Product> GetRecommendProducts(Product cur, int num){
+        ArrayList<Product> ret = new ArrayList<Product>();
+        int cnt = 0;
+        for (Product p : categoryMap.get(cur.category)) {
+            ret.add(p);
+            cnt++;
+            if (cnt >= num) break;
         }
         return ret;
     }

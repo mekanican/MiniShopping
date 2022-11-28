@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         StoreFragment storeFragment = new StoreFragment();
         CartFragment cartFragment = new CartFragment();
         FavoriteListFragment favoriteListFragment = new FavoriteListFragment();
+        MapsFragment mapsFragment = new MapsFragment();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -43,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
                             .show(favoriteListFragment)
                             .commit();
                     currentFragment = favoriteListFragment;
+                case R.id.map:
+                    getSupportFragmentManager().beginTransaction()
+                            .hide(currentFragment)
+                            .show(mapsFragment)
+                            .commit();
+                    currentFragment = mapsFragment;
                     break;
                 default:
                     return false;
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, storeFragment)
                 .add(R.id.fragment_container, cartFragment)
                 .add(R.id.fragment_container, favoriteListFragment)
+                .add(R.id.fragment_container, mapsFragment)
                 .hide(cartFragment)
                 .commit();
         currentFragment = storeFragment;

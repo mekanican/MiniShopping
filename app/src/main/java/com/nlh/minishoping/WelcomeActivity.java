@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class WelcomeActivity extends AppCompatActivity {
     public static AssetManager assetManager;
 
-    // Hello Loc was here
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

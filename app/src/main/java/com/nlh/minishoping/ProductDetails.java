@@ -1,5 +1,7 @@
 package com.nlh.minishoping;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +49,22 @@ public class ProductDetails extends AppCompatActivity {
 
         //Log.i("name", name);
 
+        // https://www.geeksforgeeks.org/how-to-add-and-customize-back-button-of-action-bar-in-android/
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setupImageView(Context c, ImageView iv) {
@@ -58,22 +77,6 @@ public class ProductDetails extends AppCompatActivity {
                 .error(R.drawable.icon)
                 .animateLoad(R.anim.loading)
                 .intoImageView(iv);
-    }
-
-    public void shoppingCartDetailsClicked(View view) {
-
-    }
-
-    public void onContactClicked(View view) {
-
-    }
-
-    public void onAddToCartClicked(View view) {
-
-    }
-
-    public void onInstantBuyClicked(View view) {
-
     }
 
     // https://developer.android.com/training/data-storage/shared-preferences?hl=en
@@ -138,4 +141,15 @@ public class ProductDetails extends AppCompatActivity {
         Log.i("Number", Integer.toString(number));
     }
 
+    public void onAddToCartClicked(View view) {
+
+    }
+
+    public void onInstantBuyClicked(View view) {
+
+    }
+
+    public void onHotlineClicked(View view) {
+
+    }
 }

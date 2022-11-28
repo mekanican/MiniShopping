@@ -1,5 +1,6 @@
 package com.nlh.minishoping;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -47,5 +49,23 @@ public class StoreFragment extends Fragment {
         gvProductList = getActivity().findViewById(R.id.grid_view_product_list);
         ProductGridViewAdapter productGridViewAdapter = new ProductGridViewAdapter(getContext(), homeProductArrayList);
         gvProductList.setAdapter(productGridViewAdapter);
+        gvProductList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HomeProduct product = (HomeProduct) gvProductList.getItemAtPosition(i);
+
+                String name = product.getName();
+                String price = Integer.toString(product.getPrice()) + " VND";
+                String imageLink = product.getImageLink();
+
+                Intent intent = new Intent(getContext(), ProductDetails.class);
+
+                intent.putExtra("name", name);
+                intent.putExtra("price", price);
+                intent.putExtra("link", imageLink);
+
+                startActivity(intent);
+            }
+        });
     }
 }

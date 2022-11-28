@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             app:srcCompat="@drawable/ic_cart"
-            android:onClick="shoppingCartClicked"
+            android:onClick="shoppingCartDetailsClicked"
             android:layout_marginTop="10dp"
             />
 
@@ -123,6 +123,24 @@
             android:layout_marginRight="20dp"
             android:text="Mua ngay"
             android:onClick="onInstantBuyClicked"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:text="Thêm vào mục yêu thích"
+            android:onClick="onFavoriteClicked"/>
+
 
     </LinearLayout>
 

@@ -9,6 +9,7 @@ public class ProductCart {
 
     public ProductCart(HomeProduct homeProduct) {
         wrapped = homeProduct;
+        numberOfItem = 1;
     }
 
     public int getID() {

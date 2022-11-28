@@ -61,7 +61,7 @@ public class StoreFragment extends Fragment {
                 String description = product.getDescription();
 
                 Intent intent = new Intent(getContext(), ProductDetails.class);
-
+                intent.putExtra("ID", product.getId());
                 intent.putExtra("name", name);
                 intent.putExtra("price", price);
                 intent.putExtra("link", imageLink);

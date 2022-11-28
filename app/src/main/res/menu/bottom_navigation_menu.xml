@@ -11,6 +11,11 @@
         android:icon="@drawable/shopping_cart_icon"
         android:title="Cart" />
     <item
+        android:id="@+id/favorite"
+        android:enabled="true"
+        android:icon="@drawable/favorite_icon"
+        android:title="Favorite"/>
+    <item
         android:id="@+id/map"
         android:enabled="true"
         android:icon="@drawable/map_icon"

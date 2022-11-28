@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         StoreFragment storeFragment = new StoreFragment();
         CartFragment cartFragment = new CartFragment();
+        FavoriteListFragment favoriteListFragment = new FavoriteListFragment();
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -36,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                     currentFragment = cartFragment;
                     break;
+                case R.id.favorite:
+                    getSupportFragmentManager().beginTransaction()
+                            .hide(currentFragment)
+                            .show(favoriteListFragment)
+                            .commit();
+                    currentFragment = favoriteListFragment;
+                    break;
                 default:
                     return false;
             }
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .add(R.id.fragment_container, storeFragment)
                 .add(R.id.fragment_container, cartFragment)
+                .add(R.id.fragment_container, favoriteListFragment)
                 .hide(cartFragment)
                 .commit();
         currentFragment = storeFragment;

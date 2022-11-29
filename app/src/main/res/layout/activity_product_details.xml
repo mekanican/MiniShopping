@@ -102,7 +102,7 @@
                 android:scrollbars="vertical"
                 android:text="A useless guy"
                 android:textAlignment="textStart" />
-            <GridView
+            <com.example.ExpandableHeightGridView
                 android:id="@+id/grid_view_recommendation_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -113,8 +113,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:horizontalSpacing="10dp"
-                android:verticalSpacing="15dp"
-                android:scrollbars="vertical"/>
+                android:verticalSpacing="15dp"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

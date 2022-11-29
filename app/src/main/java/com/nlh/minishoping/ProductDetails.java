@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ExpandableHeightGridView;
 import com.google.android.material.internal.ContextUtils;
 import com.koushikdutta.ion.Ion;
 
@@ -33,7 +34,7 @@ public class ProductDetails extends AppCompatActivity {
     TextView tv_product_price;
     TextView tv_product_category;
     TextView tv_product_description;
-    GridView gv_recommendation_list;
+    ExpandableHeightGridView gv_recommendation_list;
     
     int ID;
     String name;
@@ -56,6 +57,7 @@ public class ProductDetails extends AppCompatActivity {
         tv_product_category = findViewById(R.id.tv_product_category_details);
         tv_product_description = findViewById(R.id.tv_product_description_details);
         gv_recommendation_list = findViewById(R.id.grid_view_recommendation_list);
+        gv_recommendation_list.setExpanded(true);
 
         ID = bundle.getInt("ID");
         name = bundle.getString("name");

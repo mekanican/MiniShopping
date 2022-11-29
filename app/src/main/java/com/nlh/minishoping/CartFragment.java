@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -93,7 +94,8 @@ public class CartFragment extends Fragment {
     }
 
     private void setPriceByID(int ID, int price) {
-        ((TextView) getActivity().findViewById(ID)).setText(String.format("%d VND", price));
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        ((TextView) getActivity().findViewById(ID)).setText(formatter.format(price) + " VND");
     }
 
 

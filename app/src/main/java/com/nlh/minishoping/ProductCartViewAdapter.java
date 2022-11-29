@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class ProductCartViewAdapter extends BaseAdapter {
@@ -47,9 +49,11 @@ public class ProductCartViewAdapter extends BaseAdapter {
 
         ProductCart product = (ProductCart) getItem(i);
         // Modify each "item" in list from data of ith product.
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
         setTextByID(productView, R.id.id_, String.format("#%d", product.getID()));
-        setTextByID(productView, R.id.name_, String.format("%s", product.getName()));
-        setTextByID(productView, R.id.price_, String.format("%d * %d VND", product.getNumberOfItem(), product.getPrice()));
+        setTextByID(productView, R.id.name_, product.getName());
+        setTextByID(productView, R.id.price_, String.format("%d * %s VND", product.getNumberOfItem(),
+                formatter.format(product.getPrice())));
 
         // setImageByID(productView, R.id.image_, product.image);
 

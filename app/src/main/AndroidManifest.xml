@@ -32,28 +32,23 @@
             android:value="AIzaSyCoqYixbU6WIaQwtGqKcMSmHnagYpDHrVg" />
 
         <activity
-            android:name=".FavoriteList"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_na`me"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".MainActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ProductDetails"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".WelcomeActivity"

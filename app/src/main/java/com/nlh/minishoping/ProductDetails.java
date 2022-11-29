@@ -194,7 +194,13 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     public void onAddToCartClicked(View view) {
-        SharedInfo.getInstance().addProductToCart(ID);
+        boolean success = SharedInfo.getInstance().addProductToCart(ID);
+
+        if (success) {
+            Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Sản phẩm có trong giỏ hàng!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onInstantBuyClicked(View view) {

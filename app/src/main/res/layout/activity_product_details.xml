@@ -102,6 +102,19 @@
                 android:scrollbars="vertical"
                 android:text="A useless guy"
                 android:textAlignment="textStart" />
+
+            <TextView
+                android:id="@+id/tv_recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:scrollbars="vertical"
+                android:text="Sản phẩm tương tự"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAlignment="textStart" />
             <com.example.ExpandableHeightGridView
                 android:id="@+id/grid_view_recommendation_list"
                 android:layout_width="match_parent"

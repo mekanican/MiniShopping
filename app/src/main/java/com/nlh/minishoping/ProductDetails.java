@@ -51,29 +51,12 @@ public class ProductDetails extends AppCompatActivity {
         setContentView(R.layout.activity_product_details);
         intent = getIntent();
         bundle = intent.getExtras();
-        iv_product_image = findViewById(R.id.iv_product_image_details);
-        tv_product_name = findViewById(R.id.tv_product_name_details);
-        tv_product_price = findViewById(R.id.tv_product_price_details);
-        tv_product_category = findViewById(R.id.tv_product_category_details);
-        tv_product_description = findViewById(R.id.tv_product_description_details);
-        gv_recommendation_list = findViewById(R.id.grid_view_recommendation_list);
-        gv_recommendation_list.setExpanded(true);
 
-        ID = bundle.getInt("ID");
-        name = bundle.getString("name");
-        price = bundle.getString("price");
-        imageLink = bundle.getString("link");
-        category = bundle.getString("category");
-        description = bundle.getString("description");
+        setupViewsOnCreate();
 
+        getDataFromPreviousActivity();
 
-        setupImageView(this, iv_product_image);
-        tv_product_name.setText(name);
-        tv_product_price.setText(price);
-        tv_product_category.setText(category);
-        tv_product_description.setText(description);
-
-        //Log.i("name", name);
+        setupViewsToDisplay();
 
         // https://www.geeksforgeeks.org/how-to-add-and-customize-back-button-of-action-bar-in-android/
         // calling the action bar
@@ -82,69 +65,40 @@ public class ProductDetails extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         setupGridViewRecommendationsList();
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
-                this.finish();
+                // finishAfterTransition();
+                // this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void setupImageView(Context c, ImageView iv) {
-        //Log.d("meow", "GetProducts: " + imageLink);
-        Ion.getDefault(c).getConscryptMiddleware().enable(false);
-        Ion.with(c)
-                .load(imageLink)
-                .withBitmap()
-                .placeholder(R.drawable.hung)
-                .error(R.drawable.icon)
-                .animateLoad(R.anim.loading)
-                .intoImageView(iv);
-    }
-
     // https://developer.android.com/training/data-storage/shared-preferences?hl=en
     // https://viblo.asia/p/shared-preferences-trong-android-1Je5EEvY5nL
     public void onFavoriteClicked(View view) {
-        //Context context = getActivity
+        // get the data store in SharedPreferences
         SharedPreferences spFavorite = this.getSharedPreferences(
                 "FAVORITE", Context.MODE_PRIVATE);
 
-        Integer number;
-        if (!spFavorite.contains("Number")) {
-            boolean res = spFavorite.edit().putString("Number", "0").commit();
-            number = 0;
-        } else {
-            number = Integer.parseInt(spFavorite.getString("Number", null));
-        }
+        Integer number = getFavoriteNumber(spFavorite);
 
         boolean isDuplicated = false;
 
         // check if exists duplication
         if (number > 0) {
             for (int i = 1; i <= number; i++) {
-                String tempName = spFavorite.getString("Name " + i, null);
-                if (!tempName.equals(name)) {
-                    continue;
+                String tempID = spFavorite.getString("ID " + i, null);
+                String stringID = Integer.toString(ID);
+                if (tempID.equals(stringID)) {
+                    isDuplicated = true;
+                    break;
                 }
 
-                String tempPrice = spFavorite.getString("Price " + i, null);
-                if (!tempPrice.equals(price)) {
-                    continue;
-                }
-
-                String tempImageLink = spFavorite.getString("Image " + i, null);
-                if (!tempImageLink.equals(imageLink)) {
-                    continue;
-                }
-
-                // if come to this, then 3 things equal
-                isDuplicated = true;
-                break;
             }
         }
 
@@ -154,50 +108,77 @@ public class ProductDetails extends AppCompatActivity {
             return;
         }
 
+        String idKey = "ID " + (number + 1);
         String nameKey = "Name " + (number + 1);
         String priceKey = "Price " + (number + 1);
         String imageKey = "Image " + (number + 1);
         String categoryKey = "Category " + (number + 1);
         String descriptionKey = "Description " + (number + 1);
 
+        // add key - value pairs to data
         boolean res;
-
-        res = spFavorite.edit().putString(nameKey, name).commit();
+        res = addToFavoriteData(spFavorite, idKey, nameKey, priceKey, imageKey, categoryKey, descriptionKey);
         if (!res) {
             showFailNotification();
-        }
-
-        res = spFavorite.edit().putString(priceKey, price).commit();
-        if (!res) {
-            showFailNotification();
-        }
-
-        res = spFavorite.edit().putString(imageKey, imageLink).commit();
-        if (!res) {
-            showFailNotification();
-        }
-
-        res = spFavorite.edit().putString(categoryKey, category).commit();
-        if (!res) {
-            showFailNotification();
-        }
-
-        res =spFavorite.edit().putString(descriptionKey, description).commit();
-        if (!res) {
-            showFailNotification();
+            return;
         }
 
         number += 1;
         res = spFavorite.edit().putString("Number", Integer.toString(number)).commit();
-        if (!res) {
-            showFailNotification();
-        }
-
         if (res) {
             Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Lỗi! Thêm sản phẩm vào danh sách yêu thích không thành công", Toast.LENGTH_LONG).show();
+            showFailNotification();
         }
+    }
+
+    private boolean addToFavoriteData(SharedPreferences spFavorite, String idKey, String nameKey, String priceKey, String imageKey, String categoryKey, String descriptionKey) {
+        boolean res;
+
+        res = spFavorite.edit().putString(idKey, Integer.toString(ID)).commit();
+        if (!res) {
+            return false;
+        }
+
+        res = spFavorite.edit().putString(nameKey, name).commit();
+        if (!res) {
+            return false;
+        }
+
+        res = spFavorite.edit().putString(priceKey, price).commit();
+        if (!res) {
+            return false;
+        }
+
+        res = spFavorite.edit().putString(imageKey, imageLink).commit();
+        if (!res) {
+            return false;
+        }
+
+        res = spFavorite.edit().putString(categoryKey, category).commit();
+        if (!res) {
+            return false;
+        }
+
+        res =spFavorite.edit().putString(descriptionKey, description).commit();
+        if (!res) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private Integer getFavoriteNumber(SharedPreferences sp) {
+        Integer res = 0;
+
+        if (!sp.contains("Number")) {
+            sp.edit().putString("Number", "0").commit();
+            //return res;
+        } else {
+            res = Integer.parseInt(sp.getString("Number", null));
+        }
+
+        return res;
     }
 
     public void onAddToCartClicked(View view) {
@@ -211,24 +192,56 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     public void showFailNotification() {
-        Toast.makeText(this, "Fail to add this product to favorite list", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Lỗi! Thêm sản phẩm vào danh sách yêu thích không thành công", Toast.LENGTH_LONG).show();
     }
 
-    public void setupGridViewRecommendationsList() {
-        String priceWithoutSuffix = "";
-        for (int j = 0; j < price.length() - 4; j++) {
-            priceWithoutSuffix += price.charAt(j);
-        }
+    private void setupViewsOnCreate() {
+        iv_product_image = findViewById(R.id.iv_product_image_details);
+        tv_product_name = findViewById(R.id.tv_product_name_details);
+        tv_product_price = findViewById(R.id.tv_product_price_details);
+        tv_product_category = findViewById(R.id.tv_product_category_details);
+        tv_product_description = findViewById(R.id.tv_product_description_details);
+        gv_recommendation_list = findViewById(R.id.grid_view_recommendation_list);
+        gv_recommendation_list.setExpanded(true);
+    }
 
-        Product p = new Product(1, imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
+    private void getDataFromPreviousActivity() {
+        ID = bundle.getInt("ID");
+        name = bundle.getString("name");
+        price = bundle.getString("price");
+        imageLink = bundle.getString("link");
+        category = bundle.getString("category");
+        description = bundle.getString("description");
+    }
 
-        ArrayList<Product> recommendationListRaw = DataHandler.GetRecommendProducts(p, NUMBER_OF_RECOMMENDATIONS);
-        ArrayList<HomeProduct> recommendationList = recommendationListRaw.stream()
-                .map(HomeProduct::new)
-                .collect(Collectors.toCollection(ArrayList::new));
+    private void setupViewsToDisplay() {
+        setupImageView(this, iv_product_image);
+        tv_product_name.setText(name);
+        tv_product_price.setText(price);
+        tv_product_category.setText(category);
+        tv_product_description.setText(description);
+    }
 
+    private void setupImageView(Context c, ImageView iv) {
+        //Log.d("meow", "GetProducts: " + imageLink);
+        Ion.getDefault(c).getConscryptMiddleware().enable(false);
+        Ion.with(c)
+                .load(imageLink)
+                .withBitmap()
+                .placeholder(R.drawable.hung)
+                .error(R.drawable.icon)
+                .animateLoad(R.anim.loading)
+                .intoImageView(iv);
+    }
+
+    private void setupGridViewRecommendationsList() {
+        ArrayList<HomeProduct> recommendationList = getRecommendations();
+
+        // setup adapter for recommendation list
         ProductGridViewAdapter productGridViewAdapter = new ProductGridViewAdapter(this, recommendationList);
         gv_recommendation_list.setAdapter(productGridViewAdapter);
+
+        // set on click listener for each item in recommendation list
         gv_recommendation_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -251,5 +264,28 @@ public class ProductDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private String parsePrice(String originalPrice) {
+        String res = "";
+        for (int j = 0; j < originalPrice.length() - 4; j++) { // " VND".length() = 4
+            res += originalPrice.charAt(j);
+        }
+        return res;
+    }
+
+    private ArrayList<HomeProduct> getRecommendations() {
+        String priceWithoutSuffix = parsePrice(price);
+
+        // temp product, created for get recommendations
+        Product p = new Product(1, imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
+
+        // get recommendations
+        ArrayList<Product> recommendationListRaw = DataHandler.GetRecommendProducts(p, NUMBER_OF_RECOMMENDATIONS);
+        ArrayList<HomeProduct> recommendationList = recommendationListRaw.stream()
+                .map(HomeProduct::new)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        return recommendationList;
     }
 }

@@ -150,6 +150,7 @@ public class ProductDetails extends AppCompatActivity {
 
         // if duplicated, do nothing
         if (isDuplicated) {
+            Toast.makeText(this, "Sản phẩm đã có trong danh sách yêu thích", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -191,6 +192,12 @@ public class ProductDetails extends AppCompatActivity {
         if (!res) {
             showFailNotification();
         }
+
+        if (res) {
+            Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Lỗi! Thêm sản phẩm vào danh sách yêu thích không thành công", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onAddToCartClicked(View view) {
@@ -201,14 +208,6 @@ public class ProductDetails extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Sản phẩm có trong giỏ hàng!", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void onInstantBuyClicked(View view) {
-
-    }
-
-    public void onHotlineClicked(View view) {
-
     }
 
     public void showFailNotification() {
@@ -234,6 +233,7 @@ public class ProductDetails extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HomeProduct product = (HomeProduct) gv_recommendation_list.getItemAtPosition(i);
+                int id = product.getId();
                 String name = product.getName();
                 String price = Integer.toString(product.getPrice()) + " VND";
                 String imageLink = product.getImageLink();
@@ -241,7 +241,7 @@ public class ProductDetails extends AppCompatActivity {
                 String description = product.getDescription();
 
                 Intent intent = new Intent(ProductDetails.this, ProductDetails.class);
-
+                intent.putExtra("ID", id);
                 intent.putExtra("name", name);
                 intent.putExtra("price", price);
                 intent.putExtra("link", imageLink);

@@ -42,7 +42,6 @@ public class FavoriteListFragment extends Fragment {
 
         }
 
-        Log.i("Function", "onCreate");
 
     }
 

@@ -288,4 +288,24 @@ public class ProductDetails extends AppCompatActivity {
 
         return recommendationList;
     }
+
+    // https://www.stechies.com/add-share-button-android-app/
+    public void onShareClicked(View view) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+
+        String shareBody = "";
+        shareBody = shareBody + "Tên sản phẩm: " + name + "\n";
+        shareBody = shareBody + "Giá sản phẩm: " + price + "\n";
+        shareBody = shareBody + "Hình ảnh sản phẩm: " + imageLink + "\n";
+        shareBody = shareBody + "Thể loại: " + category + "\n";
+        shareBody = shareBody + "Mô tả sản phẩm: " + description + "\n";
+
+        String shareTitle = "Chia sẻ sản phẩm trên MiniShopping ";
+
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareTitle);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+
+        startActivity(Intent.createChooser(shareIntent, "Chia sẻ bằng"));
+    }
 }

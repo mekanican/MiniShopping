@@ -72,4 +72,8 @@ public class StoreFragment extends Fragment {
             }
         });
     }
+
+    public void productFindClicked(View view) {
+        
+    }
 }

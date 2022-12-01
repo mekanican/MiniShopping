@@ -82,7 +82,7 @@ public class StoreFragment extends Fragment {
 
         ((Button) getActivity().findViewById(R.id.btn_search)).setOnClickListener(view1 -> {
             String productName = String.valueOf(etProductNameToFind.getText());
-            
+
         });
     }
 

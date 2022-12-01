@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.stream.Collectors;
 public class StoreFragment extends Fragment {
     GridView gvProductList;
     ArrayList<HomeProduct> homeProductArrayList;
+
+    TextView etProductNameToFind;
 
     public StoreFragment() {
         // Required empty public constructor
@@ -33,6 +38,8 @@ public class StoreFragment extends Fragment {
 
         }
         homeProductArrayList = SharedInfo.getInstance().getProductHome();
+
+        //etProductNameToFind = getActivity().findViewById(R.id.et_product_name);
     }
 
     @Override
@@ -46,6 +53,7 @@ public class StoreFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        etProductNameToFind = getActivity().findViewById(R.id.et_product_name);
         gvProductList = getActivity().findViewById(R.id.grid_view_product_list);
         ProductGridViewAdapter productGridViewAdapter = new ProductGridViewAdapter(getContext(), homeProductArrayList);
         gvProductList.setAdapter(productGridViewAdapter);
@@ -71,9 +79,11 @@ public class StoreFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        ((Button) getActivity().findViewById(R.id.btn_search)).setOnClickListener(view1 -> {
+            String productName = String.valueOf(etProductNameToFind.getText());
+            
+        });
     }
 
-    public void productFindClicked(View view) {
-        
-    }
 }

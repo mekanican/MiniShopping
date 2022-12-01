@@ -93,11 +93,12 @@ public class DataHandler {
     }
 
     public static ArrayList<Integer> GetSearchProducts(String query) {
+        String[] words = query.toLowerCase().split(" ");
         ArrayList<Integer> ret = new ArrayList<Integer>();
         for (int i = 0; i < productNames.size(); i++) {
             boolean found = true;
             Set<String> cur = productNames.get(i);
-            for (String q : query.toLowerCase().split(" ")) {
+            for (String q : words) {
                 if (!cur.contains(q)) {
                     found = false;
                     break;

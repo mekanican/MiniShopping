@@ -22,7 +22,7 @@ public class HomeProduct {
         // Log.d("meow", "GetProducts: " + wrapped.imageLink);
         // Ion.getDefault(c).getConscryptMiddleware().enable(false);
         Ion.with(iv)
-                .placeholder(R.drawable.hung)
+                .placeholder(R.drawable.loading)
                 .error(R.drawable.icon)
                 .animateLoad(R.anim.loading)
                 .load(wrapped.imageLink);

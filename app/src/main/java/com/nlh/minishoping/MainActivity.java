@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             .show(aboutUsFragment)
                             .commit();
                     currentFragment = aboutUsFragment;
+                    break;
                 default:
                     return false;
             }

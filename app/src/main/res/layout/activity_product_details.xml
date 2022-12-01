@@ -61,7 +61,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/hung"
+                app:srcCompat="@drawable/loading"
                 android:contentDescription="Product image"/>
 
             <TextView

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -41,11 +44,21 @@ public class MapsFragment extends Fragment {
             LatLng currentLocation = new LatLng(10.762417, 106.681198);
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17));
+
+            int height = 150;
+            int width = 150;
+            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.images);
+            Bitmap b = bitmapdraw.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, true);
+
             googleMap.addMarker(new MarkerOptions()
                     .position(currentLocation)
                     .title("Mini Shop")
-                    .snippet("Nơi làm việc của mini shop"));
+                    .snippet("Nơi làm việc của mini shop")
+                    .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
         }
+
+
     };
 
     @Nullable
@@ -67,8 +80,6 @@ public class MapsFragment extends Fragment {
         ArrayList<String> ops = new ArrayList<>();
         ops.add("Style 1");
         ops.add("Style 2");
-        ops.add("Style 3");
-        ops.add("Style 4");
 
         ArrayAdapter styleMap= new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, ops);
         spinner.setAdapter(styleMap);

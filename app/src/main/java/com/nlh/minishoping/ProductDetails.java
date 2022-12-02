@@ -71,9 +71,8 @@ public class ProductDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
-                // finishAfterTransition();
-                // this.finish();
+            case android.R.id.home:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -128,6 +127,7 @@ public class ProductDetails extends AppCompatActivity {
         res = spFavorite.edit().putString("Number", Integer.toString(number)).commit();
         if (res) {
             Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
+            SharedInfo.getInstance().addFavoriteTrigger();
         } else {
             showFailNotification();
         }
@@ -165,7 +165,6 @@ public class ProductDetails extends AppCompatActivity {
         if (!res) {
             return false;
         }
-
         return true;
     }
 
@@ -229,7 +228,7 @@ public class ProductDetails extends AppCompatActivity {
         Ion.with(c)
                 .load(imageLink)
                 .withBitmap()
-                .placeholder(R.drawable.hung)
+                .placeholder(R.drawable.loading)
                 .error(R.drawable.icon)
                 .animateLoad(R.anim.loading)
                 .intoImageView(iv);

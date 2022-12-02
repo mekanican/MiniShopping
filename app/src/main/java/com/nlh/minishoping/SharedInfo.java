@@ -16,6 +16,7 @@ public class SharedInfo {
     private ArrayList<ProductCart> productCart;
 
     private Callback updateCart;
+    private Callback updateFavorite;
     private SharedInfo() {
         productCart = new ArrayList<>();
         productRaw = new ArrayList<>();
@@ -46,6 +47,10 @@ public class SharedInfo {
         return true;
     }
 
+    public void addFavoriteTrigger() {
+        updateFavorite.call();
+    }
+
     public HomeProduct getProductByID(int ID) {
         return new HomeProduct(productRaw.get(ID - 1));
     }
@@ -56,5 +61,9 @@ public class SharedInfo {
 
     public void setCallbackUpdateCart(Callback c) {
         updateCart = c;
+    }
+
+    public void setCallbackUpdateFavorite(Callback c) {
+        updateFavorite = c;
     }
 }

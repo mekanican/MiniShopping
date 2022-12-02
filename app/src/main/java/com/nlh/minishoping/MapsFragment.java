@@ -47,7 +47,7 @@ public class MapsFragment extends Fragment {
 
             int height = 150;
             int width = 150;
-            BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.images);
+            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.images);
             Bitmap b = bitmapdraw.getBitmap();
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, true);
 
@@ -81,7 +81,7 @@ public class MapsFragment extends Fragment {
         ops.add("Style 1");
         ops.add("Style 2");
 
-        ArrayAdapter styleMap= new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, ops);
+        ArrayAdapter styleMap = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, ops);
         spinner.setAdapter(styleMap);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

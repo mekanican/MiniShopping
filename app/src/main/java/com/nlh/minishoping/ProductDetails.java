@@ -36,7 +36,7 @@ public class ProductDetails extends AppCompatActivity {
     TextView tv_product_category;
     TextView tv_product_description;
     ExpandableHeightGridView gv_recommendation_list;
-    
+
     int ID;
     String name;
     String price;
@@ -161,7 +161,7 @@ public class ProductDetails extends AppCompatActivity {
             return false;
         }
 
-        res =spFavorite.edit().putString(descriptionKey, description).commit();
+        res = spFavorite.edit().putString(descriptionKey, description).commit();
         if (!res) {
             return false;
         }

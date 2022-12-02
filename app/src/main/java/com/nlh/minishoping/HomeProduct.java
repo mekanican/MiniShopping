@@ -32,11 +32,17 @@ public class HomeProduct {
         return wrapped.price;
     }
 
-    public String getImageLink() { return wrapped.imageLink;}
+    public String getImageLink() {
+        return wrapped.imageLink;
+    }
 
-    public String getCategory() { return wrapped.category;}
+    public String getCategory() {
+        return wrapped.category;
+    }
 
-    public String getDescription() { return wrapped.description;}
+    public String getDescription() {
+        return wrapped.description;
+    }
 
     private final Product wrapped;
 }

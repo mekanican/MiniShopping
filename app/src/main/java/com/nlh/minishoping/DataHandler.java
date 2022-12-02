@@ -1,12 +1,8 @@
 package com.nlh.minishoping;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,11 +39,11 @@ public class DataHandler {
 
         } finally {
             if (reader != null) {
-                 try {
-                     reader.close();
-                 } catch (IOException e) {
-                     //log the exception
-                 }
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    //log the exception
+                }
             }
         }
 
@@ -56,15 +52,15 @@ public class DataHandler {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
                 ret.add(new Product(
-                    obj.getInt("id"),
-                    obj.getString("image"),
-                    obj.getString("name"),
-                    obj.getString("category"),
-                    obj.getString("description"),
-                    obj.getInt("price")
+                        obj.getInt("id"),
+                        obj.getString("image"),
+                        obj.getString("name"),
+                        obj.getString("category"),
+                        obj.getString("description"),
+                        obj.getInt("price")
                 ));
                 Set<String> cur = new HashSet<>();
-                for (String s : obj.getString("name").toLowerCase().split(" ")){
+                for (String s : obj.getString("name").toLowerCase().split(" ")) {
                     cur.add(s);
                 }
                 productNames.add(cur);
@@ -82,7 +78,7 @@ public class DataHandler {
         return ret;
     }
 
-    public static ArrayList<Product> GetRecommendProducts(Product cur, int num){
+    public static ArrayList<Product> GetRecommendProducts(Product cur, int num) {
         ArrayList<Product> ret = new ArrayList<Product>();
         int cnt = 0;
         for (Product p : categoryMap.get(cur.getCategory())) {
@@ -105,7 +101,7 @@ public class DataHandler {
                     break;
                 }
             }
-            if (found){
+            if (found) {
                 ret.add(i);
             }
         }

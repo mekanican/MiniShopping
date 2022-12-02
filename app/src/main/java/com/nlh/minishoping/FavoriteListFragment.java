@@ -18,7 +18,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class FavoriteListFragment extends Fragment {
@@ -31,7 +30,6 @@ public class FavoriteListFragment extends Fragment {
     public FavoriteListFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -58,7 +56,7 @@ public class FavoriteListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Log.i("Function", "onViewCreated");
-        spFavorite = this.requireActivity().getSharedPreferences("FAVORITE" , Context.MODE_PRIVATE);
+        spFavorite = this.requireActivity().getSharedPreferences("FAVORITE", Context.MODE_PRIVATE);
         tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
 
         number = 0;

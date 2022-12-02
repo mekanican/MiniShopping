@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:gravity="right"
-                    android:text="15%"
+                    android:text="8%"
                     android:paddingRight="20dp" />
             </LinearLayout>
 

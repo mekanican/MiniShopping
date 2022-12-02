@@ -3,18 +3,15 @@ package com.nlh.minishoping;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.json.*;
 
 public class DataHandler {
     private static HashMap<String, ArrayList<Product>> categoryMap = new HashMap<>();
 
     public static ArrayList<Product> GetProducts() {
-        Path currentRelativePath = Paths.get("");
+        //Path currentRelativePath = Paths.get("");
         ArrayList<Product> ret = new ArrayList<Product>();
         String json = "";
 
@@ -22,13 +19,13 @@ public class DataHandler {
         try {
             reader = new BufferedReader(
                     new InputStreamReader(WelcomeActivity.assetManager.open("data.json"), "UTF-8"));
-        
+
             String mLine;
             while ((mLine = reader.readLine()) != null) {
                 json += mLine;
             }
         } catch (IOException e) {
-            // Log.d("meow", "GetProducts: " + e.getMessage());
+
         } finally {
             if (reader != null) {
                  try {
@@ -38,8 +35,6 @@ public class DataHandler {
                  }
             }
         }
-
-        // Log.d("meow", "GetProducts: " + json);
 
         try {
             JSONArray jsonArray = new JSONArray(json);
@@ -77,4 +72,4 @@ public class DataHandler {
         }
         return ret;
     }
-};
+}

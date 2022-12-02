@@ -46,6 +46,10 @@ public class SharedInfo {
         return true;
     }
 
+    public HomeProduct getProductByID(int ID) {
+        return new HomeProduct(productRaw.get(ID - 1));
+    }
+
     public ArrayList<ProductCart> getProductCart() {
         return productCart;
     }

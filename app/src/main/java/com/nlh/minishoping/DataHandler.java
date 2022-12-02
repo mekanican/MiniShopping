@@ -1,5 +1,7 @@
 package com.nlh.minishoping;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -65,6 +67,7 @@ public class DataHandler {
                 for (String s : obj.getString("name").toLowerCase().split(" ")){
                     cur.add(s);
                 }
+                productNames.add(cur);
             }
         } catch (JSONException e) {
             e.printStackTrace();

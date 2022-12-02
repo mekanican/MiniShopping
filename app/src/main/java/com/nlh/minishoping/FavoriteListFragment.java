@@ -63,49 +63,21 @@ public class FavoriteListFragment extends Fragment {
         tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
 
         gvFavoriteList = getActivity().findViewById(R.id.grid_view_favorite_list_fragment);
-        if (!spFavorite.contains("Number")) {
-            tvNoFavoriteItem.setVisibility(View.VISIBLE);
-        } else {
-            number = Integer.parseInt(spFavorite.getString("Number", null).toString());
-        }
-
-        gvFavoriteList = getActivity().findViewById(R.id.grid_view_favorite_list_fragment);
-
-        // this case does not happen =))
-        if (number == 0) {
-            tvNoFavoriteItem.setVisibility(View.VISIBLE);
-            return;
-        }
+        noItemNotify();
 
         Log.i("Number", Integer.toString(number));
 
         ArrayList<HomeProduct> favoriteList = new ArrayList<HomeProduct>();
 
-        String name;
-        String price;
-        String imageLink;
-        String category;
-        String description;
-
-        for (int i = 1; i <= number; i++) {
-            name = spFavorite.getString("Name " + Integer.toString(i), null);
-            price = spFavorite.getString("Price " + Integer.toString(i), null);
-            imageLink = spFavorite.getString("Image " + Integer.toString(i), null);
-            category = spFavorite.getString("Category " + Integer.toString(i), null);
-            description = spFavorite.getString("Description " + Integer.toString(i), null);
-
-            String priceWithoutSuffix = "";
-            for (int j = 0; j < price.length() - 4; j++) {
-                priceWithoutSuffix += price.charAt(j);
-            }
-
-            Product p = new Product(i, imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
-            HomeProduct hp = new HomeProduct(p);
-
-            favoriteList.add(hp);
-        }
+        reloadFavorite(favoriteList);
         ProductGridViewAdapter favoriteProductsGridViewAdapter = new ProductGridViewAdapter(getActivity(), favoriteList);
         gvFavoriteList.setAdapter(favoriteProductsGridViewAdapter);
+        SharedInfo.getInstance().setCallbackUpdateFavorite(() -> {
+            favoriteList.clear();
+            noItemNotify();
+            reloadFavorite(favoriteList);
+            favoriteProductsGridViewAdapter.notifyDataSetChanged();
+        });
         gvFavoriteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -117,7 +89,7 @@ public class FavoriteListFragment extends Fragment {
                 String description = product.getDescription();
 
                 Intent intent = new Intent(getContext(), ProductDetails.class);
-
+                intent.putExtra("ID", product.getId());
                 intent.putExtra("name", productName);
                 intent.putExtra("price", productPrice);
                 intent.putExtra("link", productImageLink);
@@ -128,5 +100,47 @@ public class FavoriteListFragment extends Fragment {
             }
         });
 
+    }
+
+    private void noItemNotify() {
+        if (!spFavorite.contains("Number")) {
+            tvNoFavoriteItem.setVisibility(View.VISIBLE);
+        } else {
+            number = Integer.parseInt(spFavorite.getString("Number", null).toString());
+        }
+
+        if (number == 0) {
+            tvNoFavoriteItem.setVisibility(View.VISIBLE);
+        } else {
+            tvNoFavoriteItem.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void reloadFavorite(ArrayList<HomeProduct> favoriteList) {
+        String name;
+        String price;
+        String imageLink;
+        String category;
+        String description;
+        String idx;
+
+        for (int i = 1; i <= number; i++) {
+            idx = spFavorite.getString("ID " + i, null);
+            name = spFavorite.getString("Name " + Integer.toString(i), null);
+            price = spFavorite.getString("Price " + Integer.toString(i), null);
+            imageLink = spFavorite.getString("Image " + Integer.toString(i), null);
+            category = spFavorite.getString("Category " + Integer.toString(i), null);
+            description = spFavorite.getString("Description " + Integer.toString(i), null);
+
+            String priceWithoutSuffix = "";
+            for (int j = 0; j < price.length() - 4; j++) {
+                priceWithoutSuffix += price.charAt(j);
+            }
+
+            Product p = new Product(Integer.valueOf(idx), imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
+            HomeProduct hp = new HomeProduct(p);
+
+            favoriteList.add(hp);
+        }
     }
 }

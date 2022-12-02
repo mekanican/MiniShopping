@@ -8,16 +8,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsFragment extends Fragment {
+import java.util.ArrayList;
 
+public class MapsFragment extends Fragment {
+    GoogleMap cur;
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -31,6 +37,7 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            cur = googleMap;
             LatLng currentLocation = new LatLng(10.762417, 106.681198);
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17));
@@ -54,6 +61,29 @@ public class MapsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        Spinner spinner = view.findViewById(R.id.spinner);
+
+        ArrayList<String> ops = new ArrayList<>();
+        ops.add("Style 1");
+        ops.add("Style 2");
+        ops.add("Style 3");
+        ops.add("Style 4");
+
+        ArrayAdapter styleMap= new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, ops);
+        spinner.setAdapter(styleMap);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cur.setMapType(position + 1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }

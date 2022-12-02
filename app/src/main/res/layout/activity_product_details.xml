@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductDetails">
+
     <LinearLayout
         android:id="@+id/two_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="wrap_content"
@@ -20,27 +21,28 @@
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:onClick="onFavoriteClicked"
-            android:text="Yêu thích" />
+            android:text="Yêu thích"
+            android:textSize="12sp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:onClick="onShareClicked"
             android:text="Chia sẻ"
-            android:onClick="onShareClicked" />
+            android:textSize="12sp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:onClick="onAddToCartClicked"
             android:text="Thêm vào giỏ"
-            android:onClick="onAddToCartClicked" />
+            android:textSize="12sp" />
     </LinearLayout>
 
     <ScrollView

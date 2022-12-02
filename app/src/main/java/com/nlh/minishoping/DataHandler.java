@@ -3,12 +3,25 @@ package com.nlh.minishoping;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.json.*;
 
 public class DataHandler {
     private static HashMap<String, ArrayList<Product>> categoryMap = new HashMap<>();
+    private static ArrayList<Set<String>> productNames = new ArrayList<>();
+
+    public static String stripAccents(String s) {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return s;
+    }
 
     public static ArrayList<Product> GetProducts() {
         //Path currentRelativePath = Paths.get("");
@@ -48,6 +61,10 @@ public class DataHandler {
                     obj.getString("description"),
                     obj.getInt("price")
                 ));
+                Set<String> cur = new HashSet<>();
+                for (String s : obj.getString("name").toLowerCase().split(" ")){
+                    cur.add(s);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -72,4 +89,23 @@ public class DataHandler {
         }
         return ret;
     }
-}
+
+    public static ArrayList<Integer> GetSearchProducts(String query) {
+        String[] words = query.toLowerCase().split(" ");
+        ArrayList<Integer> ret = new ArrayList<Integer>();
+        for (int i = 0; i < productNames.size(); i++) {
+            boolean found = true;
+            Set<String> cur = productNames.get(i);
+            for (String q : words) {
+                if (!cur.contains(q)) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found){
+                ret.add(i);
+            }
+        }
+        return ret;
+    }
+};

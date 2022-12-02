@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:weightSum="1">
     <!--  Image part  -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_weight="0.2"
         android:gravity="center"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
+        android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/image_"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:src="@drawable/icon"
-            android:id="@+id/image_"
-            android:contentDescription="image" />
+            android:contentDescription="image"
+            android:src="@drawable/icon" />
     </LinearLayout>
     <!--  Info part  -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="0.8"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.8"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/id_"
@@ -41,28 +41,31 @@
             android:id="@+id/name_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product Name"
+            android:text="@string/product_name"
             android:textSize="16sp"
             android:textStyle="bold" />
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1">
+
             <TextView
                 android:id="@+id/price_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.4"
                 android:gravity="right"
-                android:text="Price"
+                android:text="@string/price"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_weight="0.4"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/down_cart"
                 android:layout_width="0dp"
@@ -71,6 +74,7 @@
                 android:background="@drawable/round_rectangle"
                 android:text="-"
                 android:textSize="20sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,7 +82,8 @@
                 android:gravity="center"
                 android:text="1"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/up_cart"
                 android:layout_width="0dp"
@@ -87,8 +92,6 @@
                 android:background="@drawable/round_rectangle"
                 android:text="+"
                 android:textSize="20sp" />
-
-
 
 
         </LinearLayout>

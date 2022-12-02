@@ -30,29 +30,32 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Họ và tên: Nguyễn Văn Hưng"/>
+                    android:layout_marginRight="20dp"
+                    android:text="@string/full_name_hung" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Email: 20120009@student.hcmus.edu.vn"
-                    android:autoLink="email"/>
+                    android:layout_marginRight="20dp"
+                    android:autoLink="email"
+                    android:text="@string/email_hung" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
                     android:autoLink="phone"
-                    android:text="SĐT: 0937142920"/>
+                    android:text="@string/phone_hung" />
             </LinearLayout>
         </LinearLayout>
 
@@ -75,29 +78,32 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Họ và tên: Nguyễn Văn Lộc"/>
+                    android:layout_marginRight="20dp"
+                    android:text="@string/fullname_loc" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Email: 20120131@student.hcmus.edu.vn"
-                    android:autoLink="email"/>
+                    android:layout_marginRight="20dp"
+                    android:autoLink="email"
+                    android:text="@string/email_loc" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
                     android:autoLink="phone"
-                    android:text="SĐT: 0905481342"/>
+                    android:text="@string/phone_loc" />
             </LinearLayout>
         </LinearLayout>
 
@@ -120,29 +126,32 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Họ và tên: Võ Trọng Nghĩa"/>
+                    android:layout_marginRight="20dp"
+                    android:text="@string/fullname_nghia" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Email: 20120536@student.hcmus.edu.vn"
-                    android:autoLink="email"/>
+                    android:layout_marginRight="20dp"
+                    android:autoLink="email"
+                    android:text="@string/email_nghia" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
                     android:autoLink="phone"
-                    android:text="SĐT: 0984628018"/>
+                    android:text="@string/phone_nghia" />
             </LinearLayout>
 
 
@@ -151,13 +160,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:autoLink="phone"
             android:layout_gravity="center_horizontal"
-            android:text="Liên hệ: 0937142920 (gặp anh Hưng)"
-            />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:autoLink="phone"
+            android:text="@string/contact_info" />
 
     </LinearLayout>
 </ScrollView>

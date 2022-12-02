@@ -1,22 +1,26 @@
 package com.nlh.minishoping;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartFragment extends Fragment {
 
-    ArrayList<ProductCart> productList;
+    ArrayList<CartProduct> productList;
     ProductCartViewAdapter pcvAdapter;
     ListView lvProductList;
     BottomNavigationView bottomNavigationView;
@@ -91,9 +95,9 @@ public class CartFragment extends Fragment {
     }
 
 
-    private int totalProductsPrice(ArrayList<ProductCart> products) {
+    private int totalProductsPrice(ArrayList<CartProduct> products) {
         return products.stream()
-                .mapToInt(ProductCart::total)
+                .mapToInt(CartProduct::total)
                 .sum();
     }
 

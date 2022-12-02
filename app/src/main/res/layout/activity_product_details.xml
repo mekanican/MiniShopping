@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductDetails">
@@ -21,7 +21,7 @@
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:onClick="onFavoriteClicked"
-            android:text="Yêu thích"
+            android:text="@string/add_to_favorite"
             android:textSize="12sp" />
 
         <Button
@@ -30,7 +30,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:onClick="onShareClicked"
-            android:text="Chia sẻ"
+            android:text="@string/share_this_product"
             android:textSize="12sp" />
 
         <Button
@@ -41,7 +41,7 @@
             android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:onClick="onAddToCartClicked"
-            android:text="Thêm vào giỏ"
+            android:text="@string/add_product_to_cart"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -51,10 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/two_buttons"
         android:layout_alignParentTop="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/iv_product_image_details"
                 android:layout_width="364dp"
@@ -63,46 +65,46 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/loading"
-                android:contentDescription="Product image"/>
+                android:contentDescription="@string/product_image"
+                app:srcCompat="@drawable/loading" />
 
             <TextView
                 android:id="@+id/tv_product_name_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Nguyen Van Hung"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:text="@string/nguyen_van_hung"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_product_price_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0 VND"
-                android:textSize="24dp"
-                android:textColor="#FF3333"
-                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:text="@string/_0_vnd"
+                android:textColor="#FF3333"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_product_category_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category: Hooman"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:text="@string/category_hooman" />
 
             <TextView
                 android:id="@+id/tv_product_description_details"
@@ -112,7 +114,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:scrollbars="vertical"
-                android:text="A useless guy"
+                android:text="@string/a_useless_guy"
                 android:textAlignment="textStart" />
 
             <TextView
@@ -123,22 +125,23 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:scrollbars="vertical"
-                android:text="Sản phẩm tương tự"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textAlignment="textStart" />
+                android:text="@string/related_products"
+                android:textAlignment="textStart"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <com.example.ExpandableHeightGridView
                 android:id="@+id/grid_view_recommendation_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:numColumns="2"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
                 android:horizontalSpacing="10dp"
-                android:verticalSpacing="15dp"/>
+                android:numColumns="2"
+                android:verticalSpacing="15dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

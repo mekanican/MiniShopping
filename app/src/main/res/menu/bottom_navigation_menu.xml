@@ -4,25 +4,25 @@
         android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/store_icon"
-        android:title="Product List" />
+        android:title="Cửa hàng" />
     <item
         android:id="@+id/cart"
         android:enabled="true"
         android:icon="@drawable/shopping_cart_icon"
-        android:title="Cart" />
+        android:title="Giỏ hàng" />
     <item
         android:id="@+id/favorite"
         android:enabled="true"
         android:icon="@drawable/favorite_icon"
-        android:title="Favorite"/>
+        android:title="Yêu thích"/>
     <item
         android:id="@+id/map"
         android:enabled="true"
         android:icon="@drawable/map_icon"
-        android:title="Map" />
+        android:title="Bản đồ" />
     <item
         android:id="@+id/about"
         android:enabled="true"
         android:icon="@drawable/info_icon"
-        android:title="About us" />
+        android:title="Giới thiệu" />
 </menu>

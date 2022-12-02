@@ -1,23 +1,19 @@
 package com.nlh.minishoping;
 
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class ProductCartViewAdapter extends BaseAdapter {
 
-    final ArrayList<ProductCart> listProduct;
+    final ArrayList<CartProduct> listProduct;
     final Callback onChanged;
 
-    public ProductCartViewAdapter(ArrayList<ProductCart> listProduct, Callback onChanged) {
+    public ProductCartViewAdapter(ArrayList<CartProduct> listProduct, Callback onChanged) {
         this.listProduct = listProduct;
         this.onChanged = onChanged;
     }
@@ -47,7 +43,7 @@ public class ProductCartViewAdapter extends BaseAdapter {
             productView = view;
         }
 
-        ProductCart product = (ProductCart) getItem(i);
+        CartProduct product = (CartProduct) getItem(i);
         // Modify each "item" in list from data of ith product.
         DecimalFormat formatter = new DecimalFormat("#,###.00");
         setTextByID(productView, R.id.id_, String.format("#%d", product.getID()));

@@ -13,12 +13,13 @@ public class SharedInfo {
 
 
     private ArrayList<Product> productRaw;
-    private ArrayList<ProductCart> productCart;
+    private ArrayList<CartProduct> cartProduct;
 
     private Callback updateCart;
     private Callback updateFavorite;
+    
     private SharedInfo() {
-        productCart = new ArrayList<>();
+        cartProduct = new ArrayList<>();
         productRaw = new ArrayList<>();
     }
 
@@ -38,11 +39,11 @@ public class SharedInfo {
     }
 
     public boolean addProductToCart(int ID) {
-        ProductCart newProduct = new ProductCart(new HomeProduct(productRaw.get(ID - 1)));
-        if (!productCart.isEmpty() && productCart.stream().anyMatch(a -> a.getID() == newProduct.getID())) {
+        CartProduct newProduct = new CartProduct(new HomeProduct(productRaw.get(ID - 1)));
+        if (!cartProduct.isEmpty() && cartProduct.stream().anyMatch(a -> a.getID() == newProduct.getID())) {
             return false;
         }
-        productCart.add(newProduct);
+        cartProduct.add(newProduct);
         updateCart.call();
         return true;
     }
@@ -55,8 +56,8 @@ public class SharedInfo {
         return new HomeProduct(productRaw.get(ID - 1));
     }
 
-    public ArrayList<ProductCart> getProductCart() {
-        return productCart;
+    public ArrayList<CartProduct> getProductCart() {
+        return cartProduct;
     }
 
     public void setCallbackUpdateCart(Callback c) {

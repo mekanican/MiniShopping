@@ -18,7 +18,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class FavoriteListFragment extends Fragment {
@@ -31,7 +30,6 @@ public class FavoriteListFragment extends Fragment {
     public FavoriteListFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override

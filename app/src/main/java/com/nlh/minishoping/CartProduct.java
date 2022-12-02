@@ -3,11 +3,11 @@ package com.nlh.minishoping;
 import android.widget.ImageView;
 
 
-public class ProductCart {
+public class CartProduct {
     private final HomeProduct wrapped;
     private int numberOfItem;
 
-    public ProductCart(HomeProduct homeProduct) {
+    public CartProduct(HomeProduct homeProduct) {
         wrapped = homeProduct;
         numberOfItem = 1;
     }

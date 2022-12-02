@@ -81,7 +81,24 @@ public class StoreFragment extends Fragment {
         });
 
         ((Button) getActivity().findViewById(R.id.btn_search)).setOnClickListener(view1 -> {
-            String productName = String.valueOf(etProductNameToFind.getText());
+            String productNameForSearching = String.valueOf(etProductNameToFind.getText());
+
+            ArrayList<Integer> searchResultsIndices = DataHandler.GetSearchProducts(productNameForSearching);
+
+            ArrayList<HomeProduct> searhResults = new ArrayList<HomeProduct>();
+
+            for (int i = 0; i < searchResultsIndices.size(); i++) {
+                searhResults.add(homeProductArrayList.get(searchResultsIndices.get(i)));
+            }
+
+            Intent intent = new Intent(getContext(), SearchResultsActivity.class);
+            intent.putExtra("Number", (searchResultsIndices.size()));
+
+            for (int i = 0; i < searhResults.size(); i++) {
+                intent.putExtra("ID" + i, searhResults.get(i).getId());
+            }
+
+            startActivity(intent);
 
         });
     }

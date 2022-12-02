@@ -2,4 +2,37 @@
     <string name="app_name">Mini Shopping App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_to_favorite">Yêu thích</string>
+    <string name="share_this_product">Chia sẻ</string>
+    <string name="add_product_to_cart">Thêm vào giỏ</string>
+    <string name="product_image">Product image</string>
+    <string name="nguyen_van_hung">Nguyen Van Hung</string>
+    <string name="_0_vnd">0 VND</string>
+    <string name="category_hooman">Category: Hooman</string>
+    <string name="a_useless_guy">A useless guy</string>
+    <string name="related_products">Sản phẩm tương tự</string>
+    <string name="no_search_results">Không có sản phẩm thỏa mãn</string>
+    <string name="full_name_hung">Họ và tên: Nguyễn Văn Hưng</string>
+    <string name="email_hung">Email: 20120009@student.hcmus.edu.vn</string>
+    <string name="phone_hung">SĐT: 0937142920</string>
+    <string name="fullname_loc">Họ và tên: Nguyễn Văn Lộc</string>
+    <string name="email_loc">Email: 20120131@student.hcmus.edu.vn</string>
+    <string name="phone_loc">SĐT: 0905481342</string>
+    <string name="fullname_nghia">Họ và tên: Võ Trọng Nghĩa</string>
+    <string name="email_nghia">Email: 20120536@student.hcmus.edu.vn</string>
+    <string name="phone_nghia">SĐT: 0984628018</string>
+    <string name="contact_info">Liên hệ: 0937142920 (gặp anh Hưng)</string>
+    <string name="payment">Đơn hàng</string>
+    <string name="product_price">Giá sản phẩm</string>
+    <string name="shipping_fee">Phí giao hàng</string>
+    <string name="vat">VAT</string>
+    <string name="_8">8%</string>
+    <string name="total_price">Tổng thanh toán</string>
+    <string name="delete_all">Xóa tất cả</string>
+    <string name="proceed">Đặt hàng</string>
+    <string name="no_favorite">Không có sản phẩm yêu thích</string>
+    <string name="enter_name_for_finding">Nhập tên sản phẩm để tìm kiếm</string>
+    <string name="find">Tìm</string>
+    <string name="product_name">Product Name</string>
+    <string name="price">Price</string>
 </resources>

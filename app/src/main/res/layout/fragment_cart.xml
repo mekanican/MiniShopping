@@ -49,7 +49,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Product price"
+                    android:text="Giá sản phẩm"
                     android:paddingLeft="20dp" />
 
                 <TextView
@@ -72,7 +72,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Shipping price"
+                    android:text="Phí giao hàng"
                     android:paddingLeft="20dp" />
 
                 <TextView
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:paddingLeft="20dp"
-                    android:text="Total price"
+                    android:text="Tổng thanh toán"
                     android:textStyle="bold" />
 
                 <TextView
@@ -150,7 +150,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.35"
-            android:text="Delete all"
+            android:text="Xóa tất cả"
             android:id="@+id/delete_"
             android:backgroundTint="@android:color/holo_red_light" />
 
@@ -163,7 +163,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.35"
-            android:text="Proceed"
+            android:text="Đặt hàng"
             android:id="@+id/proceed_"
             android:backgroundTint="@android:color/holo_blue_light" />
     </LinearLayout>

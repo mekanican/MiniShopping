@@ -28,10 +28,6 @@ public class SharedInfo {
         productRaw = DataHandler.GetProducts();
     }
 
-    public ArrayList<Product> getProductRaw() {
-        return productRaw;
-    }
-
     public ArrayList<HomeProduct> getProductHome() {
         return productRaw.stream()
                 .map(HomeProduct::new)

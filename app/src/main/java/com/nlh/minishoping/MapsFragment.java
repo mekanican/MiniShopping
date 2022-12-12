@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +16,6 @@ import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 
 public class MapsFragment extends Fragment {
     GoogleMap cur;
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -47,8 +46,7 @@ public class MapsFragment extends Fragment {
 
             int height = 150;
             int width = 150;
-            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.images);
-            Bitmap b = bitmapdraw.getBitmap();
+            Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.images);
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, true);
 
             googleMap.addMarker(new MarkerOptions()
@@ -81,7 +79,7 @@ public class MapsFragment extends Fragment {
         ops.add("Style 1");
         ops.add("Style 2");
 
-        ArrayAdapter styleMap = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, ops);
+        ArrayAdapter<String> styleMap = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ops);
         spinner.setAdapter(styleMap);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

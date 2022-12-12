@@ -9,11 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -25,6 +23,7 @@ public class FavoriteListFragment extends Fragment {
     GridView gvFavoriteList;
     SharedPreferences spFavorite;
     Integer number;
+    Integer last_pos;
 
 
     public FavoriteListFragment() {
@@ -35,69 +34,54 @@ public class FavoriteListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-
-        }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.i("Function", "onCreateView");
         return inflater.inflate(R.layout.fragment_favorite_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ArrayList<HomeProduct> favoriteList = new ArrayList<>();
 
-        Log.i("Function", "onViewCreated");
         spFavorite = this.requireActivity().getSharedPreferences("FAVORITE", Context.MODE_PRIVATE);
         tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
+        gvFavoriteList = getActivity().findViewById(R.id.grid_view_favorite_list_fragment);
 
         number = 0;
-        tvNoFavoriteItem = getActivity().findViewById(R.id.tv_no_favorite_item_fragment);
-
-        gvFavoriteList = getActivity().findViewById(R.id.grid_view_favorite_list_fragment);
+        last_pos = 0;
         noItemNotify();
-
-        Log.i("Number", Integer.toString(number));
-
-        ArrayList<HomeProduct> favoriteList = new ArrayList<HomeProduct>();
-
         reloadFavorite(favoriteList);
+
         ProductGridViewAdapter favoriteProductsGridViewAdapter = new ProductGridViewAdapter(getActivity(), favoriteList);
         gvFavoriteList.setAdapter(favoriteProductsGridViewAdapter);
+
         SharedInfo.getInstance().setCallbackUpdateFavorite(() -> {
-            favoriteList.clear();
             noItemNotify();
             reloadFavorite(favoriteList);
             favoriteProductsGridViewAdapter.notifyDataSetChanged();
         });
-        gvFavoriteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HomeProduct product = (HomeProduct) gvFavoriteList.getItemAtPosition(i);
-                String productName = product.getName();
-                String productPrice = Integer.toString(product.getPrice()) + " VND";
-                String productImageLink = product.getImageLink();
-                String category = product.getCategory();
-                String description = product.getDescription();
+        gvFavoriteList.setOnItemClickListener((adapterView, view1, i, l) -> {
+            HomeProduct product = (HomeProduct) gvFavoriteList.getItemAtPosition(i);
+            String productName = product.getName();
+            String productPrice = product.getPrice() + " VND";
+            String productImageLink = product.getImageLink();
+            String category = product.getCategory();
+            String description = product.getDescription();
 
-                Intent intent = new Intent(getContext(), ProductDetails.class);
-                intent.putExtra("ID", product.getId());
-                intent.putExtra("name", productName);
-                intent.putExtra("price", productPrice);
-                intent.putExtra("link", productImageLink);
-                intent.putExtra("category", category);
-                intent.putExtra("description", description);
+            Intent intent = new Intent(getContext(), ProductDetails.class);
+            intent.putExtra("ID", product.getId());
+            intent.putExtra("name", productName);
+            intent.putExtra("price", productPrice);
+            intent.putExtra("link", productImageLink);
+            intent.putExtra("category", category);
+            intent.putExtra("description", description);
 
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
 
     }
@@ -106,7 +90,7 @@ public class FavoriteListFragment extends Fragment {
         if (!spFavorite.contains("Number")) {
             tvNoFavoriteItem.setVisibility(View.VISIBLE);
         } else {
-            number = Integer.parseInt(spFavorite.getString("Number", null).toString());
+            number = Integer.parseInt(spFavorite.getString("Number", null));
         }
 
         if (number == 0) {
@@ -124,7 +108,7 @@ public class FavoriteListFragment extends Fragment {
         String description;
         String idx;
 
-        for (int i = 1; i <= number; i++) {
+        for (int i = last_pos + 1; i <= number; i++) {
             idx = spFavorite.getString("ID " + i, null);
             name = spFavorite.getString("Name " + Integer.toString(i), null);
             price = spFavorite.getString("Price " + Integer.toString(i), null);
@@ -132,15 +116,16 @@ public class FavoriteListFragment extends Fragment {
             category = spFavorite.getString("Category " + Integer.toString(i), null);
             description = spFavorite.getString("Description " + Integer.toString(i), null);
 
-            String priceWithoutSuffix = "";
+            StringBuilder priceWithoutSuffix = new StringBuilder();
             for (int j = 0; j < price.length() - 4; j++) {
-                priceWithoutSuffix += price.charAt(j);
+                priceWithoutSuffix.append(price.charAt(j));
             }
 
-            Product p = new Product(Integer.valueOf(idx), imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
+            Product p = new Product(Integer.parseInt(idx), imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix.toString()));
             HomeProduct hp = new HomeProduct(p);
 
             favoriteList.add(hp);
         }
+        last_pos = number;
     }
 }

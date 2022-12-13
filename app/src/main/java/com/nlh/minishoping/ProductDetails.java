@@ -7,22 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ExpandableHeightGridView;
-import com.google.android.material.internal.ContextUtils;
 import com.koushikdutta.ion.Ion;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -70,10 +63,9 @@ public class ProductDetails extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -134,51 +126,24 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     private boolean addToFavoriteData(SharedPreferences spFavorite, String idKey, String nameKey, String priceKey, String imageKey, String categoryKey, String descriptionKey) {
-        boolean res;
-
-        res = spFavorite.edit().putString(idKey, Integer.toString(ID)).commit();
-        if (!res) {
-            return false;
-        }
-
-        res = spFavorite.edit().putString(nameKey, name).commit();
-        if (!res) {
-            return false;
-        }
-
-        res = spFavorite.edit().putString(priceKey, price).commit();
-        if (!res) {
-            return false;
-        }
-
-        res = spFavorite.edit().putString(imageKey, imageLink).commit();
-        if (!res) {
-            return false;
-        }
-
-        res = spFavorite.edit().putString(categoryKey, category).commit();
-        if (!res) {
-            return false;
-        }
-
-        res = spFavorite.edit().putString(descriptionKey, description).commit();
-        if (!res) {
+        if (!spFavorite.edit().putString(idKey, Integer.toString(ID)).commit() ||
+                !spFavorite.edit().putString(nameKey, name).commit() ||
+                !spFavorite.edit().putString(priceKey, price).commit() ||
+                !spFavorite.edit().putString(imageKey, imageLink).commit() ||
+                !spFavorite.edit().putString(categoryKey, category).commit() ||
+                !spFavorite.edit().putString(descriptionKey, description).commit()) {
             return false;
         }
         return true;
     }
 
     private Integer getFavoriteNumber(SharedPreferences sp) {
-        Integer res = 0;
-
         if (!sp.contains("Number")) {
             sp.edit().putString("Number", "0").commit();
-            //return res;
         } else {
-            res = Integer.parseInt(sp.getString("Number", null));
+            return Integer.parseInt(sp.getString("Number", null));
         }
-
-        return res;
+        return 0;
     }
 
     public void onAddToCartClicked(View view) {
@@ -215,23 +180,19 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     private void setupViewsToDisplay() {
-        setupImageView(this, iv_product_image);
+        setupImageView(iv_product_image);
         tv_product_name.setText(name);
         tv_product_price.setText(price);
         tv_product_category.setText(category);
         tv_product_description.setText(description);
     }
 
-    private void setupImageView(Context c, ImageView iv) {
-        //Log.d("meow", "GetProducts: " + imageLink);
-        Ion.getDefault(c).getConscryptMiddleware().enable(false);
-        Ion.with(c)
-                .load(imageLink)
-                .withBitmap()
+    private void setupImageView(ImageView iv) {
+        Ion.with(iv)
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.icon)
                 .animateLoad(R.anim.loading)
-                .intoImageView(iv);
+                .load(imageLink);
     }
 
     private void setupGridViewRecommendationsList() {
@@ -242,51 +203,44 @@ public class ProductDetails extends AppCompatActivity {
         gv_recommendation_list.setAdapter(productGridViewAdapter);
 
         // set on click listener for each item in recommendation list
-        gv_recommendation_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HomeProduct product = (HomeProduct) gv_recommendation_list.getItemAtPosition(i);
-                int id = product.getId();
-                String name = product.getName();
-                String price = Integer.toString(product.getPrice()) + " VND";
-                String imageLink = product.getImageLink();
-                String category = product.getCategory();
-                String description = product.getDescription();
+        gv_recommendation_list.setOnItemClickListener((adapterView, view, i, l) -> {
+            HomeProduct product = (HomeProduct) gv_recommendation_list.getItemAtPosition(i);
+            int id = product.getId();
+            String name = product.getName();
+            String price = product.getPrice() + " VND";
+            String imageLink = product.getImageLink();
+            String category = product.getCategory();
+            String description = product.getDescription();
 
-                Intent intent = new Intent(ProductDetails.this, ProductDetails.class);
-                intent.putExtra("ID", id);
-                intent.putExtra("name", name);
-                intent.putExtra("price", price);
-                intent.putExtra("link", imageLink);
-                intent.putExtra("category", category);
-                intent.putExtra("description", description);
+            Intent intent = new Intent(ProductDetails.this, ProductDetails.class);
+            intent.putExtra("ID", id);
+            intent.putExtra("name", name);
+            intent.putExtra("price", price);
+            intent.putExtra("link", imageLink);
+            intent.putExtra("category", category);
+            intent.putExtra("description", description);
 
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
     }
 
     private String parsePrice(String originalPrice) {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (int j = 0; j < originalPrice.length() - 4; j++) { // " VND".length() = 4
-            res += originalPrice.charAt(j);
+            res.append(originalPrice.charAt(j));
         }
-        return res;
+        return res.toString();
     }
 
     private ArrayList<HomeProduct> getRecommendations() {
         String priceWithoutSuffix = parsePrice(price);
-
         // temp product, created for get recommendations
         Product p = new Product(1, imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
 
-        // get recommendations
-        ArrayList<Product> recommendationListRaw = DataHandler.GetRecommendProducts(p, NUMBER_OF_RECOMMENDATIONS);
-        ArrayList<HomeProduct> recommendationList = recommendationListRaw.stream()
+        return DataHandler.GetRecommendProducts(p, NUMBER_OF_RECOMMENDATIONS)
+                .stream()
                 .map(HomeProduct::new)
                 .collect(Collectors.toCollection(ArrayList::new));
-
-        return recommendationList;
     }
 
     // https://www.stechies.com/add-share-button-android-app/

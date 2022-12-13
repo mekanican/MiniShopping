@@ -56,8 +56,8 @@ public class ProductCartViewAdapter extends BaseAdapter {
         product.getImageToImageView(productView.findViewById(R.id.image_));
 
         // Handle button U/D
-        setHandleProduct(productView, this, R.id.up_cart, () -> product.addItem());
-        setHandleProduct(productView, this, R.id.down_cart, () -> product.removeItem());
+        setHandleProduct(productView, this, R.id.up_cart, product::addItem);
+        setHandleProduct(productView, this, R.id.down_cart, product::removeItem);
 
         return productView;
     }

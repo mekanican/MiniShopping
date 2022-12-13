@@ -19,8 +19,6 @@ public class HomeProduct {
     }
 
     public void getImageToImageView(ImageView iv) {
-        // Log.d("meow", "GetProducts: " + wrapped.imageLink);
-        // Ion.getDefault(c).getConscryptMiddleware().enable(false);
         Ion.with(iv)
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.icon)

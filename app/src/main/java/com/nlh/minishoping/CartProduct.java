@@ -38,6 +38,10 @@ public class CartProduct {
         }
     }
 
+    public String getEmail() {
+        return wrapped.getEmail();
+    }
+
     public int getNumberOfItem() {
         return numberOfItem;
     }

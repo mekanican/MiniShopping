@@ -1,5 +1,6 @@
 package com.nlh.minishoping;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -74,12 +75,18 @@ public class CartFragment extends Fragment {
 
         // Handle proceed
         (getActivity().findViewById(R.id.proceed_)).setOnClickListener(view1 -> {
-            Toast.makeText(getContext(),
-                    String.format("Chúc mừng bạn đã tốn %d VND, sản phẩm sẽ được giao trong nay mai :>",
-                            (int) Math.round((totalProductsPrice(productList) + DEFAULT_SHIPPING_PRICE) * VAT)),
-                    Toast.LENGTH_LONG).show();
+            processCart();
             removeAll();
         });
+    }
+
+    private void processCart() {
+//        Toast.makeText(getContext(),
+//                String.format("Chúc mừng bạn đã tốn %d VND, sản phẩm sẽ được giao trong nay mai :>",
+//                        (int) Math.round((totalProductsPrice(productList) + DEFAULT_SHIPPING_PRICE) * VAT)),
+//                Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getContext(), AddressActivity.class);
+        startActivity(intent);
     }
 
     private void removeAll() {

@@ -42,5 +42,9 @@ public class HomeProduct {
         return wrapped.description;
     }
 
+    public String getEmail() {
+        return wrapped.sellerEmail;
+    }
+
     private final Product wrapped;
 }

@@ -14,7 +14,8 @@
         android:hint="Address"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/ic_baseline_find_replace_24"
-        android:id="@+id/text_box">
+        android:id="@+id/text_box"
+        style="?attr/textInputOutlinedStyle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

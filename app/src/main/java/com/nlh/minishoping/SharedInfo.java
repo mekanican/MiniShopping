@@ -1,6 +1,7 @@
 package com.nlh.minishoping;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class SharedInfo {
@@ -17,12 +18,18 @@ public class SharedInfo {
 
     private Callback updateCart;
     private Callback updateFavorite;
-    
+
+    private Random r;
+
     private SharedInfo() {
         cartProduct = new ArrayList<>();
         productRaw = new ArrayList<>();
+        r = new Random();
     }
 
+    public int getRandInt(int end) {
+        return r.nextInt() % end;
+    }
 
     public void initData() {
         productRaw = DataHandler.GetProducts();

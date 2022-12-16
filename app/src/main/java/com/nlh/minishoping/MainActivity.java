@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Debug only
+        Log.d("Email", getIntent().getExtras().getString("Email"));
+        Toast.makeText(this, "Chao mung " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
 
         StoreFragment storeFragment = new StoreFragment();
         CartFragment cartFragment = new CartFragment();

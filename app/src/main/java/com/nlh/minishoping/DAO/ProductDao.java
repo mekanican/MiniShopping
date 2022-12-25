@@ -1,24 +1,26 @@
 package com.nlh.minishoping.DAO;
 
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Query;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface ProductDao {
-    @Query("select * from api_product")
-    ArrayList<Product> getAllProducts();
+//    @Query("select * from api_product")
+//    List<Product> getAllProducts();
 
-    @Query("select * from api_product where :from <= id and id <= :to ")
-    ArrayList<Product> getFromToProducts(int from, int to);
+    @Query("select id, name, price, image as imageLink from api_product")
+    public abstract DataSource.Factory<Integer, GeneralInfo> getPageProducts();
 
-    @Query("select * from api_product where category = :category")
-    ArrayList<Product> getCategoryProducts(String category);
+    @Query("select id, name, price, image as imageLink from api_product where category = :category limit 10")
+        // At most 10 item
+    List<GeneralInfo> getCategoryProducts(String category);
 
-    @Query("select * from api_product where price < :price")
-    ArrayList<Product> getPriceLowerProducts(int price);
+    @Query("select id, name, price, image as imageLink from api_product where price < :price")
+    public abstract DataSource.Factory<Integer, GeneralInfo> getPriceLowerProducts(float price);
 
-    @Query("select id, name, price, image from api_product")
-    ArrayList<GeneralInfo> getGeneralInfoProducts();
+    @Query("select * from api_product where id = :id limit 1")
+    Product getByIDProduct(int id);
 }

@@ -24,4 +24,8 @@ public abstract class ProductDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public static ProductDatabase getInstance() {
+        return INSTANCE;
+    }
 }

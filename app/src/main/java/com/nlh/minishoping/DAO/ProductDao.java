@@ -23,4 +23,7 @@ public interface ProductDao {
 
     @Query("select * from api_product where id = :id limit 1")
     Product getByIDProduct(int id);
+
+    @Query("select id, name, price, image as imageLink from api_product where id = :id limit 1")
+    GeneralInfo getInfoByIDProduct(int id);
 }

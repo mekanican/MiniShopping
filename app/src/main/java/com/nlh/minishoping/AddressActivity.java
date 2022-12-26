@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddressActivity extends AppCompatActivity {
 
@@ -96,7 +97,9 @@ public class AddressActivity extends AppCompatActivity {
                 intent.putExtra(CalendarContract.Events.HAS_ALARM, true);
                 startActivity(intent);
 
-                Toast.makeText(this, "Da xac nhan gui toi " + addr + "\n" + "Khoang cach: " + dist + "\n" + "Giao trong " + dayToDelivery + " ngay", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Da xac nhan gui toi " + addr + "\n" +
+                        "Khoang cach: " + String.format(Locale.ENGLISH, "%.2f", dist) + "\n" +
+                        "Giao trong " + dayToDelivery + " ngay", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }

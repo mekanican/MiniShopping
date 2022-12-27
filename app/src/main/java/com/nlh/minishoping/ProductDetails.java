@@ -3,6 +3,9 @@ package com.nlh.minishoping;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +19,14 @@ import android.widget.Toast;
 
 import com.example.ExpandableHeightGridView;
 import com.koushikdutta.ion.Ion;
+import com.nlh.minishoping.Cart.CartMap;
+import com.nlh.minishoping.DAO.GeneralInfo;
+import com.nlh.minishoping.DAO.ProductDatabase;
+import com.nlh.minishoping.Store.ProductAdapter;
+import com.nlh.minishoping.Store.ProductViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductDetails extends AppCompatActivity {
@@ -28,7 +37,6 @@ public class ProductDetails extends AppCompatActivity {
     TextView tv_product_price;
     TextView tv_product_category;
     TextView tv_product_description;
-    ExpandableHeightGridView gv_recommendation_list;
 
     int ID;
     String name;
@@ -36,8 +44,6 @@ public class ProductDetails extends AppCompatActivity {
     String imageLink;
     String category;
     String description;
-
-    private final int NUMBER_OF_RECOMMENDATIONS = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +153,7 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     public void onAddToCartClicked(View view) {
-        boolean success = SharedInfo.getInstance().addProductToCart(ID);
+        boolean success = CartMap.getInstance().addItem(ID);
 
         if (success) {
             Toast.makeText(this, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
@@ -166,17 +172,20 @@ public class ProductDetails extends AppCompatActivity {
         tv_product_price = findViewById(R.id.tv_product_price_details);
         tv_product_category = findViewById(R.id.tv_product_category_details);
         tv_product_description = findViewById(R.id.tv_product_description_details);
-        gv_recommendation_list = findViewById(R.id.grid_view_recommendation_list);
-        gv_recommendation_list.setExpanded(true);
     }
 
     private void getDataFromPreviousActivity() {
         ID = bundle.getInt("ID");
-        name = bundle.getString("name");
-        price = bundle.getString("price");
-        imageLink = bundle.getString("link");
-        category = bundle.getString("category");
-        description = bundle.getString("description");
+
+        // Warning: may slow on UI thread
+        com.nlh.minishoping.DAO.Product product =
+                ProductDatabase.getInstance().productDao().getByIDProduct(ID);
+
+        name = product.name;
+        price = Integer.toString((int) product.price);
+        imageLink = product.imageLink; // TODO: Fix network to get image
+        category = product.category;
+        description = product.description;
     }
 
     private void setupViewsToDisplay() {
@@ -196,51 +205,22 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     private void setupGridViewRecommendationsList() {
-        ArrayList<HomeProduct> recommendationList = getRecommendations();
+        // List<GeneralInfo> categoryProducts = ProductDatabase.getInstance().productDao().getCategoryProducts(category);
 
-        // setup adapter for recommendation list
-        ProductGridViewAdapter productGridViewAdapter = new ProductGridViewAdapter(this, recommendationList);
-        gv_recommendation_list.setAdapter(productGridViewAdapter);
+        RecyclerView recyclerView = findViewById(R.id.rview);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        productViewModel.initCategory(category);
 
-        // set on click listener for each item in recommendation list
-        gv_recommendation_list.setOnItemClickListener((adapterView, view, i, l) -> {
-            HomeProduct product = (HomeProduct) gv_recommendation_list.getItemAtPosition(i);
-            int id = product.getId();
-            String name = product.getName();
-            String price = product.getPrice() + " VND";
-            String imageLink = product.getImageLink();
-            String category = product.getCategory();
-            String description = product.getDescription();
-
-            Intent intent = new Intent(ProductDetails.this, ProductDetails.class);
-            intent.putExtra("ID", id);
-            intent.putExtra("name", name);
-            intent.putExtra("price", price);
-            intent.putExtra("link", imageLink);
-            intent.putExtra("category", category);
-            intent.putExtra("description", description);
-
-            startActivity(intent);
+        ProductAdapter productAdapter = new ProductAdapter(view1 -> {
+            int itemPosition = recyclerView.getChildAdapterPosition(view1);
+            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+            Intent intent = new Intent(this, ProductDetails.class)
+                    .putExtra("ID", gi.id);
+            this.startActivity(intent);
         });
-    }
-
-    private String parsePrice(String originalPrice) {
-        StringBuilder res = new StringBuilder();
-        for (int j = 0; j < originalPrice.length() - 4; j++) { // " VND".length() = 4
-            res.append(originalPrice.charAt(j));
-        }
-        return res.toString();
-    }
-
-    private ArrayList<HomeProduct> getRecommendations() {
-        String priceWithoutSuffix = parsePrice(price);
-        // temp product, created for get recommendations
-        Product p = new Product(1, imageLink, name, category, description, Integer.parseInt(priceWithoutSuffix));
-
-        return DataHandler.GetRecommendProducts(p, NUMBER_OF_RECOMMENDATIONS)
-                .stream()
-                .map(HomeProduct::new)
-                .collect(Collectors.toCollection(ArrayList::new));
+        productViewModel.productList.observe(this, productAdapter::submitList);
+        recyclerView.setAdapter(productAdapter);
     }
 
     // https://www.stechies.com/add-share-button-android-app/

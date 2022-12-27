@@ -38,20 +38,11 @@
 
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/grid_view_product_list"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:scrollbars="vertical"
-        android:verticalSpacing="15dp">
+        android:layout_height="match_parent">
 
-    </GridView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

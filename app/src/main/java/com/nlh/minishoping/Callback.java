@@ -1,6 +1,7 @@
 package com.nlh.minishoping;
 
 // For callback function
-interface Callback {
+public interface Callback {
     void call();
 }
+

@@ -16,10 +16,10 @@ public interface ProductDao {
 
     @Query("select id, name, price, image as imageLink from api_product where category = :category limit 10")
         // At most 10 item
-    List<GeneralInfo> getCategoryProducts(String category);
+    DataSource.Factory<Integer, GeneralInfo> getCategoryProducts(String category);
 
     @Query("select id, name, price, image as imageLink from api_product where price < :price")
-    public abstract DataSource.Factory<Integer, GeneralInfo> getPriceLowerProducts(float price);
+    DataSource.Factory<Integer, GeneralInfo> getPriceLowerProducts(float price);
 
     @Query("select * from api_product where id = :id limit 1")
     Product getByIDProduct(int id);

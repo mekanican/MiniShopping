@@ -18,6 +18,7 @@ public abstract class ProductDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context, ProductDatabase.class, "Product.db")
                             .createFromAsset("db.sqlite3")
+                            .allowMainThreadQueries()
                             .build();
                 }
             }

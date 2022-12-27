@@ -15,13 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nlh.minishoping.Cart.CartMap;
+import com.nlh.minishoping.DAO.GeneralInfo;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartFragment extends Fragment {
 
-    ArrayList<CartProduct> productList;
+    ArrayList<CartMap.Pair<GeneralInfo, Integer>> productList;
     ProductCartViewAdapter pcvAdapter;
     ListView lvProductList;
     BottomNavigationView bottomNavigationView;
@@ -49,64 +51,68 @@ public class CartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Setup productList
-        productList = SharedInfo.getInstance().getProductCart();
+        CartMap cartMapInstance = CartMap.getInstance();
 
-        // Setup list view
-        pcvAdapter = new ProductCartViewAdapter(productList, this::update);
+        // Setup productList
+        productList = new ArrayList<>();
+        pcvAdapter = new ProductCartViewAdapter(productList, id -> {
+            cartMapInstance.increaseItemQuantity((int) id);
+        }, id -> {
+            cartMapInstance.decreaseItemQuantity((int) id);
+        });
+
         lvProductList = getActivity().findViewById(R.id.cart_lv);
         lvProductList.setAdapter(pcvAdapter);
 
         bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
-        SharedInfo.getInstance().setCallbackUpdateCart(() -> {
-            int total = bottomNavigationView.getOrCreateBadge(R.id.cart).getNumber();
-            bottomNavigationView.getOrCreateBadge(R.id.cart).setNumber(total + 1);
+
+        cartMapInstance.setCallback(() -> {
+            productList.clear();
+            CartMap.Pair<ArrayList<CartMap.Pair<GeneralInfo, Integer>>, Integer> pair =
+                    cartMapInstance.generateArrayListWithTotal();
+            productList.addAll(pair.x);
+            bottomNavigationView.getOrCreateBadge(R.id.cart).setNumber(
+                    cartMapInstance.getNumberOfItem()
+            );
+            update(pair.y);
             pcvAdapter.notifyDataSetChanged();
-            update();
         });
 
         resetValue();
 
         // Handle deleteAll
         (getActivity().findViewById(R.id.delete_)).setOnClickListener(view1 -> {
-            removeAll();
+            deleteAll(cartMapInstance);
         });
 
 
         // Handle proceed
         (getActivity().findViewById(R.id.proceed_)).setOnClickListener(view1 -> {
             processCart();
-            removeAll();
+            deleteAll(cartMapInstance);
         });
     }
 
+    private void deleteAll(CartMap cartMapInstance) {
+        productList.clear();
+        cartMapInstance.clearCart();
+        resetValue();
+        bottomNavigationView.removeBadge(R.id.cart);
+        pcvAdapter.notifyDataSetChanged();
+    }
+
     private void processCart() {
-//        Toast.makeText(getContext(),
-//                String.format("Chúc mừng bạn đã tốn %d VND, sản phẩm sẽ được giao trong nay mai :>",
-//                        (int) Math.round((totalProductsPrice(productList) + DEFAULT_SHIPPING_PRICE) * VAT)),
-//                Toast.LENGTH_LONG).show();
+        // TODO: passing the cartMap.toString -> Server / to next intent
         Intent intent = new Intent(getContext(), AddressActivity.class);
         startActivity(intent);
     }
 
-    private void removeAll() {
-        productList.clear();
-        pcvAdapter.notifyDataSetChanged();
-        resetValue();
-        bottomNavigationView.removeBadge(R.id.cart);
-    }
-
     private void setPriceByID(int ID, int price) {
-        DecimalFormat formatter = new DecimalFormat("#,###.00");
-        ((TextView) getActivity().findViewById(ID)).setText(formatter.format(price) + " VND");
+        DecimalFormat formatter = new DecimalFormat("###,###,### 'VND'");
+        ((TextView) getActivity().findViewById(ID))
+                .setText(formatter.format(price));
     }
 
-
-    private int totalProductsPrice(ArrayList<CartProduct> products) {
-        return products.stream()
-                .mapToInt(CartProduct::total)
-                .sum();
-    }
 
     private void resetValue() {
         setPriceByID(R.id.product_price, 0);
@@ -114,8 +120,7 @@ public class CartFragment extends Fragment {
         setPriceByID(R.id.total_price, (int) (DEFAULT_SHIPPING_PRICE * VAT));
     }
 
-    private void update() {
-        int total = totalProductsPrice(productList);
+    private void update(int total) {
         setPriceByID(R.id.product_price, total);
         setPriceByID(R.id.total_price, (int) Math.round((total + DEFAULT_SHIPPING_PRICE) * VAT));
     }

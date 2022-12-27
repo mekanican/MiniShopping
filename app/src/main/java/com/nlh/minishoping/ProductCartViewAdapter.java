@@ -5,17 +5,24 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.nlh.minishoping.Cart.CartMap;
+import com.nlh.minishoping.DAO.GeneralInfo;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ProductCartViewAdapter extends BaseAdapter {
 
-    final ArrayList<CartProduct> listProduct;
-    final Callback onChanged;
+    final ArrayList<CartMap.Pair<GeneralInfo, Integer>> listProduct;
+    final Callback1 increase, decrease;
 
-    public ProductCartViewAdapter(ArrayList<CartProduct> listProduct, Callback onChanged) {
+    public ProductCartViewAdapter(ArrayList<CartMap.Pair<GeneralInfo, Integer>> listProduct,
+                                  Callback1 increase,
+                                  Callback1 decrease) {
         this.listProduct = listProduct;
-        this.onChanged = onChanged;
+        this.increase = increase;
+        this.decrease = decrease;
     }
 
     @Override
@@ -30,7 +37,7 @@ public class ProductCartViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return listProduct.get(i).getID();
+        return listProduct.get(i).x.id;
     }
 
     @Override
@@ -43,34 +50,27 @@ public class ProductCartViewAdapter extends BaseAdapter {
             productView = view;
         }
 
-        CartProduct product = (CartProduct) getItem(i);
+        CartMap.Pair<GeneralInfo, Integer> product = (CartMap.Pair<GeneralInfo, Integer>) getItem(i);
         // Modify each "item" in list from data of ith product.
         DecimalFormat formatter = new DecimalFormat("#,###.00");
-        setTextByID(productView, R.id.id_, String.format("#%d", product.getID()));
-        setTextByID(productView, R.id.name_, product.getName());
-        setTextByID(productView, R.id.price_, String.format("%d * %s VND", product.getNumberOfItem(),
-                formatter.format(product.getPrice())));
+        setTextByID(productView, R.id.id_, String.format(Locale.ENGLISH, "#%d", product.x.id));
+        setTextByID(productView, R.id.name_, product.x.name);
+        setTextByID(productView, R.id.price_, String.format(Locale.ENGLISH, "%d * %s VND", product.y,
+                formatter.format(product.x.price)));
 
         // setImageByID(productView, R.id.image_, product.image);
 
-        product.getImageToImageView(productView.findViewById(R.id.image_));
+        // product.getImageToImageView(productView.findViewById(R.id.image_));
+        // TODO: Handle image
 
         // Handle button U/D
-        setHandleProduct(productView, this, R.id.up_cart, product::addItem);
-        setHandleProduct(productView, this, R.id.down_cart, product::removeItem);
+        productView.findViewById(R.id.up_cart).setOnClickListener(view1 -> increase.call(product.x.id));
+        productView.findViewById(R.id.down_cart).setOnClickListener(view1 -> decrease.call(product.x.id));
 
         return productView;
     }
 
     private void setTextByID(View view, int ID, String text) {
         ((TextView) view.findViewById(ID)).setText(text);
-    }
-
-    private void setHandleProduct(View view, BaseAdapter context, int ID, Callback b) {
-        view.findViewById(ID).setOnClickListener(view1 -> {
-            b.call();
-            context.notifyDataSetChanged();
-            onChanged.call();
-        });
     }
 }

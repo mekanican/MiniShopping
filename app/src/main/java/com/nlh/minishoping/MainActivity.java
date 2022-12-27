@@ -8,16 +8,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nlh.minishoping.Cart.CartMap;
 
 public class MainActivity extends AppCompatActivity {
 
     Fragment currentFragment;
+    CartMap cartMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        cartMap = CartMap.getInstance();
 
         // Debug only
         Log.d("Email", getIntent().getExtras().getString("Email"));

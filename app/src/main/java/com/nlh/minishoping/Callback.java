@@ -4,3 +4,4 @@ package com.nlh.minishoping;
 public interface Callback {
     void call();
 }
+

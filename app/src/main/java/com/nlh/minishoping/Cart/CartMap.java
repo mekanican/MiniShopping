@@ -11,19 +11,30 @@ import java.util.HashMap;
 
 public class CartMap {
     private final HashMap<Integer, Integer> hashMap;
-    private final Callback update;
+    private Callback update;
 
-    public CartMap(Callback c) {
+    private static final CartMap INSTANCE = new CartMap();
+
+    public static CartMap getInstance() {
+        return INSTANCE;
+    }
+
+    private CartMap() {
         hashMap = new HashMap<>();
+    }
+
+    public void setCallback(Callback c) {
         update = c;
     }
 
-    public void addItem(int ID) {
+    public boolean addItem(int ID) {
         // Check duplicated
         if (!hashMap.containsKey(ID)) {
-            hashMap.put(ID, 0);
+            hashMap.put(ID, 1);
             update.call();
+            return true;
         }
+        return false;
     }
 
     public void clearCart() {
@@ -34,6 +45,7 @@ public class CartMap {
     public boolean increaseItemQuantity(int ID) {
         if (!hashMap.containsKey(ID)) return false;
         hashMap.compute(ID, (k, v) -> v + 1);
+        update.call();
         return true;
     }
 
@@ -46,8 +58,8 @@ public class CartMap {
 
         if (hashMap.get(ID) == 0) {
             hashMap.remove(ID);
-            update.call();
         }
+        update.call();
         return true;
     }
 
@@ -70,8 +82,9 @@ public class CartMap {
     }
 
     // For getting data from id -> list -> adapter for listview
-    public ArrayList<Pair<GeneralInfo, Integer>> generateArrayList() {
+    public Pair<ArrayList<Pair<GeneralInfo, Integer>>, Integer> generateArrayListWithTotal() {
         ArrayList<Pair<GeneralInfo, Integer>> result = new ArrayList<>();
+        int totalPrice = 0;
 
         hashMap.forEach((k, v) -> {
             GeneralInfo generalInfo = ProductDatabase
@@ -80,7 +93,12 @@ public class CartMap {
                     .getInfoByIDProduct(k);
             result.add(new Pair<>(generalInfo, v));
         });
-        return result;
+
+        totalPrice = result.stream()
+                .mapToInt(e -> (int) e.x.price * e.y)
+                .sum();
+
+        return new Pair<>(result, totalPrice);
     }
 
     public static class Pair<A, B> {

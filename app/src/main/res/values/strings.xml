@@ -35,4 +35,6 @@
     <string name="find">Tìm</string>
     <string name="product_name">Product Name</string>
     <string name="price">Price</string>
+    <string name="channel_name">Channel 1</string>
+    <string name="channel_description">This is channel 1</string>
 </resources>

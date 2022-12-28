@@ -35,6 +35,11 @@ dependencies {
     def lifecycle_version = "2.5.1"
     def paging_version = "3.1.1"
 
+    def core_version = "1.6.0"
+    dependencies {
+        implementation "androidx.core:core:$core_version"
+    }
+
     implementation "androidx.paging:paging-runtime:$paging_version"
 
 

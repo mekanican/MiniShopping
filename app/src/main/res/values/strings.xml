@@ -35,6 +35,10 @@
     <string name="find">Tìm</string>
     <string name="product_name">Product Name</string>
     <string name="price">Price</string>
-    <string name="channel_name">Channel 1</string>
-    <string name="channel_description">This is channel 1</string>
+    <string name="channel1_name">Channel 1</string>
+    <string name="channel1_description">This is channel 1</string>
+    <string name="welcome_noti_title">Xin chào</string>
+    <string name="welcome_noti_content">Chào mừng bạn đến với MiniShopping! Gì cũng có, gì cũng rẻ!</string>
+    <string name="channel2_name">Channel 2</string>
+    <string name="channel2_description">This is channel 2</string>
 </resources>

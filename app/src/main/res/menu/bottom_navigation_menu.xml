@@ -15,14 +15,14 @@
         android:enabled="true"
         android:icon="@drawable/favorite_icon"
         android:title="Yêu thích"/>
+    <item android:id="@+id/notification"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="Thông báo"/>
+
     <item
         android:id="@+id/map"
         android:enabled="true"
         android:icon="@drawable/map_icon"
         android:title="Bản đồ" />
-    <item
-        android:id="@+id/about"
-        android:enabled="true"
-        android:icon="@drawable/info_icon"
-        android:title="Giới thiệu" />
 </menu>

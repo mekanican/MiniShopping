@@ -61,6 +61,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
+            android:parentActivityName=".WelcomeActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
@@ -69,7 +70,8 @@
         <activity
             android:name=".ProductDetails"
             android:exported="false"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

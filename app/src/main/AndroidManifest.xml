@@ -64,6 +64,9 @@
             android:parentActivityName=".WelcomeActivity"
             android:screenOrientation="portrait">
             <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WelcomeActivity"/>
+            <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>

@@ -132,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_baseline_notifications_24);
 
         // Create an Intent for the activity you want to start
-        Intent intent = new Intent(getApplicationContext(), ProductDetails.class);
+        Intent intent = new Intent(this, ProductDetails.class);
         intent.putExtra("ID", 2);
 
         // Create the TaskStackBuilder and add the intent, which inflates the back stack
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
 
         // Get the PendingIntent containing the entire back stack
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_2)
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_2)
                 .setContentTitle("Sản phẩm hot giảm sâu!")
                 .setContentText("Bạn ơi, sản phẩm hot đang giảm sâu nè. Xem ngay thôi!")
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)

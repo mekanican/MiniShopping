@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotificationFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/product_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:textStyle="bold"
+        android:text="SẢN PHẨM GIẢM GIÁ" />
+
+    <TextView
+        android:id="@+id/product_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:clickable="true"
+        android:text="Sản phẩm hot giảm giá sốc!! Click để xem ngay" />
+
+    <TextView
+        android:id="@+id/product_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:clickable="true"
+        android:text="Bánh giảm giá mùa Tết đến nè!! Click để xem ngay" />
+
+    <TextView
+        android:id="@+id/product_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:clickable="true"
+        android:text="Kính mát thời trang sành điệu giá rẻ đây!! Click để xem ngay" />
+
+
+    <TextView
+        android:id="@+id/discount_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:textStyle="bold"
+        android:text="MÃ KHUYẾN MÃI" />
+
+    <TextView
+        android:id="@+id/discount_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Nhập mã QUAMON để được giảm 100%" />
+
+    <TextView
+        android:id="@+id/discount_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Nhập mã MOBILE để được giảm 70%" />
+
+    <TextView
+        android:id="@+id/discount_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Nhập mã HELLO để được giảm 50%" />
+
+    <TextView
+        android:id="@+id/discount_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Nhập mã WELCOME để được giảm 50%"
+        android:textSize="20sp" />
+
+</LinearLayout>

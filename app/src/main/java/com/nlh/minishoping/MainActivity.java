@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         cartMap = CartMap.getInstance();
 
         // Debug only
-        Log.d("Email", getIntent().getExtras().getString("Email"));
-        Toast.makeText(this, "Chao mung " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
+//        Log.d("Email", getIntent().getExtras().getString("Email"));
+//        Toast.makeText(this, "Chao mung " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
 
         StoreFragment storeFragment = new StoreFragment();
         CartFragment cartFragment = new CartFragment();
@@ -143,10 +143,6 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(0,
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-//        Intent intent = new Intent(this, NotificationFragment.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_2)
                 .setContentTitle("Sản phẩm hot giảm sâu!")

@@ -1,10 +1,14 @@
 package com.nlh.minishoping;
 
+import static com.nlh.minishoping.Connector.ServerConnector.HOST_NAME;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
 import com.nlh.minishoping.Cart.CartMap;
 import com.nlh.minishoping.DAO.GeneralInfo;
 
@@ -58,10 +62,8 @@ public class ProductCartViewAdapter extends BaseAdapter {
         setTextByID(productView, R.id.price_, String.format(Locale.ENGLISH, "%d * %s VND", product.y,
                 formatter.format(product.x.price)));
 
-        // setImageByID(productView, R.id.image_, product.image);
-
-        // product.getImageToImageView(productView.findViewById(R.id.image_));
-        // TODO: Handle image
+        String linkToImage = HOST_NAME + product.x.imageLink;
+        getImageToImageView(productView.findViewById(R.id.image_), linkToImage);
 
         // Handle button U/D
         productView.findViewById(R.id.up_cart).setOnClickListener(view1 -> increase.call(product.x.id));
@@ -72,5 +74,13 @@ public class ProductCartViewAdapter extends BaseAdapter {
 
     private void setTextByID(View view, int ID, String text) {
         ((TextView) view.findViewById(ID)).setText(text);
+    }
+
+    public static void getImageToImageView(ImageView iv, String imageLink) {
+        Ion.with(iv)
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.icon)
+                .animateLoad(R.anim.loading)
+                .load(imageLink);
     }
 }

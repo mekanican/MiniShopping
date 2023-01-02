@@ -1,5 +1,7 @@
 package com.nlh.minishoping;
 
+import static com.nlh.minishoping.Connector.ServerConnector.HOST_NAME;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -183,7 +185,7 @@ public class ProductDetails extends AppCompatActivity {
 
         name = product.name;
         price = Integer.toString((int) product.price);
-        imageLink = product.imageLink; // TODO: Fix network to get image
+        imageLink = HOST_NAME + product.imageLink;
         category = product.category;
         description = product.description;
     }

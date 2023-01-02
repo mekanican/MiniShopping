@@ -1,5 +1,8 @@
 package com.nlh.minishoping.Store;
 
+import static com.nlh.minishoping.Connector.ServerConnector.HOST_NAME;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.koushikdutta.ion.Ion;
+import com.nlh.minishoping.Connector.ServerConnector;
 import com.nlh.minishoping.DAO.GeneralInfo;
 import com.nlh.minishoping.R;
 
@@ -65,8 +69,10 @@ public class ProductAdapter extends PagedListAdapter<GeneralInfo, ProductAdapter
         public void bindTo(GeneralInfo gi) {
             tvProductName.setText(gi.name);
             tvProductPrice.setText("" + (int) gi.price + " VND");
+            String image = HOST_NAME + gi.imageLink;
+            Log.i("Image link", image);
             // Server chua co nen sai tam link nhe :(
-            getImageToImageView(ivProductImage, "https://lzd-img-global.slatic.net/g/ff/kf/Sfae58f8bc68b49d4b7f178737b293858g.jpg_400x400q80.jpg_.webp"); // gi.imageLink
+            getImageToImageView(ivProductImage, image); // gi.imageLink
         }
     }
 }

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nlh.minishoping.Cart.CartMap;
+import com.nlh.minishoping.Connector.ServerConnector;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -109,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
         sendWelcomeNotification();
 
         sendDiscountNotification();
+
+        int[] arr = ServerConnector.GetSearchResults("voucher");
+        if (arr != null) {
+            for (int i = 0; i < arr.length; i++) {
+                Log.i("RESULT ARRAY " + i, String.valueOf(arr[i]));
+            }
+        }
     }
 
     private void sendWelcomeNotification() {

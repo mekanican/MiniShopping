@@ -60,4 +60,40 @@ public class ServerConnector {
         return null;
     }
 
+    public static boolean RegisterOrLogin(String email) {
+        String result = null;
+
+        RegisterTask registerTask = new RegisterTask();
+        registerTask.execute(email);
+
+        try {
+            result = registerTask.get();
+            Log.i("RESULT_REGISTER", result);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (result == null) {
+            return false;
+        }
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            String message = jsonObject.getString("message");
+            Log.i("REGISTER_MESSAGE", message);
+
+            if (message.equals("success")) {
+                return true;
+            }
+
+            return false;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

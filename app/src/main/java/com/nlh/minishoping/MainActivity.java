@@ -117,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("RESULT ARRAY " + i, String.valueOf(arr[i]));
             }
         }
+
+        boolean ans = ServerConnector.RegisterOrLogin("vanloc1808@gmail.com");
+        Log.i("REGISTER ANSWER", String.valueOf(ans));
     }
 
     private void sendWelcomeNotification() {

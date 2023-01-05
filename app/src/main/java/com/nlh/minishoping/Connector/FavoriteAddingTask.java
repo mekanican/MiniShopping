@@ -16,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class FavoriteTask extends AsyncTask<String, Void, String>  {
+public class FavoriteAddingTask extends AsyncTask<String, Void, String>  {
     @Override
     protected String doInBackground(String... values) {
         String apiURL = HOST_NAME + API_PATH + "favorite";

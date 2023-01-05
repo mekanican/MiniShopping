@@ -6,13 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class ServerConnector {
@@ -113,13 +106,13 @@ public class ServerConnector {
     }
 
     public static int AddProductToFavorite(String hash, int productID) {
-        String result = null;
+        String result;
 
-        FavoriteTask favoriteTask = new FavoriteTask();
-        favoriteTask.execute(hash, String.valueOf(productID));
+        FavoriteAddingTask favoriteAddingTask = new FavoriteAddingTask();
+        favoriteAddingTask.execute(hash, String.valueOf(productID));
 
         try {
-            result = favoriteTask.get();
+            result = favoriteAddingTask.get();
             Log.i("FAVORITE RESULT", result);
 
             JSONObject jsonObject = new JSONObject(result);
@@ -138,6 +131,26 @@ public class ServerConnector {
         }
 
         return -1;
+    }
+
+    public static int[] GetFavoriteList(String hash) {
+        String result = null;
+
+        FavoriteGettingTask favoriteGettingTask = new FavoriteGettingTask();
+        favoriteGettingTask.execute(hash);
+
+        try {
+            result = favoriteGettingTask.get();
+            Log.i("FAVORITE GETTING RESULT", result);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        int[] arr = getArraysFromJson(result, "favorites");
+
+        return arr;
     }
 
     private static int[] getArraysFromJson(String result, String key) {

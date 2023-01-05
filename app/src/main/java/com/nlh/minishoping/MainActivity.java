@@ -112,20 +112,23 @@ public class MainActivity extends AppCompatActivity {
         sendWelcomeNotification();
 
         sendDiscountNotification();
-
-        // GET SEARCH RESULTS
-        int[] arr = ServerConnector.GetSearchResults("voucher");
-
+//
+//        // GET SEARCH RESULTS
+//        int[] arr = ServerConnector.GetSearchResults("voucher");
+//
+        // TODO: EDIT CODE HERE, REPLACE THE HARD-CODED EMAIL WITH THE USER'S EMAIL
         // GET THE HASH VALUE OF THIS EMAIL
         hashValue = ServerConnector.RegisterOrLogin("vanloc1808@gmail.com");
         Log.i("REGISTER ANSWER", String.valueOf(hashValue));
+//
+//        // GET PRODUCTS BY CATEGORY
+//        int[] catArr = ServerConnector.GetProductsByCategory("Bách hóa");
+//
+//        // TEST ADD PRODUCT TO FAVORITE
+//        int ans = ServerConnector.AddProductToFavorite("bac265735b6b4d63d1d2c33e6ddb314dcb33c37ebe747213b3186c92ab37956d", 3);
+//        Log.i("FAVORITE RETURNED", String.valueOf(ans));
 
-        // GET PRODUCTS BY CATEGORY
-        int[] catArr = ServerConnector.GetProductsByCategory("Bách hóa");
-
-        // TEST ADD PRODUCT TO FAVORITE
-        int ans = ServerConnector.AddProductToFavorite("bac265735b6b4d63d1d2c33e6ddb314dcb33c37ebe747213b3186c92ab37956d", 3);
-        Log.i("FAVORITE RETURNED", String.valueOf(ans));
+        int[] arr = ServerConnector.GetFavoriteList(hashValue);
     }
 
     // https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android

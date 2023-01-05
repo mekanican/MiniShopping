@@ -82,8 +82,6 @@ public class ProductDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // https://developer.android.com/training/data-storage/shared-preferences?hl=en
-    // https://viblo.asia/p/shared-preferences-trong-android-1Je5EEvY5nL
     public void onFavoriteClicked(View view) {
         int ans = ServerConnector.AddProductToFavorite(hashValue, ID);
         if (ans == 0) {
@@ -95,27 +93,6 @@ public class ProductDetails extends AppCompatActivity {
         }
     }
 
-    private boolean addToFavoriteData(SharedPreferences spFavorite, String idKey, String nameKey, String priceKey, String imageKey, String categoryKey, String descriptionKey) {
-        if (!spFavorite.edit().putString(idKey, Integer.toString(ID)).commit() ||
-                !spFavorite.edit().putString(nameKey, name).commit() ||
-                !spFavorite.edit().putString(priceKey, price).commit() ||
-                !spFavorite.edit().putString(imageKey, imageLink).commit() ||
-                !spFavorite.edit().putString(categoryKey, category).commit() ||
-                !spFavorite.edit().putString(descriptionKey, description).commit()) {
-            return false;
-        }
-        return true;
-    }
-
-    private Integer getFavoriteNumber(SharedPreferences sp) {
-        if (!sp.contains("Number")) {
-            sp.edit().putString("Number", "0").commit();
-        } else {
-            return Integer.parseInt(sp.getString("Number", null));
-        }
-        return 0;
-    }
-
     public void onAddToCartClicked(View view) {
         boolean success = CartMap.getInstance().addItem(ID);
 
@@ -124,10 +101,6 @@ public class ProductDetails extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Sản phẩm có trong giỏ hàng!", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void showFailNotification() {
-        Toast.makeText(this, "Lỗi! Thêm sản phẩm vào danh sách yêu thích không thành công", Toast.LENGTH_LONG).show();
     }
 
     private void setupViewsOnCreate() {

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.ExpandableHeightGridView;
 import com.koushikdutta.ion.Ion;
 import com.nlh.minishoping.Cart.CartMap;
+import com.nlh.minishoping.Connector.ServerConnector;
 import com.nlh.minishoping.DAO.GeneralInfo;
 import com.nlh.minishoping.DAO.ProductDatabase;
 import com.nlh.minishoping.Store.ProductAdapter;
@@ -84,55 +85,13 @@ public class ProductDetails extends AppCompatActivity {
     // https://developer.android.com/training/data-storage/shared-preferences?hl=en
     // https://viblo.asia/p/shared-preferences-trong-android-1Je5EEvY5nL
     public void onFavoriteClicked(View view) {
-        // get the data store in SharedPreferences
-        SharedPreferences spFavorite = this.getSharedPreferences(
-                "FAVORITE", Context.MODE_PRIVATE);
-
-        Integer number = getFavoriteNumber(spFavorite);
-
-        boolean isDuplicated = false;
-
-        // check if exists duplication
-        if (number > 0) {
-            for (int i = 1; i <= number; i++) {
-                String tempID = spFavorite.getString("ID " + i, null);
-                String stringID = Integer.toString(ID);
-                if (tempID.equals(stringID)) {
-                    isDuplicated = true;
-                    break;
-                }
-
-            }
-        }
-
-        // if duplicated, do nothing
-        if (isDuplicated) {
+        int ans = ServerConnector.AddProductToFavorite(hashValue, ID);
+        if (ans == 0) {
+            Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích thành công", Toast.LENGTH_LONG).show();
+        } else if (ans == 1) {
             Toast.makeText(this, "Sản phẩm đã có trong danh sách yêu thích", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        String idKey = "ID " + (number + 1);
-        String nameKey = "Name " + (number + 1);
-        String priceKey = "Price " + (number + 1);
-        String imageKey = "Image " + (number + 1);
-        String categoryKey = "Category " + (number + 1);
-        String descriptionKey = "Description " + (number + 1);
-
-        // add key - value pairs to data
-        boolean res;
-        res = addToFavoriteData(spFavorite, idKey, nameKey, priceKey, imageKey, categoryKey, descriptionKey);
-        if (!res) {
-            showFailNotification();
-            return;
-        }
-
-        number += 1;
-        res = spFavorite.edit().putString("Number", Integer.toString(number)).commit();
-        if (res) {
-            Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
-            SharedInfo.getInstance().addFavoriteTrigger();
         } else {
-            showFailNotification();
+            Toast.makeText(this, "Có lỗi xảy ra khi thêm sản phẩm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
         }
     }
 

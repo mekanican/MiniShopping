@@ -112,14 +112,11 @@ public class MainActivity extends AppCompatActivity {
         sendDiscountNotification();
 
         int[] arr = ServerConnector.GetSearchResults("voucher");
-        if (arr != null) {
-            for (int i = 0; i < arr.length; i++) {
-                Log.i("RESULT ARRAY " + i, String.valueOf(arr[i]));
-            }
-        }
 
         boolean ans = ServerConnector.RegisterOrLogin("vanloc1808@gmail.com");
         Log.i("REGISTER ANSWER", String.valueOf(ans));
+
+        int[] catArr = ServerConnector.GetProductsByCategory("Bách hóa");
     }
 
     private void sendWelcomeNotification() {

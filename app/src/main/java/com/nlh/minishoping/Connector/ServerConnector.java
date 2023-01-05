@@ -19,6 +19,8 @@ public class ServerConnector {
     public static final  String HOST_NAME = "http://10.0.2.2:8000/";
     public static final String API_PATH = "api/";
 
+    private static final String PRODUCTS_KEY = "products";
+
     public static int[] GetSearchResults(String name) {
         String result = null;
 
@@ -37,27 +39,13 @@ public class ServerConnector {
 
         Log.i("RESULT", result);
 
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            String products = jsonObject.getString("products");
-            Log.i("PRODUCTS", products);
+        int[] arr = getArraysFromJson(result, PRODUCTS_KEY);
 
-            JSONArray jsonArray = new JSONArray(products);
-            int[] arr = new int[jsonArray.length()];
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                arr[i] = jsonArray.getInt(i);
-            }
-
-            for (int i = 0; i < arr.length; i++) {
-                Log.i("ARRAY " + i, String.valueOf(arr[i]));
-            }
-
-            return arr;
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (arr == null) {
+            return null;
         }
-        return null;
+
+        return arr;
     }
 
     public static boolean RegisterOrLogin(String email) {
@@ -95,5 +83,50 @@ public class ServerConnector {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static int[] GetProductsByCategory(String category) {
+        String result = null;
+
+        CategoryTask categoryTask = new CategoryTask();
+        categoryTask.execute(category);
+
+        try {
+            result = categoryTask.get();
+            Log.i("CATEGORY RESULT", result);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        int[] arr = getArraysFromJson(result, PRODUCTS_KEY);
+
+        return arr;
+    }
+
+
+    private static int[] getArraysFromJson(String result, String key) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            String stringArrays = jsonObject.getString(key);
+            Log.i("PRODUCTS", stringArrays);
+
+            JSONArray jsonArray = new JSONArray(stringArrays);
+            int[] arr = new int[jsonArray.length()];
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                arr[i] = jsonArray.getInt(i);
+            }
+
+            for (int i = 0; i < arr.length; i++) {
+                Log.i("ARRAY " + i, String.valueOf(arr[i]));
+            }
+
+            return arr;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

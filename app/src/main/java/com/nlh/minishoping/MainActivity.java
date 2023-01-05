@@ -111,11 +111,14 @@ public class MainActivity extends AppCompatActivity {
 
         sendDiscountNotification();
 
+        // GET SEARCH RESULTS
         int[] arr = ServerConnector.GetSearchResults("voucher");
 
-        boolean ans = ServerConnector.RegisterOrLogin("vanloc1808@gmail.com");
+        // GET THE HASH VALUE OF THIS EMAIL
+        String ans = ServerConnector.RegisterOrLogin("vanloc1808@gmail.com");
         Log.i("REGISTER ANSWER", String.valueOf(ans));
 
+        // GET PRODUCTS BY CATEGORY
         int[] catArr = ServerConnector.GetProductsByCategory("Bách hóa");
     }
 

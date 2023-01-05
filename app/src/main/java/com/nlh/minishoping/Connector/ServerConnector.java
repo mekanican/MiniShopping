@@ -37,7 +37,7 @@ public class ServerConnector {
             return null;
         }
 
-        Log.i("RESULT", result);
+        // Log.i("RESULT", result);
 
         int[] arr = getArraysFromJson(result, PRODUCTS_KEY);
 
@@ -48,7 +48,7 @@ public class ServerConnector {
         return arr;
     }
 
-    public static boolean RegisterOrLogin(String email) {
+    public static String RegisterOrLogin(String email) {
         String result = null;
 
         RegisterTask registerTask = new RegisterTask();
@@ -56,17 +56,17 @@ public class ServerConnector {
 
         try {
             result = registerTask.get();
-            Log.i("RESULT_REGISTER", result);
+            // Log.i("RESULT_REGISTER", result);
         } catch (ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return null;
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
 
         if (result == null) {
-            return false;
+            return null;
         }
 
         try {
@@ -75,13 +75,20 @@ public class ServerConnector {
             Log.i("REGISTER_MESSAGE", message);
 
             if (message.equals("success")) {
-                return true;
+                String stringData = jsonObject.getString("data");
+                Log.i("REGISTER_DATA", stringData);
+
+                JSONObject dataJsonObject = new JSONObject(stringData);
+                String hash = dataJsonObject.getString("hash");
+                Log.i("REGISTER_HASH", hash);
+
+                return hash;
             }
 
-            return false;
+            return null;
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -93,7 +100,7 @@ public class ServerConnector {
 
         try {
             result = categoryTask.get();
-            Log.i("CATEGORY RESULT", result);
+            // Log.i("CATEGORY RESULT", result);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -106,11 +113,12 @@ public class ServerConnector {
     }
 
 
+
     private static int[] getArraysFromJson(String result, String key) {
         try {
             JSONObject jsonObject = new JSONObject(result);
             String stringArrays = jsonObject.getString(key);
-            Log.i("PRODUCTS", stringArrays);
+            // Log.i("PRODUCTS", stringArrays);
 
             JSONArray jsonArray = new JSONArray(stringArrays);
             int[] arr = new int[jsonArray.length()];
@@ -120,7 +128,7 @@ public class ServerConnector {
             }
 
             for (int i = 0; i < arr.length; i++) {
-                Log.i("ARRAY " + i, String.valueOf(arr[i]));
+                // Log.i("ARRAY " + i, String.valueOf(arr[i]));
             }
 
             return arr;

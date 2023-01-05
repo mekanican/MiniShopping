@@ -112,7 +112,33 @@ public class ServerConnector {
         return arr;
     }
 
+    public static int AddProductToFavorite(String hash, int productID) {
+        String result = null;
 
+        FavoriteTask favoriteTask = new FavoriteTask();
+        favoriteTask.execute(hash, String.valueOf(productID));
+
+        try {
+            result = favoriteTask.get();
+            Log.i("FAVORITE RESULT", result);
+
+            JSONObject jsonObject = new JSONObject(result);
+            String message = jsonObject.getString("message");
+            Log.i("FAVORITE MESSAGE", message);
+            if (message.equals("success")) {
+                return 0;
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
 
     private static int[] getArraysFromJson(String result, String key) {
         try {

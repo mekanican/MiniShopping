@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Fragment currentFragment;
     CartMap cartMap;
 
+    String hashValue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,11 +117,20 @@ public class MainActivity extends AppCompatActivity {
         int[] arr = ServerConnector.GetSearchResults("voucher");
 
         // GET THE HASH VALUE OF THIS EMAIL
-        String ans = ServerConnector.RegisterOrLogin("vanloc1808@gmail.com");
-        Log.i("REGISTER ANSWER", String.valueOf(ans));
+        hashValue = ServerConnector.RegisterOrLogin("vanloc1808@gmail.com");
+        Log.i("REGISTER ANSWER", String.valueOf(hashValue));
 
         // GET PRODUCTS BY CATEGORY
         int[] catArr = ServerConnector.GetProductsByCategory("Bách hóa");
+
+        // TEST ADD PRODUCT TO FAVORITE
+        int ans = ServerConnector.AddProductToFavorite("bac265735b6b4d63d1d2c33e6ddb314dcb33c37ebe747213b3186c92ab37956d", 3);
+        Log.i("FAVORITE RETURNED", String.valueOf(ans));
+    }
+
+    // https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+    public String getHashValue() {
+        return hashValue;
     }
 
     private void sendWelcomeNotification() {

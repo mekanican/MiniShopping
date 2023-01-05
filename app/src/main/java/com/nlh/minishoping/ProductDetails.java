@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,6 +47,8 @@ public class ProductDetails extends AppCompatActivity {
     String imageLink;
     String category;
     String description;
+
+    String hashValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +181,9 @@ public class ProductDetails extends AppCompatActivity {
 
     private void getDataFromPreviousActivity() {
         ID = bundle.getInt("ID");
+
+        hashValue = bundle.getString("HASH");
+        Log.i("HASH VALUE GOTTEN IN PRODUCT DETAILS", hashValue);
 
         // Warning: may slow on UI thread
         com.nlh.minishoping.DAO.Product product =

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 public class StoreFragment extends Fragment {
 
     TextView etProductNameToFind;
+    String hashValue;
 
     public StoreFragment() {
         // Required empty public constructor
@@ -42,6 +44,10 @@ public class StoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        hashValue = mainActivity.getHashValue();
+        Log.i("HASH VALUE GOTTEN IN STORE FRAGMENT", hashValue);
 
         return inflater.inflate(R.layout.fragment_store, container, false);
     }
@@ -60,7 +66,8 @@ public class StoreFragment extends Fragment {
             int itemPosition = recyclerView.getChildAdapterPosition(view1);
             GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
             Intent intent = new Intent(getActivity(), ProductDetails.class)
-                    .putExtra("ID", gi.id);
+                    .putExtra("ID", gi.id)
+                            .putExtra("HASH", hashValue);
             getActivity().startActivity(intent);
         });
         productViewModel.productList.observe(getActivity(), productAdapter::submitList);

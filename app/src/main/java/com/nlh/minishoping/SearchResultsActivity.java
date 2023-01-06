@@ -3,6 +3,9 @@ package com.nlh.minishoping;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +14,13 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.nlh.minishoping.Connector.ServerConnector;
+import com.nlh.minishoping.DAO.GeneralInfo;
+import com.nlh.minishoping.DAO.Product;
+import com.nlh.minishoping.DAO.ProductDatabase;
+import com.nlh.minishoping.Store.ProductAdapter;
+import com.nlh.minishoping.Store.ProductViewModel;
+
 import java.util.ArrayList;
 
 public class SearchResultsActivity extends AppCompatActivity {
@@ -18,6 +28,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     Bundle bundle;
     TextView tvNoSearchResults;
     GridView gvSearchResults;
+    String hashValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,35 +40,18 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         tvNoSearchResults = findViewById(R.id.tv_no_search_result);
 
-        ArrayList<HomeProduct> productArrayList = setupProductArrayList();
-        if (productArrayList.size() > 0) {
-            gvSearchResults = findViewById(R.id.grid_view_product_list_search_results);
+        String searchQuery = bundle.getString("QUERY");
+        hashValue = bundle.getString("HASH");
 
-            ProductGridViewAdapter productGridViewAdapter = new ProductGridViewAdapter(this, productArrayList);
-            gvSearchResults.setAdapter(productGridViewAdapter);
-            gvSearchResults.setOnItemClickListener((adapterView, view, i, l) -> {
-                HomeProduct product = (HomeProduct) gvSearchResults.getItemAtPosition(i);
+        int[] searchResults = ServerConnector.GetSearchResults(searchQuery);
+        RecyclerView rvResults = findViewById(R.id.search_result_recycler_view);
+        rvResults.setLayoutManager(new GridLayoutManager(this, 2));
 
-                String name = product.getName();
-                String price = product.getPrice() + " VND";
-                String imageLink = product.getImageLink();
-                String category = product.getCategory();
-                String description = product.getDescription();
 
-                Intent intent = new Intent(SearchResultsActivity.this, ProductDetails.class);
-                intent.putExtra("ID", product.getId());
-                intent.putExtra("name", name);
-                intent.putExtra("price", price);
-                intent.putExtra("link", imageLink);
-                intent.putExtra("category", category);
-                intent.putExtra("description", description);
-
-                startActivity(intent);
-            });
-        }
 
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 

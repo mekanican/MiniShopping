@@ -74,22 +74,13 @@ public class StoreFragment extends Fragment {
         recyclerView.setAdapter(productAdapter);
 
         getActivity().findViewById(R.id.btn_search).setOnClickListener(view1 -> {
-            // TODO: Fix this
-//            String productNameForSearching = String.valueOf(etProductNameToFind.getText());
-//            ArrayList<Integer> searchResultsIndices = DataHandler.GetSearchProducts(productNameForSearching);
-//            ArrayList<HomeProduct> searchResults = new ArrayList<>();
-//
-//            for (int i = 0; i < searchResultsIndices.size(); i++) {
-//                searchResults.add(homeProductArrayList.get(searchResultsIndices.get(i)));
-//            }
-//
-//            Intent intent = new Intent(getContext(), SearchResultsActivity.class);
-//            intent.putExtra("Number", (searchResultsIndices.size()));
-//
-//            for (int i = 0; i < searchResults.size(); i++) {
-//                intent.putExtra("ID" + i, searchResults.get(i).getId());
-//            }
-//            startActivity(intent);
+            String query = String.valueOf(etProductNameToFind.getText());
+
+            Intent intent = new Intent(getActivity(), SearchResultsActivity.class);
+            intent.putExtra("QUERY", query);
+            intent.putExtra("HASH", hashValue);
+
+            startActivity(intent);
         });
     }
 

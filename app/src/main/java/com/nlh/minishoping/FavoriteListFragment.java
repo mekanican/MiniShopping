@@ -68,19 +68,20 @@ public class FavoriteListFragment extends Fragment {
 
         int[] favoriteArray = ServerConnector.GetFavoriteList(hashValue);
 
-        Product[] products = new Product[favoriteArray.length];
-        for (int i = 0; i < favoriteArray.length; i++) {
-            products[i] = ProductDatabase.getInstance().productDao().getByIDProduct(favoriteArray[i]);
+        if (favoriteArray == null) {
+            tvNoFavoriteItem.setVisibility(View.VISIBLE);
         }
 
+        productViewModel.initSearch(favoriteArray);
         ProductAdapter productAdapter = new ProductAdapter(view1 -> {
-            int itemPosition = rvFavoriteList.getChildAdapterPosition(view1);
-            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+           int itemPosition = rvFavoriteList.getChildAdapterPosition(view1);
+           GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
             Intent intent = new Intent(getActivity(), ProductDetails.class)
                     .putExtra("ID", gi.id)
                     .putExtra("HASH", hashValue);
-            getActivity().startActivity(intent);
+            startActivity(intent);
         });
+
         productViewModel.productList.observe(getActivity(), productAdapter::submitList);
         rvFavoriteList.setAdapter(productAdapter);
     }

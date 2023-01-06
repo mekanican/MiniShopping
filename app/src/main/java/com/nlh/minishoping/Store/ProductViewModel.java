@@ -11,6 +11,7 @@ import androidx.paging.PagedList;
 import com.nlh.minishoping.DAO.GeneralInfo;
 import com.nlh.minishoping.DAO.ProductDao;
 import com.nlh.minishoping.DAO.ProductDatabase;
+import com.nlh.minishoping.DAO.Product;
 
 // https://c1ctech.com/android-jetpack-paging-example-using-room/
 

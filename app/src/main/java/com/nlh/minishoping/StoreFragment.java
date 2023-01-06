@@ -72,6 +72,7 @@ public class StoreFragment extends Fragment {
         });
         productViewModel.productList.observe(getActivity(), productAdapter::submitList);
         recyclerView.setAdapter(productAdapter);
+
         getActivity().findViewById(R.id.btn_search).setOnClickListener(view1 -> {
             // TODO: Fix this
 //            String productNameForSearching = String.valueOf(etProductNameToFind.getText());

@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nlh.minishoping.Cart.CartMap;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment currentFragment;
     CartMap cartMap;
+
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         NotificationFragment notificationFragment = new NotificationFragment();
 
         String notificationString = getIntent().getStringExtra("Fragment");
+        email = getIntent().getStringExtra("Email");
         if (notificationString != null) {
             Log.i("NOTIFICATION STRING", notificationString);
 
@@ -132,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Debug only
 //        Log.d("Email", getIntent().getExtras().getString("Email"));
-//        Toast.makeText(this, "Chao mung " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Chào mừng " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
 
 
     }
@@ -145,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 .setContentText(getString(R.string.welcome_noti_content))
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setLargeIcon(bitmap)
+                .setAutoCancel(true)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -161,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         //notificationIntent.putExtra("ID", 2);
         notificationIntent.putExtra("Fragment", "NotificationFragment");
+        notificationIntent.putExtra("Email", email);
 
 
         // Create the TaskStackBuilder and add the notificationIntent, which inflates the back stack
@@ -178,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setLargeIcon(bitmap)
                 .setContentIntent(resultPendingIntent)
+                .setAutoCancel(true)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

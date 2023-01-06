@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,8 @@ public class ProductDetails extends AppCompatActivity {
 
     String hashValue;
 
+    boolean isFavorite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,28 @@ public class ProductDetails extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         setupGridViewRecommendationsList();
+
+        isFavorite = false;
+        int[] favoriteArray = ServerConnector.GetFavoriteList(hashValue);
+        for (int i = 0; i < favoriteArray.length; i++) {
+            if (favoriteArray[i] == ID) {
+                isFavorite = true;
+                break;
+            }
+        }
+        Log.i("FAVORITE CHECK RESULT", String.valueOf(isFavorite));
+
+
+        adjustFavoriteButtonText(isFavorite);
+    }
+
+    private void adjustFavoriteButtonText(boolean isFavorite) {
+        if (!isFavorite) {
+            return;
+        }
+
+        Button btn = findViewById(R.id.favorite_button);
+        btn.setText("Bỏ thích");
     }
 
     @Override
@@ -83,13 +108,23 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     public void onFavoriteClicked(View view) {
-        int ans = ServerConnector.AddProductToFavorite(hashValue, ID);
-        if (ans == 0) {
-            Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích thành công", Toast.LENGTH_LONG).show();
-        } else if (ans == 1) {
-            Toast.makeText(this, "Sản phẩm đã có trong danh sách yêu thích", Toast.LENGTH_LONG).show();
+        Log.i("PRODUCT DETAILS HASH VALUE", hashValue);
+        Log.i("PRODUCT DETAIL ID", String.valueOf(ID));
+        int ans = ServerConnector.AddProductToFavorite(hashValue, ID, isFavorite);
+        Log.i("PRODUCT DETAILS RETURN FROM CONNECTOR", String.valueOf(ans));
+
+        if (!isFavorite) {
+            if (ans == 0) {
+                Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích thành công", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Có lỗi xảy ra khi thêm sản phẩm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(this, "Có lỗi xảy ra khi thêm sản phẩm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
+            if (ans == 0) {
+                Toast.makeText(this, "Sản phẩm đã được xóa khỏi danh sách yêu thích thành công", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Có lỗi xảy ra khi xóa sản phẩm khỏi danh sách yêu thích", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

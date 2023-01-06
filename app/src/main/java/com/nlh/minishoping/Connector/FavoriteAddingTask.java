@@ -30,8 +30,14 @@ public class FavoriteAddingTask extends AsyncTask<String, Void, String>  {
 
             // Set the content type of the request
             conn.setRequestProperty("Content-Type", "application/json");
+            String already = values[2];
+            String requestBody = null;
+            if (already.equals("true")) {
+                requestBody = "{\n \"hash\": \"" + values[0] + "\", \n\"product\":" + values[1] + ", \n\"action\": \"remove\"" +"\n}";
+            } else {
+                requestBody = "{\n \"hash\": \"" + values[0] + "\", \n\"product\":" + values[1] + ", \n\"action\": \"add\"" +"\n}";
+            }
 
-            String requestBody = "{\n \"hash\": \"" + values[0] + "\", \n\"product\":" + values[1] + "\n}";
             Log.i("FAVORITE REQUEST BODY", requestBody);
 
             OutputStream outputStream = conn.getOutputStream();

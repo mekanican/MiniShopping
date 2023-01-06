@@ -105,11 +105,14 @@ public class ServerConnector {
         return arr;
     }
 
-    public static int AddProductToFavorite(String hash, int productID) {
+    public static int AddProductToFavorite(String hash, int productID, boolean already) {
         String result;
 
         FavoriteAddingTask favoriteAddingTask = new FavoriteAddingTask();
-        favoriteAddingTask.execute(hash, String.valueOf(productID));
+        favoriteAddingTask.execute(hash, String.valueOf(productID), String.valueOf(already));
+
+        Log.i("FAVORITE HASH", hash);
+        Log.i("FAVORITE ID", String.valueOf(productID));
 
         try {
             result = favoriteAddingTask.get();
@@ -118,7 +121,7 @@ public class ServerConnector {
             JSONObject jsonObject = new JSONObject(result);
             String message = jsonObject.getString("message");
             Log.i("FAVORITE MESSAGE", message);
-            if (message.equals("success")) {
+            if (message.equals("Product added successfully") || message.equals("Product removed successfully")) {
                 return 0;
             }
 

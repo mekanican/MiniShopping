@@ -20,6 +20,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:id="@+id/favorite_button"
             android:onClick="onFavoriteClicked"
             android:text="@string/add_to_favorite"
             android:textSize="12sp" />

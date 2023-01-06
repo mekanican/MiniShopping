@@ -27,7 +27,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     Intent intent;
     Bundle bundle;
     TextView tvNoSearchResults;
-    GridView gvSearchResults;
     String hashValue;
 
     @Override
@@ -44,10 +43,28 @@ public class SearchResultsActivity extends AppCompatActivity {
         hashValue = bundle.getString("HASH");
 
         int[] searchResults = ServerConnector.GetSearchResults(searchQuery);
+
+        if (searchResults == null) {
+            tvNoSearchResults.setVisibility(View.VISIBLE);
+            return;
+        }
+
         RecyclerView rvResults = findViewById(R.id.search_result_recycler_view);
         rvResults.setLayoutManager(new GridLayoutManager(this, 2));
 
+        ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        productViewModel.initSearch(searchResults);
 
+        ProductAdapter productAdapter = new ProductAdapter(view1 -> {
+            int itemPosition = rvResults.getChildAdapterPosition(view1);
+            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+            Intent intent = new Intent(this, ProductDetails.class)
+                    .putExtra("ID", gi.id)
+                    .putExtra("HASH", hashValue);
+            this.startActivity(intent);
+        });
+        productViewModel.productList.observe(this, productAdapter::submitList);
+        rvResults.setAdapter(productAdapter);
 
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
@@ -62,21 +79,6 @@ public class SearchResultsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private ArrayList<HomeProduct> setupProductArrayList() {
-        ArrayList<HomeProduct> result = new ArrayList<>();
-        int number = bundle.getInt("Number");
-        if (number == 0) {
-            tvNoSearchResults.setVisibility(View.VISIBLE);
-            return result;
-        }
-        for (int i = 0; i < number; i++) {
-            int id = bundle.getInt("ID" + i);
-            HomeProduct homeProduct = SharedInfo.getInstance().getProductByID(id);
-            result.add(homeProduct);
-        }
-        return result;
     }
 
 }

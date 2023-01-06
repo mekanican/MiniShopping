@@ -43,4 +43,13 @@ public class ProductViewModel extends AndroidViewModel {
                 .build();
         productList = (new LivePagedListBuilder<>(productDao.getCategoryProducts(category), pagedListConfig)).build();
     }
+
+    public void initSearch(int[] idList) {
+        PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
+                .setEnablePlaceholders(true)
+                .setPrefetchDistance(6)
+                .setPageSize(10)
+                .build();
+        productList = (new LivePagedListBuilder<>(productDao.getSearchProductFromIdList(idList), pagedListConfig)).build();
+    }
 }

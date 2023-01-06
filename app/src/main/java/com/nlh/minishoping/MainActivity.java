@@ -48,29 +48,21 @@ public class MainActivity extends AppCompatActivity {
         String notificationString = getIntent().getStringExtra("Fragment");
         if (notificationString != null) {
             Log.i("NOTIFICATION STRING", notificationString);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            NotificationFragment newNotificationFragment = new NotificationFragment();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //fragmentTransaction.replace(android.R.id.content, newNotificationFragment);
-            if (currentFragment != null) {
-                fragmentTransaction.hide(currentFragment);
-            }
-            fragmentTransaction.show(newNotificationFragment);
-            //fragmentTransaction.commit();
 
-            fragmentTransaction.setReorderingAllowed(true)
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
                     .add(R.id.fragment_container, storeFragment)
                     .add(R.id.fragment_container, cartFragment)
                     .add(R.id.fragment_container, favoriteListFragment)
                     .add(R.id.fragment_container, notificationFragment)
                     .add(R.id.fragment_container, mapsFragment)
-                    .hide(storeFragment)
                     .hide(cartFragment)
                     .hide(favoriteListFragment)
-                    .hide(mapsFragment).
-                    commit();
-
-            currentFragment = notificationFragment;
+                    .hide(storeFragment)
+                    .hide(mapsFragment)
+                    .commit();
+            currentFragment = storeFragment;
+            bottomNavigationView.setSelectedItemId(R.id.notification);
         } else {
 
             getSupportFragmentManager().beginTransaction()
@@ -86,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     .hide(mapsFragment)
                     .commit();
             currentFragment = storeFragment;
-
+            bottomNavigationView.setSelectedItemId(R.id.home);
             sendWelcomeNotification();
 
             sendDiscountNotification();

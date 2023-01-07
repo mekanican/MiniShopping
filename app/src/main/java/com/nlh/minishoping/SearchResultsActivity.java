@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
@@ -40,6 +41,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         tvNoSearchResults = findViewById(R.id.tv_no_search_result);
 
         String searchQuery = bundle.getString("QUERY");
+        Log.i("SEARCH RESULT QUERY",searchQuery);
         hashValue = bundle.getString("HASH");
 
         int[] searchResults = ServerConnector.GetSearchResults(searchQuery);
@@ -47,6 +49,10 @@ public class SearchResultsActivity extends AppCompatActivity {
         if (searchResults == null) {
             tvNoSearchResults.setVisibility(View.VISIBLE);
             return;
+        }
+
+        for (int i = 0; i < searchResults.length; i++) {
+            Log.i("SEARCH RESULT " + i, String.valueOf(searchResults[i]));
         }
 
         RecyclerView rvResults = findViewById(R.id.search_result_recycler_view);
@@ -57,13 +63,13 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         ProductAdapter productAdapter = new ProductAdapter(view1 -> {
             int itemPosition = rvResults.getChildAdapterPosition(view1);
-            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+            GeneralInfo gi = productViewModel.otherList.getValue().get(itemPosition);
             Intent intent = new Intent(this, ProductDetails.class)
                     .putExtra("ID", gi.id)
                     .putExtra("HASH", hashValue);
             this.startActivity(intent);
         });
-        productViewModel.productList.observe(this, productAdapter::submitList);
+        productViewModel.otherList.observe(this, productAdapter::submitList);
         rvResults.setAdapter(productAdapter);
 
         ActionBar actionBar = getSupportActionBar();

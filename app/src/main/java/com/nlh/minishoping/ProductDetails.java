@@ -191,7 +191,8 @@ public class ProductDetails extends AppCompatActivity {
             int itemPosition = recyclerView.getChildAdapterPosition(view1);
             GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
             Intent intent = new Intent(this, ProductDetails.class)
-                    .putExtra("ID", gi.id);
+                    .putExtra("ID", gi.id)
+                    .putExtra("HASH", hashValue);
             this.startActivity(intent);
         });
         productViewModel.productList.observe(this, productAdapter::submitList);

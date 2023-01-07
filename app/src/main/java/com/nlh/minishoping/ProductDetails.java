@@ -182,20 +182,45 @@ public class ProductDetails extends AppCompatActivity {
     private void setupGridViewRecommendationsList() {
         // List<GeneralInfo> categoryProducts = ProductDatabase.getInstance().productDao().getCategoryProducts(category);
 
-        RecyclerView recyclerView = findViewById(R.id.rview);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-        productViewModel.initCategory(category);
+//        RecyclerView recyclerView = findViewById(R.id.rview);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+//        productViewModel.initCategory(category);
+//
+//        ProductAdapter productAdapter = new ProductAdapter(view1 -> {
+//            int itemPosition = recyclerView.getChildAdapterPosition(view1);
+//            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+//            Intent intent = new Intent(this, ProductDetails.class)
+//                    .putExtra("ID", gi.id);
+//            this.startActivity(intent);
+//        });
+//        productViewModel.productList.observe(this, productAdapter::submitList);
+//        recyclerView.setAdapter(productAdapter);
 
-        ProductAdapter productAdapter = new ProductAdapter(view1 -> {
-            int itemPosition = recyclerView.getChildAdapterPosition(view1);
-            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
-            Intent intent = new Intent(this, ProductDetails.class)
-                    .putExtra("ID", gi.id);
-            this.startActivity(intent);
-        });
-        productViewModel.productList.observe(this, productAdapter::submitList);
-        recyclerView.setAdapter(productAdapter);
+        int[] categoryArray = ServerConnector.GetProductsByCategory(category);
+
+        if (categoryArray != null) {
+            RecyclerView rvRecommendations = findViewById(R.id.rview);
+            rvRecommendations.setLayoutManager(new GridLayoutManager(this, 2));
+            ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+            productViewModel.initSearch(categoryArray);
+
+            ProductAdapter productAdapter = new ProductAdapter(view1 -> {
+                int itemPosition = rvRecommendations.getChildAdapterPosition(view1);
+                GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+                Intent intent = new Intent(this, ProductDetails.class)
+                        .putExtra("ID", gi.id)
+                        .putExtra("HASH", hashValue);
+                this.startActivity(intent);
+            });
+            productViewModel.productList.observe(this, productAdapter::submitList);
+            rvRecommendations.setAdapter(productAdapter);
+        }
+
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     // https://www.stechies.com/add-share-button-android-app/

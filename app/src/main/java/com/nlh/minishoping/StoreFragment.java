@@ -64,10 +64,12 @@ public class StoreFragment extends Fragment {
 
         ProductAdapter productAdapter = new ProductAdapter(view1 -> {
             int itemPosition = recyclerView.getChildAdapterPosition(view1);
+            Log.i("STORE FRAGMENT DETAIL POSITION", String.valueOf(itemPosition));
             GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
             Intent intent = new Intent(getActivity(), ProductDetails.class)
                     .putExtra("ID", gi.id)
                             .putExtra("HASH", hashValue);
+            Log.i("STORE FRAGMENT DETAIL ID", String.valueOf(gi.id));
             getActivity().startActivity(intent);
         });
         productViewModel.productList.observe(getActivity(), productAdapter::submitList);

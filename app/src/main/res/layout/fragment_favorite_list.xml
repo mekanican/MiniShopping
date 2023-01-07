@@ -17,19 +17,26 @@
         android:text="@string/no_favorite"
         android:visibility="invisible" />
 
-    <GridView
-        android:id="@+id/grid_view_favorite_list_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:gravity="center"
-        android:horizontalSpacing="6dp"
-        android:numColumns="2"
-        android:scrollbars="vertical"
-        android:verticalSpacing="6dp">
+<!--    <GridView-->
+<!--        android:id="@+id/grid_view_favorite_list_fragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:gravity="center"-->
+<!--        android:horizontalSpacing="6dp"-->
+<!--        android:numColumns="2"-->
+<!--        android:scrollbars="vertical"-->
+<!--        android:verticalSpacing="6dp">-->
 
-    </GridView>
+<!--    </GridView>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorite_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

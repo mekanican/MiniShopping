@@ -13,18 +13,11 @@
         android:text="@string/no_search_results"
         android:visibility="invisible" />
 
-    <GridView
-        android:id="@+id/grid_view_product_list_search_results"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_result_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:scrollbars="vertical"
-        android:verticalSpacing="15dp"/>
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

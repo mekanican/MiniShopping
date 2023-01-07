@@ -71,12 +71,14 @@ public class CartMap {
     @NonNull
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\"products\": [\n");
         hashMap.forEach((k, v) -> {
             stringBuilder
+                    .append("{\n \"id\": ")
                     .append(k)
-                    .append(':')
+                    .append(",\n \"quantity\": ")
                     .append(v)
-                    .append(',');
+                    .append("\n},\n");
         });
         return stringBuilder.toString();
     }

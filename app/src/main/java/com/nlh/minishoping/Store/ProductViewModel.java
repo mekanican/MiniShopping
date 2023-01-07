@@ -11,6 +11,7 @@ import androidx.paging.PagedList;
 import com.nlh.minishoping.DAO.GeneralInfo;
 import com.nlh.minishoping.DAO.ProductDao;
 import com.nlh.minishoping.DAO.ProductDatabase;
+import com.nlh.minishoping.DAO.Product;
 
 // https://c1ctech.com/android-jetpack-paging-example-using-room/
 
@@ -41,5 +42,14 @@ public class ProductViewModel extends AndroidViewModel {
                 .setPageSize(10)
                 .build();
         productList = (new LivePagedListBuilder<>(productDao.getCategoryProducts(category), pagedListConfig)).build();
+    }
+
+    public void initSearch(int[] idList) {
+        PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
+                .setEnablePlaceholders(true)
+                .setPrefetchDistance(6)
+                .setPageSize(10)
+                .build();
+        productList = (new LivePagedListBuilder<>(productDao.getSearchProductFromIdList(idList), pagedListConfig)).build();
     }
 }

@@ -13,8 +13,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.example.ExpandableHeightGridView;
 import com.koushikdutta.ion.Ion;
 import com.nlh.minishoping.Cart.CartMap;
+import com.nlh.minishoping.Connector.ServerConnector;
 import com.nlh.minishoping.DAO.GeneralInfo;
 import com.nlh.minishoping.DAO.ProductDatabase;
 import com.nlh.minishoping.Store.ProductAdapter;
@@ -47,6 +50,10 @@ public class ProductDetails extends AppCompatActivity {
     String category;
     String description;
 
+    String hashValue;
+
+    boolean isFavorite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +74,28 @@ public class ProductDetails extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         setupGridViewRecommendationsList();
+
+        isFavorite = false;
+        int[] favoriteArray = ServerConnector.GetFavoriteList(hashValue);
+        for (int i = 0; i < favoriteArray.length; i++) {
+            if (favoriteArray[i] == ID) {
+                isFavorite = true;
+                break;
+            }
+        }
+        Log.i("FAVORITE CHECK RESULT", String.valueOf(isFavorite));
+
+
+        adjustFavoriteButtonText(isFavorite);
+    }
+
+    private void adjustFavoriteButtonText(boolean isFavorite) {
+        if (!isFavorite) {
+            return;
+        }
+
+        Button btn = findViewById(R.id.favorite_button);
+        btn.setText("Bỏ thích");
     }
 
     @Override
@@ -78,80 +107,25 @@ public class ProductDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // https://developer.android.com/training/data-storage/shared-preferences?hl=en
-    // https://viblo.asia/p/shared-preferences-trong-android-1Je5EEvY5nL
     public void onFavoriteClicked(View view) {
-        // get the data store in SharedPreferences
-        SharedPreferences spFavorite = this.getSharedPreferences(
-                "FAVORITE", Context.MODE_PRIVATE);
+        Log.i("PRODUCT DETAILS HASH VALUE", hashValue);
+        Log.i("PRODUCT DETAIL ID", String.valueOf(ID));
+        int ans = ServerConnector.AddProductToFavorite(hashValue, ID, isFavorite);
+        Log.i("PRODUCT DETAILS RETURN FROM CONNECTOR", String.valueOf(ans));
 
-        Integer number = getFavoriteNumber(spFavorite);
-
-        boolean isDuplicated = false;
-
-        // check if exists duplication
-        if (number > 0) {
-            for (int i = 1; i <= number; i++) {
-                String tempID = spFavorite.getString("ID " + i, null);
-                String stringID = Integer.toString(ID);
-                if (tempID.equals(stringID)) {
-                    isDuplicated = true;
-                    break;
-                }
-
+        if (!isFavorite) {
+            if (ans == 0) {
+                Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích thành công", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Có lỗi xảy ra khi thêm sản phẩm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            if (ans == 0) {
+                Toast.makeText(this, "Sản phẩm đã được xóa khỏi danh sách yêu thích thành công", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Có lỗi xảy ra khi xóa sản phẩm khỏi danh sách yêu thích", Toast.LENGTH_LONG).show();
             }
         }
-
-        // if duplicated, do nothing
-        if (isDuplicated) {
-            Toast.makeText(this, "Sản phẩm đã có trong danh sách yêu thích", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        String idKey = "ID " + (number + 1);
-        String nameKey = "Name " + (number + 1);
-        String priceKey = "Price " + (number + 1);
-        String imageKey = "Image " + (number + 1);
-        String categoryKey = "Category " + (number + 1);
-        String descriptionKey = "Description " + (number + 1);
-
-        // add key - value pairs to data
-        boolean res;
-        res = addToFavoriteData(spFavorite, idKey, nameKey, priceKey, imageKey, categoryKey, descriptionKey);
-        if (!res) {
-            showFailNotification();
-            return;
-        }
-
-        number += 1;
-        res = spFavorite.edit().putString("Number", Integer.toString(number)).commit();
-        if (res) {
-            Toast.makeText(this, "Sản phẩm đã được thêm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
-            SharedInfo.getInstance().addFavoriteTrigger();
-        } else {
-            showFailNotification();
-        }
-    }
-
-    private boolean addToFavoriteData(SharedPreferences spFavorite, String idKey, String nameKey, String priceKey, String imageKey, String categoryKey, String descriptionKey) {
-        if (!spFavorite.edit().putString(idKey, Integer.toString(ID)).commit() ||
-                !spFavorite.edit().putString(nameKey, name).commit() ||
-                !spFavorite.edit().putString(priceKey, price).commit() ||
-                !spFavorite.edit().putString(imageKey, imageLink).commit() ||
-                !spFavorite.edit().putString(categoryKey, category).commit() ||
-                !spFavorite.edit().putString(descriptionKey, description).commit()) {
-            return false;
-        }
-        return true;
-    }
-
-    private Integer getFavoriteNumber(SharedPreferences sp) {
-        if (!sp.contains("Number")) {
-            sp.edit().putString("Number", "0").commit();
-        } else {
-            return Integer.parseInt(sp.getString("Number", null));
-        }
-        return 0;
     }
 
     public void onAddToCartClicked(View view) {
@@ -164,10 +138,6 @@ public class ProductDetails extends AppCompatActivity {
         }
     }
 
-    public void showFailNotification() {
-        Toast.makeText(this, "Lỗi! Thêm sản phẩm vào danh sách yêu thích không thành công", Toast.LENGTH_LONG).show();
-    }
-
     private void setupViewsOnCreate() {
         iv_product_image = findViewById(R.id.iv_product_image_details);
         tv_product_name = findViewById(R.id.tv_product_name_details);
@@ -178,6 +148,9 @@ public class ProductDetails extends AppCompatActivity {
 
     private void getDataFromPreviousActivity() {
         ID = bundle.getInt("ID");
+
+        hashValue = bundle.getString("HASH");
+        Log.i("HASH VALUE GOTTEN IN PRODUCT DETAILS", hashValue);
 
         // Warning: may slow on UI thread
         com.nlh.minishoping.DAO.Product product =

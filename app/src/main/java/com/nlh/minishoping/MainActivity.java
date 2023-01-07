@@ -6,6 +6,8 @@ import static com.nlh.minishoping.NotificationClass.CHANNEL_2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -31,22 +33,63 @@ public class MainActivity extends AppCompatActivity {
     Fragment currentFragment;
     CartMap cartMap;
 
+    String hashValue;
+    String email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         cartMap = CartMap.getInstance();
-
-        // Debug only
-//        Log.d("Email", getIntent().getExtras().getString("Email"));
-//        Toast.makeText(this, "Chao mung " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
 
         StoreFragment storeFragment = new StoreFragment();
         CartFragment cartFragment = new CartFragment();
         FavoriteListFragment favoriteListFragment = new FavoriteListFragment();
         MapsFragment mapsFragment = new MapsFragment();
         NotificationFragment notificationFragment = new NotificationFragment();
+
+        String notificationString = getIntent().getStringExtra("Fragment");
+        email = getIntent().getStringExtra("Email");
+        Log.i("EMAIL", email);
+        if (notificationString != null) {
+            Log.i("NOTIFICATION STRING", notificationString);
+
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragment_container, storeFragment)
+                    .add(R.id.fragment_container, cartFragment)
+                    .add(R.id.fragment_container, favoriteListFragment)
+                    .add(R.id.fragment_container, notificationFragment)
+                    .add(R.id.fragment_container, mapsFragment)
+                    .hide(cartFragment)
+                    .hide(favoriteListFragment)
+                    .hide(storeFragment)
+                    .hide(mapsFragment)
+                    .commit();
+            currentFragment = storeFragment;
+            bottomNavigationView.setSelectedItemId(R.id.notification);
+        } else {
+
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragment_container, storeFragment)
+                    .add(R.id.fragment_container, cartFragment)
+                    .add(R.id.fragment_container, favoriteListFragment)
+                    .add(R.id.fragment_container, notificationFragment)
+                    .add(R.id.fragment_container, mapsFragment)
+                    .hide(cartFragment)
+                    .hide(favoriteListFragment)
+                    .hide(notificationFragment)
+                    .hide(mapsFragment)
+                    .commit();
+            currentFragment = storeFragment;
+            bottomNavigationView.setSelectedItemId(R.id.home);
+            sendWelcomeNotification();
+
+            sendDiscountNotification();
+        }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -90,33 +133,39 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
         bottomNavigationView.setOnItemReselectedListener(item -> {
         }); // disable reselect functional
 
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .add(R.id.fragment_container, storeFragment)
-                .add(R.id.fragment_container, cartFragment)
-                .add(R.id.fragment_container, favoriteListFragment)
-                .add(R.id.fragment_container, notificationFragment)
-                .add(R.id.fragment_container, mapsFragment)
-                .hide(cartFragment)
-                .hide(favoriteListFragment)
-                .hide(notificationFragment)
-                .hide(mapsFragment)
-                .commit();
-        currentFragment = storeFragment;
+        // Debug only
+//        Log.d("Email", getIntent().getExtras().getString("Email"));
+        Toast.makeText(this, "Chào mừng " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
 
-        sendWelcomeNotification();
 
         sendDiscountNotification();
+//
+//        // GET SEARCH RESULTS
+//        int[] arr = ServerConnector.GetSearchResults("voucher");
+//
+        // TODO: EDIT CODE HERE, REPLACE THE HARD-CODED EMAIL WITH THE USER'S EMAIL
+        // GET THE HASH VALUE OF THIS EMAIL
+        hashValue = ServerConnector.RegisterOrLogin(email);
+        Log.i("REGISTER ANSWER", String.valueOf(hashValue));
+//
+//        // GET PRODUCTS BY CATEGORY
+//        int[] catArr = ServerConnector.GetProductsByCategory("Bách hóa");
+//
+//        // TEST ADD PRODUCT TO FAVORITE
+//        int ans = ServerConnector.AddProductToFavorite("bac265735b6b4d63d1d2c33e6ddb314dcb33c37ebe747213b3186c92ab37956d", 3);
+//        Log.i("FAVORITE RETURNED", String.valueOf(ans));
 
-        int[] arr = ServerConnector.GetSearchResults("voucher");
-        if (arr != null) {
-            for (int i = 0; i < arr.length; i++) {
-                Log.i("RESULT ARRAY " + i, String.valueOf(arr[i]));
-            }
-        }
+//        double dis = ServerConnector.GetVoucherDiscount("HAHA");
+//        Log.i("VOUCHER DISCOUNT", String.valueOf(dis));
+    }
+
+    // https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+    public String getHashValue() {
+        return hashValue;
     }
 
     private void sendWelcomeNotification() {
@@ -127,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 .setContentText(getString(R.string.welcome_noti_content))
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setLargeIcon(bitmap)
+                .setAutoCancel(true)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -140,12 +190,15 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_baseline_notifications_24);
 
         // Create an Intent for the activity you want to start
-        Intent intent = new Intent(this, ProductDetails.class);
-        intent.putExtra("ID", 2);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        //notificationIntent.putExtra("ID", 2);
+        notificationIntent.putExtra("Fragment", "NotificationFragment");
+        notificationIntent.putExtra("Email", email);
 
-        // Create the TaskStackBuilder and add the intent, which inflates the back stack
+
+        // Create the TaskStackBuilder and add the notificationIntent, which inflates the back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(intent);
+        stackBuilder.addNextIntentWithParentStack(notificationIntent);
 
         // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent =
@@ -158,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setLargeIcon(bitmap)
                 .setContentIntent(resultPendingIntent)
+                .setAutoCancel(true)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

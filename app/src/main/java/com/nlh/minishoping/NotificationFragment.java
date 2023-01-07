@@ -31,6 +31,7 @@ public class NotificationFragment extends Fragment {
     TextView productDiscount1;
     TextView productDiscount2;
     TextView productDiscount3;
+    private String hashValue;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -67,6 +68,10 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        hashValue = mainActivity.getHashValue();
+
         return inflater.inflate(R.layout.fragment_notification, container, false);
     }
 
@@ -102,6 +107,7 @@ public class NotificationFragment extends Fragment {
     public void onProductDiscount1Clicked(View view, int id) {
         Intent intent = new Intent(getActivity(), ProductDetails.class);
         intent.putExtra("ID", id);
+        intent.putExtra("HASH", hashValue);
         getActivity().startActivity(intent);
     }
 }

@@ -4,15 +4,14 @@ import static com.nlh.minishoping.Connector.ServerConnector.API_PATH;
 import static com.nlh.minishoping.Connector.ServerConnector.HOST_NAME;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
+@SuppressWarnings("ALL")
 public class VoucherTask extends AsyncTask<String, Void, String>  {
 
     @Override
@@ -39,9 +38,6 @@ public class VoucherTask extends AsyncTask<String, Void, String>  {
 
                 return response.toString();
             }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

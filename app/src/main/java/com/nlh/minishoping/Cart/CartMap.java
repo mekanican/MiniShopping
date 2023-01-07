@@ -10,17 +10,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CartMap {
+    private static final CartMap INSTANCE = new CartMap();
     private final HashMap<Integer, Integer> hashMap;
     private Callback update;
 
-    private static final CartMap INSTANCE = new CartMap();
+    private CartMap() {
+        hashMap = new HashMap<>();
+    }
 
     public static CartMap getInstance() {
         return INSTANCE;
-    }
-
-    private CartMap() {
-        hashMap = new HashMap<>();
     }
 
     public void setCallback(Callback c) {
@@ -72,21 +71,18 @@ public class CartMap {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\"products\": [\n");
-        hashMap.forEach((k, v) -> {
-            stringBuilder
-                    .append("{\n \"id\": ")
-                    .append(k)
-                    .append(",\n \"quantity\": ")
-                    .append(v)
-                    .append("\n},\n");
-        });
+        hashMap.forEach((k, v) -> stringBuilder
+                .append("{\n \"id\": ")
+                .append(k)
+                .append(",\n \"quantity\": ")
+                .append(v)
+                .append("\n},\n"));
         return stringBuilder.toString();
     }
 
     // For getting data from id -> list -> adapter for listview
     public Pair<ArrayList<Pair<GeneralInfo, Integer>>, Integer> generateArrayListWithTotal() {
         ArrayList<Pair<GeneralInfo, Integer>> result = new ArrayList<>();
-        int totalPrice = 0;
 
         hashMap.forEach((k, v) -> {
             GeneralInfo generalInfo = ProductDatabase
@@ -96,7 +92,7 @@ public class CartMap {
             result.add(new Pair<>(generalInfo, v));
         });
 
-        totalPrice = result.stream()
+        int totalPrice = result.stream()
                 .mapToInt(e -> (int) e.x.price * e.y)
                 .sum();
 

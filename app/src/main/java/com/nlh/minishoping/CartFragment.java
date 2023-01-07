@@ -9,20 +9,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nlh.minishoping.Cart.CartMap;
@@ -31,6 +28,7 @@ import com.nlh.minishoping.DAO.GeneralInfo;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CartFragment extends Fragment {
 
@@ -61,7 +59,7 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        hashValue = mainActivity.getHashValue();
+        hashValue = Objects.requireNonNull(mainActivity).getHashValue();
 
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
@@ -74,18 +72,14 @@ public class CartFragment extends Fragment {
 
         // Setup productList
         productList = new ArrayList<>();
-        pcvAdapter = new ProductCartViewAdapter(productList, id -> {
-            cartMapInstance.increaseItemQuantity((int) id);
-        }, id -> {
-            cartMapInstance.decreaseItemQuantity((int) id);
-        });
+        pcvAdapter = new ProductCartViewAdapter(productList, id -> cartMapInstance.increaseItemQuantity((int) id), id -> cartMapInstance.decreaseItemQuantity((int) id));
 
-        etVoucher = getActivity().findViewById(R.id.voucher_edit_text);
+        etVoucher = requireActivity().findViewById(R.id.voucher_edit_text);
 
-        lvProductList = getActivity().findViewById(R.id.cart_lv);
+        lvProductList = requireActivity().findViewById(R.id.cart_lv);
         lvProductList.setAdapter(pcvAdapter);
 
-        bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
+        bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation);
 
         cartMapInstance.setCallback(() -> {
             productList.clear();
@@ -102,20 +96,14 @@ public class CartFragment extends Fragment {
         resetValue();
 
         // Handle deleteAll
-        (getActivity().findViewById(R.id.delete_)).setOnClickListener(view1 -> {
-            deleteAll(cartMapInstance);
-        });
+        (requireActivity().findViewById(R.id.delete_)).setOnClickListener(view1 -> deleteAll(cartMapInstance));
 
 
         // Handle proceed
-        (getActivity().findViewById(R.id.proceed_)).setOnClickListener(view1 -> {
+        (requireActivity().findViewById(R.id.proceed_)).setOnClickListener(view1 -> {
             String voucher = String.valueOf(etVoucher.getText());
 
-            if (voucher == null) {
-                discount = 0;
-            } else {
-                discount = ServerConnector.GetVoucherDiscount(voucher);
-            }
+            discount = ServerConnector.GetVoucherDiscount(voucher);
 
             CartMap.Pair<ArrayList<CartMap.Pair<GeneralInfo, Integer>>, Integer> pair =
                     cartMapInstance.generateArrayListWithTotal();
@@ -123,11 +111,10 @@ public class CartFragment extends Fragment {
             int total = pair.y;
             double totalAfterDiscount = 1.00 * total * (1 - discount / 100);
             double totalPayment = (totalAfterDiscount + DEFAULT_SHIPPING_PRICE) * VAT;
-            Log.i("AFTER DISCOUNT", String.valueOf(totalAfterDiscount));
 
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_baseline_notifications_24);
 
-            Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_1)
+            Notification notification = new NotificationCompat.Builder(requireActivity(), CHANNEL_1)
                     .setContentTitle("Đặt hàng thành công")
                     .setContentText("Tổng thanh toán là " + (int) totalPayment)
                     .setSmallIcon(R.drawable.ic_baseline_notifications_24)
@@ -135,27 +122,22 @@ public class CartFragment extends Fragment {
                     .setAutoCancel(true)
                     .build();
 
-            NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager) requireActivity().getSystemService(Context.NOTIFICATION_SERVICE);
             if (notificationManager != null) {
                 notificationManager.notify(3, notification);
             }
 
-            //Log.i("CART MAP TO STRING", cartMapInstance.toString());
-
             String tempStr = cartMapInstance.toString();
-            String str = "{\n\"hash\": \"" + hashValue + "\",\n";
+            StringBuilder str = new StringBuilder("{\n\"hash\": \"" + hashValue + "\",\n");
             for (int i = 0; i < tempStr.length() - 2; i++) {
-                str += tempStr.charAt(i);
+                str.append(tempStr.charAt(i));
             }
 
-            str += "\n],\n";
+            str.append("\n],\n");
 
-            if (voucher != null) {
-                str += "\"voucher\": " + "\"" + voucher + "\"\n}";
-            }
+            str.append("\"voucher\": " + "\"").append(voucher).append("\"\n}");
 
-            //Log.i("CART STRING", str);
-            ServerConnector.Purchase(str);
+            ServerConnector.Purchase(str.toString());
 
             processCart();
             deleteAll(cartMapInstance);
@@ -173,13 +155,13 @@ public class CartFragment extends Fragment {
     private void processCart() {
         // TODO: passing the cartMap.toString -> Server / to next intent
         Intent intent = new Intent(getContext(), AddressActivity.class)
-                .putExtra("hash", ((MainActivity) getActivity()).getHashValue());
+                .putExtra("hash", ((MainActivity) requireActivity()).getHashValue());
         startActivity(intent);
     }
 
     private void setPriceByID(int ID, int price) {
         DecimalFormat formatter = new DecimalFormat("###,###,### 'VND'");
-        ((TextView) getActivity().findViewById(ID))
+        ((TextView) requireActivity().findViewById(ID))
                 .setText(formatter.format(price));
     }
 

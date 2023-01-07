@@ -1,8 +1,5 @@
 package com.nlh.minishoping;
 
-import android.widget.ImageView;
-
-
 public class CartProduct {
     private final HomeProduct wrapped;
     private int numberOfItem;
@@ -24,26 +21,12 @@ public class CartProduct {
         return wrapped.getPrice();
     }
 
-    public void getImageToImageView(ImageView imageView) {
-        wrapped.getImageToImageView(imageView);
-    }
-
     public void addItem() {
         numberOfItem++;
     }
 
-    public void removeItem() {
-        if (numberOfItem > 0) {
-            numberOfItem--;
-        }
-    }
-
     public String getEmail() {
         return wrapped.getEmail();
-    }
-
-    public int getNumberOfItem() {
-        return numberOfItem;
     }
 
     public int total() {

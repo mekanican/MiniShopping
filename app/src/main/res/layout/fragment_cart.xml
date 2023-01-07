@@ -28,7 +28,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/payment"
             android:textColor="#E91E63"
             android:textSize="25sp"
@@ -49,16 +50,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:paddingLeft="20dp"
-                    android:text="@string/product_price" />
+                    android:paddingStart="20dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/product_price"
+                    tools:ignore="NestedWeights" />
 
                 <TextView
                     android:id="@+id/product_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="right"
-                    android:paddingRight="20dp"
+                    android:paddingStart="20dp"
+                    android:gravity="end"
+                    android:paddingEnd="20dp"
                     android:text="@string/product_price" />
             </LinearLayout>
 
@@ -72,16 +76,20 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:paddingLeft="20dp"
-                    android:text="@string/shipping_fee" />
+                    android:paddingStart="20dp"
+                    android:padding="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/shipping_fee"
+                    tools:ignore="NestedWeights" />
 
                 <TextView
                     android:id="@+id/shipping_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="right"
-                    android:paddingRight="20dp"
+                    android:gravity="end"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="@string/shipping_fee" />
             </LinearLayout>
 
@@ -95,15 +103,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="10dp"
                     android:text="@string/vat" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="right"
-                    android:paddingRight="20dp"
+                    android:gravity="end"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="@string/_8" />
             </LinearLayout>
 
@@ -117,10 +127,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="10dp"
                     android:id="@+id/voucher_edit_text"
-                    android:hint="Voucher"
-                    android:textStyle="bold" />
+                    android:hint="@string/voucher"
+                    android:textStyle="bold"
+                    tools:ignore="NestedWeights" />
 
             </LinearLayout>
 
@@ -134,7 +146,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="10dp"
                     android:text="@string/total_price"
                     android:textStyle="bold" />
 
@@ -143,8 +156,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="right"
-                    android:paddingRight="20dp"
+                    android:gravity="end"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="@string/total_price"
                     android:textColor="#FF5722"
                     android:textStyle="bold" />

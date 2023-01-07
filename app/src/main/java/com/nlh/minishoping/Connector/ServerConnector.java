@@ -1,7 +1,5 @@
 package com.nlh.minishoping.Connector;
 
-import android.util.Log;
-
 import com.nlh.minishoping.Cart.CartMap;
 
 import org.json.JSONArray;
@@ -17,45 +15,30 @@ public class ServerConnector {
     private static final String PRODUCTS_KEY = "products";
 
     public static int[] GetSearchResults(String name) {
-        String result = null;
+        String result;
 
         SearchTask searchTask = new SearchTask();
         searchTask.execute(name);
 
         try {
             result = searchTask.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }
 
-        // Log.i("RESULT", result);
-
-        int[] arr = getArraysFromJson(result, PRODUCTS_KEY);
-
-        if (arr == null) {
-            return null;
-        }
-
-        return arr;
+        return getArraysFromJson(result, PRODUCTS_KEY);
     }
 
     public static String RegisterOrLogin(String email) {
-        String result = null;
 
         RegisterTask registerTask = new RegisterTask();
         registerTask.execute(email);
 
+        String result;
         try {
             result = registerTask.get();
-            // Log.i("RESULT_REGISTER", result);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }
@@ -67,17 +50,13 @@ public class ServerConnector {
         try {
             JSONObject jsonObject = new JSONObject(result);
             String message = jsonObject.getString("message");
-            Log.i("REGISTER_MESSAGE", message);
 
             if (message.equals("success")) {
                 String stringData = jsonObject.getString("data");
-                Log.i("REGISTER_DATA", stringData);
 
                 JSONObject dataJsonObject = new JSONObject(stringData);
-                String hash = dataJsonObject.getString("hash");
-                Log.i("REGISTER_HASH", hash);
 
-                return hash;
+                return dataJsonObject.getString("hash");
             }
 
             return null;
@@ -85,26 +64,6 @@ public class ServerConnector {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static int[] GetProductsByCategory(String category) {
-        String result = null;
-
-        CategoryTask categoryTask = new CategoryTask();
-        categoryTask.execute(category);
-
-        try {
-            result = categoryTask.get();
-            // Log.i("CATEGORY RESULT", result);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        int[] arr = getArraysFromJson(result, PRODUCTS_KEY);
-
-        return arr;
     }
 
     public static int AddProductToFavorite(String hash, int productID, boolean already) {
@@ -113,25 +72,16 @@ public class ServerConnector {
         FavoriteAddingTask favoriteAddingTask = new FavoriteAddingTask();
         favoriteAddingTask.execute(hash, String.valueOf(productID), String.valueOf(already));
 
-        Log.i("FAVORITE HASH", hash);
-        Log.i("FAVORITE ID", String.valueOf(productID));
-
         try {
             result = favoriteAddingTask.get();
-            Log.i("FAVORITE RESULT", result);
 
             JSONObject jsonObject = new JSONObject(result);
             String message = jsonObject.getString("message");
-            Log.i("FAVORITE MESSAGE", message);
             if (message.equals("Product added successfully") || message.equals("Product removed successfully")) {
                 return 0;
             }
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (ExecutionException | InterruptedException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -146,16 +96,11 @@ public class ServerConnector {
 
         try {
             result = favoriteGettingTask.get();
-            Log.i("FAVORITE GETTING RESULT", result);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        int[] arr = getArraysFromJson(result, "favorites");
-
-        return arr;
+        return getArraysFromJson(result, "favorites");
     }
 
     public static CartMap.Pair<Float, Float> getLocation(String hash) throws ExecutionException, InterruptedException, JSONException {
@@ -187,17 +132,12 @@ public class ServerConnector {
         try {
             JSONObject jsonObject = new JSONObject(result);
             String stringArrays = jsonObject.getString(key);
-            // Log.i("PRODUCTS", stringArrays);
 
             JSONArray jsonArray = new JSONArray(stringArrays);
             int[] arr = new int[jsonArray.length()];
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 arr[i] = jsonArray.getInt(i);
-            }
-
-            for (int i = 0; i < arr.length; i++) {
-                // Log.i("ARRAY " + i, String.valueOf(arr[i]));
             }
 
             return arr;
@@ -215,9 +155,7 @@ public class ServerConnector {
 
         try {
             strResult = voucherTask.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -238,16 +176,13 @@ public class ServerConnector {
     }
 
     public static void Purchase(String str) {
-        String strResult = null;
 
         PurchaseTask purchaseTask = new PurchaseTask();
         purchaseTask.execute(str);
 
         try {
-            strResult = purchaseTask.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+            purchaseTask.get();
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }

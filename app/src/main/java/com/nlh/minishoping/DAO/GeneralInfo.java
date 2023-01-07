@@ -29,7 +29,7 @@ public class GeneralInfo {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
+        result = 31 * result + (price != 0.0f ? Float.floatToIntBits(price) : 0);
         result = 31 * result + (imageLink != null ? imageLink.hashCode() : 0);
         return result;
     }

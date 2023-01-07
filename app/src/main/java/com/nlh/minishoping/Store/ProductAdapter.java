@@ -18,6 +18,7 @@ import com.nlh.minishoping.Connector.ServerConnector;
 import com.nlh.minishoping.DAO.GeneralInfo;
 import com.nlh.minishoping.R;
 
+@SuppressWarnings("deprecation")
 public class ProductAdapter extends PagedListAdapter<GeneralInfo, ProductAdapter.ProductViewHolder> {
 
     View.OnClickListener listener;

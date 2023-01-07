@@ -2,6 +2,11 @@ package com.nlh.minishoping;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,20 +15,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.nlh.minishoping.DAO.GeneralInfo;
 import com.nlh.minishoping.Store.ProductAdapter;
 import com.nlh.minishoping.Store.ProductViewModel;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 // Adapted from Home!
 public class StoreFragment extends Fragment {
@@ -46,7 +42,7 @@ public class StoreFragment extends Fragment {
         // Inflate the layout for this fragment
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        hashValue = mainActivity.getHashValue();
+        hashValue = Objects.requireNonNull(mainActivity).getHashValue();
         Log.i("HASH VALUE GOTTEN IN STORE FRAGMENT", hashValue);
 
         return inflater.inflate(R.layout.fragment_store, container, false);
@@ -55,25 +51,26 @@ public class StoreFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        etProductNameToFind = getActivity().findViewById(R.id.et_product_name);
+        etProductNameToFind = requireActivity().findViewById(R.id.et_product_name);
 
-        RecyclerView recyclerView = getActivity().findViewById(R.id.rview);
+        RecyclerView recyclerView = requireActivity().findViewById(R.id.recommendation_recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        ProductViewModel productViewModel = new ViewModelProvider(getActivity()).get(ProductViewModel.class);
+        ProductViewModel productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         productViewModel.init();
 
         ProductAdapter productAdapter = new ProductAdapter(view1 -> {
             int itemPosition = recyclerView.getChildAdapterPosition(view1);
-            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+            GeneralInfo gi = Objects.requireNonNull(productViewModel.productList.getValue()).get(itemPosition);
+            assert gi != null;
             Intent intent = new Intent(getActivity(), ProductDetails.class)
                     .putExtra("ID", gi.id)
                             .putExtra("HASH", hashValue);
-            getActivity().startActivity(intent);
+            requireActivity().startActivity(intent);
         });
-        productViewModel.productList.observe(getActivity(), productAdapter::submitList);
+        productViewModel.productList.observe(requireActivity(), productAdapter::submitList);
         recyclerView.setAdapter(productAdapter);
 
-        getActivity().findViewById(R.id.btn_search).setOnClickListener(view1 -> {
+        requireActivity().findViewById(R.id.btn_search).setOnClickListener(view1 -> {
             String query = String.valueOf(etProductNameToFind.getText());
 
             Intent intent = new Intent(getActivity(), SearchResultsActivity.class);

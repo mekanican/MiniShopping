@@ -1,5 +1,12 @@
 package com.nlh.minishoping;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,22 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.GridView;
-import android.widget.TextView;
-
 import com.nlh.minishoping.Connector.ServerConnector;
 import com.nlh.minishoping.DAO.GeneralInfo;
-import com.nlh.minishoping.DAO.Product;
-import com.nlh.minishoping.DAO.ProductDatabase;
 import com.nlh.minishoping.Store.ProductAdapter;
 import com.nlh.minishoping.Store.ProductViewModel;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class SearchResultsActivity extends AppCompatActivity {
     Intent intent;
@@ -63,7 +60,8 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         ProductAdapter productAdapter = new ProductAdapter(view1 -> {
             int itemPosition = rvResults.getChildAdapterPosition(view1);
-            GeneralInfo gi = productViewModel.otherList.getValue().get(itemPosition);
+            GeneralInfo gi = Objects.requireNonNull(productViewModel.otherList.getValue()).get(itemPosition);
+            assert gi != null;
             Intent intent = new Intent(this, ProductDetails.class)
                     .putExtra("ID", gi.id)
                     .putExtra("HASH", hashValue);

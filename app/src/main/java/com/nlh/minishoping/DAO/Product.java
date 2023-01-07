@@ -3,7 +3,6 @@ package com.nlh.minishoping.DAO;
 import static java.sql.Types.REAL;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

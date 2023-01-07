@@ -1,20 +1,16 @@
 package com.nlh.minishoping;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.AccountPicker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+@SuppressWarnings("deprecation")
 public class WelcomeActivity extends AppCompatActivity {
     public static AssetManager assetManager;
 
@@ -27,7 +23,6 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"},
                 false, null, null, null, null);
         startActivityForResult(intent, 23);
-
     }
 
     // https://stackoverflow.com/questions/22174259/pick-an-email-using-accountpicker-newchooseaccountintent

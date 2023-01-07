@@ -15,6 +15,7 @@ import com.nlh.minishoping.DAO.Product;
 
 // https://c1ctech.com/android-jetpack-paging-example-using-room/
 
+@SuppressWarnings("ALL")
 public class ProductViewModel extends AndroidViewModel {
     private ProductDatabase productDatabase;
     public ProductDao productDao;

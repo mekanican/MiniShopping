@@ -16,7 +16,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:textStyle="bold"
-        android:text="SẢN PHẨM GIẢM GIÁ" />
+        android:text="@string/san_pham_giam_gia" />
 
     <TextView
         android:id="@+id/product_1"
@@ -27,7 +27,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:clickable="true"
-        android:text="Sản phẩm hot giảm giá sốc!! Click để xem ngay" />
+        android:text="@string/click" />
 
     <TextView
         android:id="@+id/product_2"
@@ -38,7 +38,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:clickable="true"
-        android:text="Bánh giảm giá mùa Tết đến nè!! Click để xem ngay" />
+        android:text="@string/tet" />
 
     <TextView
         android:id="@+id/product_3"
@@ -49,7 +49,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:clickable="true"
-        android:text="Kính mát thời trang sành điệu giá rẻ đây!! Click để xem ngay" />
+        android:text="@string/kinh" />
 
 
     <TextView
@@ -61,7 +61,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:textStyle="bold"
-        android:text="MÃ KHUYẾN MÃI" />
+        android:text="@string/ma_km" />
 
     <TextView
         android:id="@+id/discount_1"
@@ -71,7 +71,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
-        android:text="Nhập mã QUAMON để được giảm 100%" />
+        android:text="@string/quamon" />
 
     <TextView
         android:id="@+id/discount_2"
@@ -81,7 +81,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
-        android:text="Nhập mã MOBILE để được giảm 70%" />
+        android:text="@string/mobile" />
 
     <TextView
         android:id="@+id/discount_3"
@@ -91,7 +91,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
-        android:text="Nhập mã HELLO để được giảm 50%" />
+        android:text="@string/hello" />
 
     <TextView
         android:id="@+id/discount_4"
@@ -100,7 +100,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:text="Nhập mã WELCOME để được giảm 50%"
+        android:text="@string/welcome"
         android:textSize="20sp" />
 
 </LinearLayout>

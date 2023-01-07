@@ -1,26 +1,20 @@
 package com.nlh.minishoping;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nlh.minishoping.Cart.CartMap;
 import com.nlh.minishoping.Connector.ServerConnector;
@@ -28,10 +22,10 @@ import com.nlh.minishoping.Connector.ServerConnector;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class AddressActivity extends AppCompatActivity {
@@ -51,10 +45,10 @@ public class AddressActivity extends AppCompatActivity {
             if (gm == null) {
                 return;
             }
-            String addr = til.getEditText().getText().toString().trim();
+            String address = Objects.requireNonNull(til.getEditText()).getText().toString().trim();
 
             try {
-                Address location = gc.getFromLocationName(addr, 1).get(0);
+                Address location = gc.getFromLocationName(address, 1).get(0);
                 LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
                 if (m != null) {
                     m.remove();
@@ -88,20 +82,16 @@ public class AddressActivity extends AppCompatActivity {
                         .position(pos)
                         .title("Your previous address"));
                 gm.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (ExecutionException | InterruptedException | JSONException e) {
                 e.printStackTrace();
             }
         });
 
         findViewById(R.id.elevatedButton).setOnClickListener(view -> {
-            String addr = til.getEditText().getText().toString().trim();
-            Address location = null;
+            String address = Objects.requireNonNull(til.getEditText()).getText().toString().trim();
+            Address location;
             try {
-                location = gc.getFromLocationName(addr, 1).get(0);
+                location = gc.getFromLocationName(address, 1).get(0);
                 LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
                 LatLng storePos = new LatLng(10.762417, 106.681198);
                 float dist = distance((float) pos.latitude, (float) pos.longitude, (float) storePos.latitude, (float) storePos.longitude);
@@ -124,17 +114,11 @@ public class AddressActivity extends AppCompatActivity {
                 intent.putExtra(CalendarContract.Events.HAS_ALARM, true);
                 startActivity(intent);
 
-                Toast.makeText(this, "Da xac nhan gui toi " + addr + "\n" +
+                Toast.makeText(this, "Da xac nhan gui toi " + address + "\n" +
                         "Khoang cach: " + String.format(Locale.ENGLISH, "%.2f", dist) + "\n" +
                         "Giao trong " + dayToDelivery + " ngay", Toast.LENGTH_LONG).show();
                 finish();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (IOException | JSONException | ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         });

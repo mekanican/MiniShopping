@@ -2,25 +2,22 @@ package com.nlh.minishoping.Connector;
 
 import static com.nlh.minishoping.Connector.ServerConnector.API_PATH;
 import static com.nlh.minishoping.Connector.ServerConnector.HOST_NAME;
-
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-public class FavoriteAddingTask extends AsyncTask<String, Void, String>  {
+@SuppressWarnings("deprecation")
+public class FavoriteAddingTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... values) {
         String apiURL = HOST_NAME + API_PATH + "favorite";
-        Log.i("FAVORITE API URL", apiURL);
 
         try {
             URL url = new URL(apiURL);
@@ -31,14 +28,12 @@ public class FavoriteAddingTask extends AsyncTask<String, Void, String>  {
             // Set the content type of the request
             conn.setRequestProperty("Content-Type", "application/json");
             String already = values[2];
-            String requestBody = null;
+            String requestBody;
             if (already.equals("true")) {
-                requestBody = "{\n \"hash\": \"" + values[0] + "\", \n\"product\":" + values[1] + ", \n\"action\": \"remove\"" +"\n}";
+                requestBody = "{\n \"hash\": \"" + values[0] + "\", \n\"product\":" + values[1] + ", \n\"action\": \"remove\"" + "\n}";
             } else {
-                requestBody = "{\n \"hash\": \"" + values[0] + "\", \n\"product\":" + values[1] + ", \n\"action\": \"add\"" +"\n}";
+                requestBody = "{\n \"hash\": \"" + values[0] + "\", \n\"product\":" + values[1] + ", \n\"action\": \"add\"" + "\n}";
             }
-
-            Log.i("FAVORITE REQUEST BODY", requestBody);
 
             OutputStream outputStream = conn.getOutputStream();
             outputStream.write(requestBody.getBytes());
@@ -46,7 +41,6 @@ public class FavoriteAddingTask extends AsyncTask<String, Void, String>  {
             outputStream.close();
 
             int responseCode = conn.getResponseCode();
-            Log.i("FAVORITE RESPONSE CODE", String.valueOf(responseCode));
             if (responseCode == HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -59,13 +53,9 @@ public class FavoriteAddingTask extends AsyncTask<String, Void, String>  {
 
                 in.close();
 
-                Log.i("FAVORITE RESPONSE", String.valueOf(response));
-
                 return response.toString();
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

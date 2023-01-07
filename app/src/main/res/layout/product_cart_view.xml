@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:baselineAligned="false"
     android:weightSum="1">
     <!--  Image part  -->
     <LinearLayout
@@ -18,14 +19,14 @@
             android:id="@+id/image_"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:contentDescription="image"
+            android:contentDescription="@string/image"
             android:src="@drawable/icon" />
     </LinearLayout>
     <!--  Info part  -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
         android:layout_weight="0.8"
         android:orientation="vertical">
@@ -34,8 +35,8 @@
             android:id="@+id/id_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:textSize="10sp" />
+            android:text="@string/one"
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/name_"
@@ -56,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:gravity="right"
+                android:gravity="end"
                 android:text="@string/price"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -72,7 +73,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="0.2"
                 android:background="@drawable/round_rectangle"
-                android:text="-"
+                android:text="@string/minus"
                 android:textSize="20sp" />
 
             <TextView
@@ -80,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:gravity="center"
-                android:text="1"
+                android:text="@string/one"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -90,7 +91,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="0.2"
                 android:background="@drawable/round_rectangle"
-                android:text="+"
+                android:text="@string/plus"
                 android:textSize="20sp" />
 
 

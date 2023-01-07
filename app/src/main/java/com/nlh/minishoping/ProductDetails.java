@@ -2,16 +2,8 @@ package com.nlh.minishoping;
 
 import static com.nlh.minishoping.Connector.ServerConnector.HOST_NAME;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,7 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ExpandableHeightGridView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.koushikdutta.ion.Ion;
 import com.nlh.minishoping.Cart.CartMap;
 import com.nlh.minishoping.Connector.ServerConnector;
@@ -30,9 +28,7 @@ import com.nlh.minishoping.DAO.ProductDatabase;
 import com.nlh.minishoping.Store.ProductAdapter;
 import com.nlh.minishoping.Store.ProductViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class ProductDetails extends AppCompatActivity {
     Intent intent;
@@ -71,14 +67,15 @@ public class ProductDetails extends AppCompatActivity {
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         setupGridViewRecommendationsList();
 
         isFavorite = false;
         int[] favoriteArray = ServerConnector.GetFavoriteList(hashValue);
-        for (int i = 0; i < favoriteArray.length; i++) {
-            if (favoriteArray[i] == ID) {
+        for (int j : favoriteArray) {
+            if (j == ID) {
                 isFavorite = true;
                 break;
             }
@@ -89,6 +86,7 @@ public class ProductDetails extends AppCompatActivity {
         adjustFavoriteButtonText(isFavorite);
     }
 
+    @SuppressLint("SetTextI18n")
     private void adjustFavoriteButtonText(boolean isFavorite) {
         if (!isFavorite) {
             return;
@@ -182,14 +180,15 @@ public class ProductDetails extends AppCompatActivity {
     private void setupGridViewRecommendationsList() {
         // List<GeneralInfo> categoryProducts = ProductDatabase.getInstance().productDao().getCategoryProducts(category);
 
-        RecyclerView recyclerView = findViewById(R.id.rview);
+        RecyclerView recyclerView = findViewById(R.id.recommendation_recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         productViewModel.initCategory(category);
 
         ProductAdapter productAdapter = new ProductAdapter(view1 -> {
             int itemPosition = recyclerView.getChildAdapterPosition(view1);
-            GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+            GeneralInfo gi = Objects.requireNonNull(productViewModel.productList.getValue()).get(itemPosition);
+            assert gi != null;
             Intent intent = new Intent(this, ProductDetails.class)
                     .putExtra("ID", gi.id)
                     .putExtra("HASH", hashValue);

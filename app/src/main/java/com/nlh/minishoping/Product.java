@@ -1,5 +1,7 @@
 package com.nlh.minishoping;
 
+import java.util.Random;
+
 public class Product {
     protected int ID;
     protected String imageLink;
@@ -17,15 +19,6 @@ public class Product {
         this.description = description;
         this.price = price;
 
-        // 2 email, randomly
-        if (SharedInfo.getInstance().getRandInt(2) == 0) {
-            this.sellerEmail = "vanloc1808@gmail.com";
-        } else {
-            this.sellerEmail = "notabotbytheway@gmail.com";
-        }
-    }
-
-    String getCategory() {
-        return category;
+        this.sellerEmail = "vanloc1808@gmail.com";
     }
 }

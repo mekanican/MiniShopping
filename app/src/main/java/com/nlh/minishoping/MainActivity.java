@@ -3,12 +3,7 @@ package com.nlh.minishoping;
 import static com.nlh.minishoping.NotificationClass.CHANNEL_1;
 import static com.nlh.minishoping.NotificationClass.CHANNEL_2;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,6 +15,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nlh.minishoping.Cart.CartMap;
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     String hashValue;
     String email;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -137,30 +137,12 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemReselectedListener(item -> {
         }); // disable reselect functional
 
-        // Debug only
-//        Log.d("Email", getIntent().getExtras().getString("Email"));
         Toast.makeText(this, "Chào mừng " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
 
-
-        // sendDiscountNotification();
-//
-//        // GET SEARCH RESULTS
-//        int[] arr = ServerConnector.GetSearchResults("voucher");
-//
         // TODO: EDIT CODE HERE, REPLACE THE HARD-CODED EMAIL WITH THE USER'S EMAIL
         // GET THE HASH VALUE OF THIS EMAIL
         hashValue = ServerConnector.RegisterOrLogin(email);
         Log.i("REGISTER ANSWER", String.valueOf(hashValue));
-//
-//        // GET PRODUCTS BY CATEGORY
-//        int[] catArr = ServerConnector.GetProductsByCategory("Bách hóa");
-//
-//        // TEST ADD PRODUCT TO FAVORITE
-//        int ans = ServerConnector.AddProductToFavorite("bac265735b6b4d63d1d2c33e6ddb314dcb33c37ebe747213b3186c92ab37956d", 3);
-//        Log.i("FAVORITE RETURNED", String.valueOf(ans));
-
-//        double dis = ServerConnector.GetVoucherDiscount("HAHA");
-//        Log.i("VOUCHER DISCOUNT", String.valueOf(dis));
     }
 
     // https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android

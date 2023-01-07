@@ -8,9 +8,9 @@ import android.os.AsyncTask;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
+@SuppressWarnings("deprecation")
 public class PurchaseTask extends AsyncTask<String, Void, String> {
 
     @Override
@@ -30,10 +30,8 @@ public class PurchaseTask extends AsyncTask<String, Void, String> {
             outputStream.flush();
             outputStream.close();
 
-            int responseCode = conn.getResponseCode();
+            conn.getResponseCode();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

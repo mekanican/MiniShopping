@@ -30,10 +30,6 @@ public class HomeProduct {
         return wrapped.price;
     }
 
-    public String getImageLink() {
-        return wrapped.imageLink;
-    }
-
     public String getCategory() {
         return wrapped.category;
     }

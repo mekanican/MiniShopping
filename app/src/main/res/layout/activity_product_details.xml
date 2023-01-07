@@ -23,7 +23,8 @@
             android:id="@+id/favorite_button"
             android:onClick="onFavoriteClicked"
             android:text="@string/add_to_favorite"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:layout_width="wrap_content"
@@ -32,7 +33,8 @@
             android:layout_weight="1"
             android:onClick="onShareClicked"
             android:text="@string/share_this_product"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:layout_width="wrap_content"
@@ -43,7 +45,8 @@
             android:layout_weight="1"
             android:onClick="onAddToCartClicked"
             android:text="@string/add_product_to_cart"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -132,7 +135,7 @@
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rview"
+                android:id="@+id/recommendation_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false" />

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:hint="Enter your address"
+        android:hint="@string/enter_your_address"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/ic_baseline_find_replace_24"
         android:id="@+id/text_box"
@@ -23,7 +23,7 @@
             android:id="@+id/text_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.fragment.app.FragmentContainerView xmlns:map="http://schemas.android.com/apk/res-auto"
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/text_box"
@@ -36,7 +36,7 @@
         android:id="@+id/elevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set location"
+        android:text="@string/set_location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textSize="30sp" />

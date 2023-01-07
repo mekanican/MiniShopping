@@ -2,26 +2,23 @@ package com.nlh.minishoping.Connector;
 
 import static com.nlh.minishoping.Connector.ServerConnector.API_PATH;
 import static com.nlh.minishoping.Connector.ServerConnector.HOST_NAME;
-
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
+@SuppressWarnings("deprecation")
 public class FavoriteGettingTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... hash) {
         String apiURL = HOST_NAME + API_PATH + "favorite/" + hash[0];
-        Log.i("FAVORITE GETTING API URL", apiURL);
 
-        URL url = null;
+        URL url;
         try {
             url = new URL(apiURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -41,13 +38,9 @@ public class FavoriteGettingTask extends AsyncTask<String, Void, String> {
 
                 in.close();
 
-                Log.i("FAVORITE GETTING RESPONSE", String.valueOf(response));
-
                 return response.toString();
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

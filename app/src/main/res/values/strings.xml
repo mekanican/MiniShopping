@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Mini Shopping App</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_to_favorite">Yêu thích</string>
     <string name="share_this_product">Chia sẻ</string>
     <string name="add_product_to_cart">Thêm vào giỏ</string>
@@ -12,16 +11,6 @@
     <string name="a_useless_guy">A useless guy</string>
     <string name="related_products">Sản phẩm tương tự</string>
     <string name="no_search_results">Không có sản phẩm thỏa mãn</string>
-    <string name="full_name_hung">Họ và tên: Nguyễn Văn Hưng</string>
-    <string name="email_hung">Email: 20120009@student.hcmus.edu.vn</string>
-    <string name="phone_hung">SĐT: 0937142920</string>
-    <string name="fullname_loc">Họ và tên: Nguyễn Văn Lộc</string>
-    <string name="email_loc">Email: 20120131@student.hcmus.edu.vn</string>
-    <string name="phone_loc">SĐT: 0905481342</string>
-    <string name="fullname_nghia">Họ và tên: Võ Trọng Nghĩa</string>
-    <string name="email_nghia">Email: 20120536@student.hcmus.edu.vn</string>
-    <string name="phone_nghia">SĐT: 0984628018</string>
-    <string name="contact_info">Liên hệ: 0937142920 (gặp anh Hưng)</string>
     <string name="payment">Đơn hàng</string>
     <string name="product_price">Giá sản phẩm</string>
     <string name="shipping_fee">Phí giao hàng</string>
@@ -41,4 +30,21 @@
     <string name="welcome_noti_content">Chào mừng bạn đến với MiniShopping! Gì cũng có, gì cũng rẻ!</string>
     <string name="channel2_name">Channel 2</string>
     <string name="channel2_description">This is channel 2</string>
+    <string name="enter_your_address">Enter your address</string>
+    <string name="set_location">Set location</string>
+    <string name="a_product_image">Product image</string>
+    <string name="voucher">Voucher</string>
+    <string name="san_pham_giam_gia">SẢN PHẨM GIẢM GIÁ</string>
+    <string name="click">Sản phẩm hot giảm giá sốc!! Click để xem ngay</string>
+    <string name="tet">Bánh giảm giá mùa Tết đến nè!! Click để xem ngay</string>
+    <string name="kinh">Kính mát thời trang sành điệu giá rẻ đây!! Click để xem ngay</string>
+    <string name="ma_km">MÃ KHUYẾN MÃI</string>
+    <string name="quamon">Nhập mã QUAMON để được giảm 100%</string>
+    <string name="mobile">Nhập mã MOBILE để được giảm 70%</string>
+    <string name="hello">Nhập mã HELLO để được giảm 50%</string>
+    <string name="welcome">Nhập mã WELCOME để được giảm 50%</string>
+    <string name="image">image</string>
+    <string name="one">1</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
 </resources>

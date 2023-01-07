@@ -75,14 +75,14 @@ public class FavoriteListFragment extends Fragment {
         productViewModel.initSearch(favoriteArray);
         ProductAdapter productAdapter = new ProductAdapter(view1 -> {
            int itemPosition = rvFavoriteList.getChildAdapterPosition(view1);
-           GeneralInfo gi = productViewModel.productList.getValue().get(itemPosition);
+            GeneralInfo gi = productViewModel.otherList.getValue().get(itemPosition);
             Intent intent = new Intent(getActivity(), ProductDetails.class)
                     .putExtra("ID", gi.id)
                     .putExtra("HASH", hashValue);
             startActivity(intent);
         });
 
-        productViewModel.productList.observe(getActivity(), productAdapter::submitList);
+        productViewModel.otherList.observe(getActivity(), productAdapter::submitList);
         rvFavoriteList.setAdapter(productAdapter);
     }
 

@@ -58,7 +58,7 @@ public class StoreFragment extends Fragment {
         etProductNameToFind = getActivity().findViewById(R.id.et_product_name);
 
         RecyclerView recyclerView = getActivity().findViewById(R.id.rview);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         ProductViewModel productViewModel = new ViewModelProvider(getActivity()).get(ProductViewModel.class);
         productViewModel.init();
 

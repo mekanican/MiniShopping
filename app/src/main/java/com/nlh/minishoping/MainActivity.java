@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Chào mừng " + getIntent().getExtras().getString("Email"), Toast.LENGTH_SHORT).show();
 
 
-        sendDiscountNotification();
+        // sendDiscountNotification();
 //
 //        // GET SEARCH RESULTS
 //        int[] arr = ServerConnector.GetSearchResults("voucher");

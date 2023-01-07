@@ -19,6 +19,7 @@ public class ProductViewModel extends AndroidViewModel {
     private ProductDatabase productDatabase;
     public ProductDao productDao;
     public LiveData<PagedList<GeneralInfo>> productList;
+    public LiveData<PagedList<GeneralInfo>> otherList;
 
     public ProductViewModel(@NonNull Application context) {
         super(context);
@@ -50,6 +51,6 @@ public class ProductViewModel extends AndroidViewModel {
                 .setPrefetchDistance(6)
                 .setPageSize(10)
                 .build();
-        productList = (new LivePagedListBuilder<>(productDao.getSearchProductFromIdList(idList), pagedListConfig)).build();
+        otherList = (new LivePagedListBuilder<>(productDao.getSearchProductFromIdList(idList), pagedListConfig)).build();
     }
 }

@@ -22,12 +22,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.nlh.minishoping.Cart.CartMap;
+import com.nlh.minishoping.Connector.ServerConnector;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class AddressActivity extends AppCompatActivity {
 
@@ -57,7 +62,7 @@ public class AddressActivity extends AppCompatActivity {
                 m = gm.addMarker(new MarkerOptions()
                         .position(pos)
                         .title("Your selected address"));
-                gm.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 18));
+                gm.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -70,6 +75,26 @@ public class AddressActivity extends AppCompatActivity {
         assert mapFragment != null;
         mapFragment.getMapAsync(googleMap -> {
             gm = googleMap;
+            try {
+                CartMap.Pair<Float, Float> latlng = ServerConnector.getLocation(getIntent().getExtras().getString("hash"));
+                if (latlng == null) {
+                    return;
+                }
+                LatLng pos = new LatLng(latlng.x, latlng.y);
+                if (m != null) {
+                    m.remove();
+                }
+                m = gm.addMarker(new MarkerOptions()
+                        .position(pos)
+                        .title("Your previous address"));
+                gm.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         });
 
         findViewById(R.id.elevatedButton).setOnClickListener(view -> {
@@ -81,6 +106,8 @@ public class AddressActivity extends AppCompatActivity {
                 LatLng storePos = new LatLng(10.762417, 106.681198);
                 float dist = distance((float) pos.latitude, (float) pos.longitude, (float) storePos.latitude, (float) storePos.longitude);
                 int dayToDelivery = distanceToDay(dist);
+
+                ServerConnector.updateLocation(getIntent().getExtras().getString("hash"), (float) pos.latitude, (float) pos.longitude);
 
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date());
@@ -100,7 +127,14 @@ public class AddressActivity extends AppCompatActivity {
                 Toast.makeText(this, "Da xac nhan gui toi " + addr + "\n" +
                         "Khoang cach: " + String.format(Locale.ENGLISH, "%.2f", dist) + "\n" +
                         "Giao trong " + dayToDelivery + " ngay", Toast.LENGTH_LONG).show();
+                finish();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });

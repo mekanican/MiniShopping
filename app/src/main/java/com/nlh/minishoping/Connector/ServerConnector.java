@@ -2,6 +2,8 @@ package com.nlh.minishoping.Connector;
 
 import android.util.Log;
 
+import com.nlh.minishoping.Cart.CartMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -154,6 +156,31 @@ public class ServerConnector {
         int[] arr = getArraysFromJson(result, "favorites");
 
         return arr;
+    }
+
+    public static CartMap.Pair<Float, Float> getLocation(String hash) throws ExecutionException, InterruptedException, JSONException {
+        GetLocationTask getLocationTask = new GetLocationTask();
+        getLocationTask.execute(hash);
+        String result = getLocationTask.get();
+        if (result == null) return null;
+        JSONObject jsonObject = new JSONObject(result);
+        JSONObject loc = jsonObject.getJSONObject("location");
+        float lat = (float) loc.getDouble("lat");
+        float lng = (float) loc.getDouble("lng");
+        return new CartMap.Pair<>(lat, lng);
+    }
+
+    public static void updateLocation(String hash, float lat, float lng) throws JSONException, ExecutionException, InterruptedException {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject loc = new JSONObject();
+        loc.put("lat", lat);
+        loc.put("lng", lng);
+        jsonObject.put("hash", hash);
+        jsonObject.put("location", loc);
+
+        SetLocationTask setLocationTask = new SetLocationTask();
+        setLocationTask.execute(jsonObject.toString());
+        setLocationTask.get();
     }
 
     private static int[] getArraysFromJson(String result, String key) {

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:hint="Address"
+        android:hint="Enter your address"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/ic_baseline_find_replace_24"
         android:id="@+id/text_box"
@@ -36,7 +36,7 @@
         android:id="@+id/elevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go"
+        android:text="Set location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textSize="30sp" />

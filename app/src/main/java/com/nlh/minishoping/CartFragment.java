@@ -172,7 +172,8 @@ public class CartFragment extends Fragment {
 
     private void processCart() {
         // TODO: passing the cartMap.toString -> Server / to next intent
-        Intent intent = new Intent(getContext(), AddressActivity.class);
+        Intent intent = new Intent(getContext(), AddressActivity.class)
+                .putExtra("hash", ((MainActivity) getActivity()).getHashValue());
         startActivity(intent);
     }
 

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.concurrent.ExecutionException;
 
 public class ServerConnector {
-    public static final String HOST_NAME = "https://1708-14-191-196-219.ap.ngrok.io/";
+    public static final String HOST_NAME = "http://10.0.2.2:8000/";
     public static final String API_PATH = "api/";
 
     private static final String PRODUCTS_KEY = "products";

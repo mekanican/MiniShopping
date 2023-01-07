@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
 //        int ans = ServerConnector.AddProductToFavorite("bac265735b6b4d63d1d2c33e6ddb314dcb33c37ebe747213b3186c92ab37956d", 3);
 //        Log.i("FAVORITE RETURNED", String.valueOf(ans));
 
-        int[] arr = ServerConnector.GetFavoriteList(hashValue);
+//        double dis = ServerConnector.GetVoucherDiscount("HAHA");
+//        Log.i("VOUCHER DISCOUNT", String.valueOf(dis));
     }
 
     // https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android

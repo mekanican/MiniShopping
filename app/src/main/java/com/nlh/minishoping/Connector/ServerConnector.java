@@ -179,4 +179,34 @@ public class ServerConnector {
         }
         return null;
     }
+
+    public static double GetVoucherDiscount(String voucher) {
+        String strResult = null;
+
+        VoucherTask voucherTask = new VoucherTask();
+        voucherTask.execute(voucher);
+
+        try {
+            strResult = voucherTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        double result = 0;
+
+        if (strResult == null) {
+            return result;
+        }
+
+        try {
+            JSONObject jsonObject = new JSONObject(strResult);
+            result = jsonObject.getDouble("discount");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

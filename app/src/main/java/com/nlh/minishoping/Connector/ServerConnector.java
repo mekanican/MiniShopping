@@ -209,4 +209,19 @@ public class ServerConnector {
 
         return result;
     }
+
+    public static void Purchase(String str) {
+        String strResult = null;
+
+        PurchaseTask purchaseTask = new PurchaseTask();
+        purchaseTask.execute(str);
+
+        try {
+            strResult = purchaseTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

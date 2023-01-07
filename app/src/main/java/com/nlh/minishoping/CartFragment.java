@@ -153,7 +153,9 @@ public class CartFragment extends Fragment {
             if (voucher != null) {
                 str += "\"voucher\": " + "\"" + voucher + "\"\n}";
             }
-            Log.i("CART STRING", str);
+
+            //Log.i("CART STRING", str);
+            ServerConnector.Purchase(str);
 
             processCart();
             deleteAll(cartMapInstance);

@@ -15,7 +15,7 @@ The application provides the following features:
 <li>Order confirmation email.</li>
 <li>Add shipping day to Google Calendar.</li>
 <li>Share products.</li>
-</ul>
+</ul>  
 ## 3. Demo
 There is a demo for this project <a href="https://youtu.be/DdSSEbHLupY">here</a>.  
 ## About us

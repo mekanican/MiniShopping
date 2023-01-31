@@ -18,3 +18,5 @@ The application provides the following features:
 </ul>
 ## 3. Demo
 There is a demo for this project <a href="https://youtu.be/DdSSEbHLupY">here</a>.  
+## About us
+We are [Nguyen Van Hung](https://github.com/hungt1), [Nguyen Van Loc](https://github.com/vanloc1808), and [Vo Trong Nghia](https://github.com/mekanican) students at class CNTN2020, University of Science, VNUHCM.
